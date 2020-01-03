@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Custom-made Transportation</string>
+
+    <string name="title_home">Home</string>
+    <string name="title_bus">Bus</string>
+    <string name="title_subway">Subway</string>
+
+    <string name="search">Search</string>
+</resources>
