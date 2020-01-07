@@ -57,16 +57,10 @@ class BusFragment : TabFragment() {
                 }
             }}
             builder.setView(edit)
-            builder.setPositiveButton(context!!.getString(android.R.string.ok), object : DialogInterface.OnClickListener {
-                override fun onClick(dialog: DialogInterface?, which: Int) {
+            builder.setPositiveButton(context!!.getString(android.R.string.ok), { dialog:DialogInterface?, which:Int ->
 
-                }
             })
-            builder.setNegativeButton(context!!.getString(android.R.string.cancel), object : DialogInterface.OnClickListener {
-                override fun onClick(dialog: DialogInterface?, which: Int) {
-
-                }
-            })
+//          builder.setNegativeButton(context!!.getString(android.R.string.cancel), {dialog: DialogInterface?, which: Int -> })
             builder.create().apply { show() }
         }
     }
