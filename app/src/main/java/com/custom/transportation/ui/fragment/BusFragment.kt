@@ -16,19 +16,42 @@ import androidx.fragment.app.FragmentManager
 import androidx.viewpager.widget.ViewPager
 import com.custom.transportation.R
 import com.custom.transportation.ui.adapter.BusPagerAdapter
+import com.custom.transportation.ui.common.BUS_TAB
+import com.custom.transportation.ui.common.MAIN_TAB
 import com.google.android.material.tabs.TabLayout
 
 class BusFragment : TabFragment() {
 
     var fm : FragmentManager? = null
+    lateinit var busAdapter : BusPagerAdapter
+    var curTabType = BUS_TAB.STOP
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view : View =  inflater.inflate(R.layout.fragment_bus, container, false)
 
         if(fm != null && context != null) {
             val viewPager: ViewPager = view.findViewById(R.id.bus_pager)
-            viewPager.adapter = BusPagerAdapter(context!!, fm!!)
+            busAdapter = BusPagerAdapter(context!!, fm!!)
+            viewPager.adapter = busAdapter
             val tabs: TabLayout = view.findViewById(R.id.bus_tabs)
+
+            tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                override fun onTabReselected(p0: TabLayout.Tab?) { }
+
+                override fun onTabUnselected(p0: TabLayout.Tab?) { }
+
+                override fun onTabSelected(p0: TabLayout.Tab?) {
+                    if(p0 == null) return
+
+                    when(p0.position) {
+                        BUS_TAB.NUMBER.pos -> {curTabType = BUS_TAB.NUMBER }
+//                        BUS_TAB.STOP.pos -> { curTabType = BUS_TAB.STOP }
+                        else -> { curTabType = BUS_TAB.STOP }
+                    }
+
+                    fabClickListener = (busAdapter.getItem(curTabType.pos) as TabFragment).fabClickListener
+                }
+            })
             tabs.setupWithViewPager(viewPager)
         }
         return view
@@ -43,26 +66,8 @@ class BusFragment : TabFragment() {
             return context.resources.getDrawable(android.R.drawable.ic_search_category_default)
     }
 
-    override val fabClickListener = object : View.OnClickListener {
-        override fun onClick(v: View?) {
-            val builder = AlertDialog.Builder(context)
-            builder.setTitle("Bus Stop")
-            val edit = EditText(context)
-            edit.filters = Array<InputFilter>(1) {object : InputFilter {
-                override fun filter(source: CharSequence?, start: Int, end: Int, dest: Spanned?, dstart: Int, dend: Int): CharSequence {
-                    if(source != null && source.matches("^[0-9-]".toRegex()))
-                        return source
-                    else
-                        return ""
-                }
-            }}
-            builder.setView(edit)
-            builder.setPositiveButton(context!!.getString(android.R.string.ok), { dialog:DialogInterface?, which:Int ->
-
-            })
-//          builder.setNegativeButton(context!!.getString(android.R.string.cancel), {dialog: DialogInterface?, which: Int -> })
-            builder.create().apply { show() }
-        }
+    override var fabClickListener = object : View.OnClickListener {
+        override fun onClick(v: View?) { }
     }
 
     companion object {
