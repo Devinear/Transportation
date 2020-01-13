@@ -6,21 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tv_busstop"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="BUS STOP"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/recycler" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintVertical_weight="1"
         android:scrollbars="vertical"
-        app:layout_constraintTop_toBottomOf="@id/tv_busstop"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

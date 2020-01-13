@@ -7,17 +7,22 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.custom.transportation.R
+import com.custom.transportation.data.unit.BusStopData
+import com.custom.transportation.data.unit.BusStopDatabase
 
 class BusStopAdapter : RecyclerView.Adapter<BusStopAdapter.ViewHolder>() {
-    var items = ArrayList<Int>()
+    var items = ArrayList<BusStopData>()
 
-    init {
-        for(i in 0..10)
-            items.add(i)
+    init { syncItems() }
+
+    fun syncItems() {
+        if(BusStopDatabase.count() > 0) {
+            items = BusStopDatabase.clone()
+        }
     }
 
     inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-        val iv = view.findViewById<ImageView>(R.id.iv_icon)
+        //val iv = view.findViewById<ImageView>(R.id.iv_icon)
         val tv_location = view.findViewById<TextView>(R.id.tv_location)
         val tv_number = view.findViewById<TextView>(R.id.tv_number)
     }
@@ -30,8 +35,8 @@ class BusStopAdapter : RecyclerView.Adapter<BusStopAdapter.ViewHolder>() {
     override fun getItemCount(): Int  = items.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.tv_location.text = position.toString()
-        holder.tv_location.text = position.toString()
+        holder.tv_location.text = items[position].stNm
+        holder.tv_number.text = items[position].arsId.toString()
     }
 
 }

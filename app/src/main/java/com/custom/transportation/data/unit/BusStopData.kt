@@ -74,4 +74,6 @@ object BusStopDatabase {
         }
         return -1
     }
+
+    fun clone() = database.clone() as ArrayList<BusStopData>
 }
