@@ -30,14 +30,8 @@ class VolleyHelper(private val context: Context) {
         val url = "${CallBackUrl.getStationByNameList}?ServiceKey=${Common.ServiceKey}&stSrch=${newName}"
 
         var stringRequest = StringRequest(Request.Method.GET, url,
-            Response.Listener {
-                    response ->
-                Toast.makeText(context, "RESPONE:${response.substring(0, 20)}", Toast.LENGTH_SHORT).show()
-            },
-            Response.ErrorListener {
-                    it ->
-                Toast.makeText(context, "ERROR", Toast.LENGTH_SHORT).show()
-            })
+            Response.Listener { response -> XmlParser(context).parse(response, parserListener) },
+            Response.ErrorListener { Toast.makeText(context, "ERROR", Toast.LENGTH_SHORT).show() })
         stringRequest.tag = TAG
         stringRequest.setShouldCache(false)
         requestQueue?.add(stringRequest)
