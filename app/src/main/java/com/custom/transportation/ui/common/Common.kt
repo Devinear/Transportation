@@ -34,3 +34,7 @@ object CallBackUrl {
     /* arsId      - 정류소 고유번호 */
     val getStationByUidItem = "http://ws.bus.go.kr/api/rest/stationinfo/getStationByUid"
 }
+
+interface ParserListener {
+    fun parserFinish(success: Boolean)
+}

@@ -9,8 +9,8 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.custom.transportation.ui.common.CallBackUrl
 import com.custom.transportation.ui.common.Common
+import com.custom.transportation.ui.common.ParserListener
 import java.net.URLEncoder
-import java.nio.charset.Charset
 
 class VolleyHelper(private val context: Context) {
 
@@ -23,6 +23,7 @@ class VolleyHelper(private val context: Context) {
     }
 
     private var requestQueue: RequestQueue? = null
+    var parserListener : ParserListener? = null
 
     fun requestByName(name: String) {
         val newName = URLEncoder.encode(name, "utf-8")

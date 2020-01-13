@@ -4,13 +4,14 @@ import android.content.Context
 import android.widget.Toast
 import com.custom.transportation.data.unit.BusStopData
 import com.custom.transportation.data.unit.BusStopDatabase
+import com.custom.transportation.ui.common.ParserListener
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 import java.io.ByteArrayInputStream
 
 class XmlParser(val context: Context) {
 
-    fun parse(response: String) {
+    fun parse(response: String, listener: ParserListener?) {
         try {
             var parser : XmlPullParser = XmlPullParserFactory.newInstance().newPullParser()
             parser.setInput(ByteArrayInputStream(response.toByteArray()), "UTF-8")
@@ -66,8 +67,10 @@ class XmlParser(val context: Context) {
                 eventType = parser.next()
             }
 
+            listener?.parserFinish(true)
         }
         catch (e: Exception) {
+            listener?.parserFinish(false)
             Toast.makeText(context, "Parse Exception: ${e.toString()}", Toast.LENGTH_SHORT).show()
         }
     }

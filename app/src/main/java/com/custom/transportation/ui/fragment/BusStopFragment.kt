@@ -5,20 +5,18 @@ import android.content.Context
 import android.content.DialogInterface
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.text.InputFilter
-import android.text.Spanned
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.custom.transportation.R
 import com.custom.transportation.data.VolleyHelper
 import com.custom.transportation.ui.adapter.BusStopAdapter
+import com.custom.transportation.ui.common.ParserListener
 
-class BusStopFragment : TabFragment() {
+class BusStopFragment : TabFragment(), ParserListener {
 
     private var busStopAdapter = BusStopAdapter()
 
@@ -42,7 +40,9 @@ class BusStopFragment : TabFragment() {
             val edit = EditText(context)
             builder.setView(edit)
             builder.setPositiveButton(context!!.getString(android.R.string.ok), { dialog: DialogInterface?, which:Int ->
-                VolleyHelper.getInstance(context!!).requestByName(edit.text.toString())
+                var helper = VolleyHelper.getInstance(context!!)
+                helper.parserListener = this@BusStopFragment
+                helper.requestByName(edit.text.toString())
             })
 //          builder.setNegativeButton(context!!.getString(android.R.string.cancel), {dialog: DialogInterface?, which: Int -> })
             builder.create().apply { show() }
@@ -55,6 +55,13 @@ class BusStopFragment : TabFragment() {
         private var instance : BusStopFragment? = null
         @JvmStatic fun getInstance() : BusStopFragment = instance ?: synchronized(this) {
             instance ?: BusStopFragment().also { instance = it }
+        }
+    }
+
+    override fun parserFinish(success: Boolean) {
+        if(success) {
+            busStopAdapter.syncItems()
+            busStopAdapter.notifyDataSetChanged()
         }
     }
 }
