@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.custom.transportation.R
 import com.custom.transportation.data.VolleyHelper
+import com.custom.transportation.data.unit.BusStopDatabase
 import com.custom.transportation.ui.adapter.BusStopAdapter
 import com.custom.transportation.ui.common.ParserListener
 
@@ -36,7 +37,7 @@ class BusStopFragment : TabFragment(), ParserListener {
     override val fabClickListener: View.OnClickListener = object : View.OnClickListener {
         override fun onClick(v: View?) {
             val builder = AlertDialog.Builder(context)
-            builder.setTitle("Bus Stop")
+            builder.setTitle("정류장 명칭 검색")
             val edit = EditText(context)
             builder.setView(edit)
             builder.setPositiveButton(context!!.getString(android.R.string.ok), { dialog: DialogInterface?, which:Int ->

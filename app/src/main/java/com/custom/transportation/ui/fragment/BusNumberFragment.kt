@@ -25,7 +25,7 @@ class BusNumberFragment : TabFragment() {
     override val fabClickListener: View.OnClickListener = object : View.OnClickListener {
         override fun onClick(v: View?) {
             val builder = AlertDialog.Builder(context)
-            builder.setTitle("Bus Number")
+            builder.setTitle("정류장 번호 검색")
             val edit = EditText(context)
             edit.filters = Array<InputFilter>(1) {object : InputFilter {
                 override fun filter(source: CharSequence?, start: Int, end: Int, dest: Spanned?, dstart: Int, dend: Int): CharSequence {
