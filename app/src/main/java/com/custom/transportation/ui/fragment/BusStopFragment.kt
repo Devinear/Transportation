@@ -40,9 +40,10 @@ class BusStopFragment : TabFragment(), ParserListener {
             val edit = EditText(context)
             builder.setView(edit)
             builder.setPositiveButton(context!!.getString(android.R.string.ok), { dialog: DialogInterface?, which:Int ->
+                BusStopDatabase.clear()
+
                 var helper = VolleyHelper.getInstance(context!!)
-                helper.parserListener = this@BusStopFragment
-                helper.requestByName(edit.text.toString())
+                helper.requestByName(edit.text.toString(), this@BusStopFragment)
             })
 //          builder.setNegativeButton(context!!.getString(android.R.string.cancel), {dialog: DialogInterface?, which: Int -> })
             builder.create().apply { show() }
