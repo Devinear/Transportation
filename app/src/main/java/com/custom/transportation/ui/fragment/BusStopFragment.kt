@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.custom.transportation.R
@@ -60,10 +61,12 @@ class BusStopFragment : TabFragment(), ParserListener {
         }
     }
 
-    override fun parserFinish(success: Boolean) {
-        if(success) {
-            busStopAdapter.syncItems()
-            busStopAdapter.notifyDataSetChanged()
-        }
+    override fun onParserSuccess() {
+        busStopAdapter.syncItems()
+        busStopAdapter.notifyDataSetChanged()
+    }
+
+    override fun onParserFail() {
+        Toast.makeText(context, "PARSER FAIL!", Toast.LENGTH_SHORT).show()
     }
 }

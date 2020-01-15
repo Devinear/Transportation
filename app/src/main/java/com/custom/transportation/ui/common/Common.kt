@@ -36,5 +36,6 @@ object CallBackUrl {
 }
 
 interface ParserListener {
-    fun parserFinish(success: Boolean)
+    fun onParserSuccess()
+    fun onParserFail()
 }

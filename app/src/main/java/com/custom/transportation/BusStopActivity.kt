@@ -1,6 +1,7 @@
 package com.custom.transportation
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,10 +28,12 @@ class BusStopActivity : AppCompatActivity(), ParserListener {
         }
     }
 
-    override fun parserFinish(success: Boolean) {
-        if(success) {
-            busInfoAdapter.syncItems()
-            busInfoAdapter.notifyDataSetChanged()
-        }
+    override fun onParserSuccess() {
+        busInfoAdapter.syncItems()
+        busInfoAdapter.notifyDataSetChanged()
+    }
+
+    override fun onParserFail() {
+        Toast.makeText(this, "PARSER FAIL!", Toast.LENGTH_SHORT).show()
     }
 }
