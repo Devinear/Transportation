@@ -20,12 +20,13 @@ class BusInfoAdapter : RecyclerView.Adapter<BusInfoAdapter.ViewHolder>() {
         }
     }
 
-    inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-        val name     = view.findViewById<TextView>(R.id.tv_name)
-        val time     = view.findViewById<TextView>(R.id.tv_time)
-        val direction= view.findViewById<TextView>(R.id.tv_direction)
-        val before   = view.findViewById<TextView>(R.id.tv_before)
-        val after    = view.findViewById<TextView>(R.id.tv_after)
+    // 확장함수써보자
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val tvName: TextView    = view.findViewById(R.id.tv_name)
+        val tvTime: TextView    = view.findViewById(R.id.tv_time)
+        val tvDirection: TextView = view.findViewById(R.id.tv_direction)
+        val tvBefore: TextView  = view.findViewById(R.id.tv_before)
+        val tvAfter: TextView   = view.findViewById(R.id.tv_after)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -36,11 +37,11 @@ class BusInfoAdapter : RecyclerView.Adapter<BusInfoAdapter.ViewHolder>() {
     override fun getItemCount(): Int  = items.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.name.text      = items[position].name
-        holder.time.text      = items[position].time
-        holder.direction.text = items[position].direction
-        holder.before.text    = items[position].before
-        holder.after.text     = items[position].after
+        holder.tvName.text      = items[position].name
+        holder.tvTime.text      = items[position].time
+        holder.tvDirection.text = items[position].direction
+        holder.tvBefore.text    = items[position].before
+        holder.tvAfter.text     = items[position].after
     }
 
 }

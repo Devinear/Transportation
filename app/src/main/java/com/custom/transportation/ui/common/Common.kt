@@ -1,18 +1,42 @@
 package com.custom.transportation.ui.common
 
-enum class MAIN_TAB(val pos: Int) {
+enum class IntentType(val tpye: String) {
+    ArsID("ArsID")
+}
+
+enum class MainTab(val pos: Int) {
     HOME(0), BUS(1), SUBWAY(2)
 }
 
-enum class BUS_TAB(val pos: Int) {
+enum class BusTab(val pos: Int) {
     STOP(0), NUMBER(1)
+}
+
+enum class TagBusStop(val tag : String) {
+    Item("itemList"),
+    ID("arsId"),
+    PosX("posX"),
+    PosY("posY"),
+    StationID("sdId"),
+    StationNum("stNm"),
+    TmX("tmX"),
+    TmY("tmY")
+}
+
+enum class TagBusInfo(val tag : String) {
+    Item("itemList"),
+    RouteNum("rtNm"),
+    FirBus("arrmsg1"),
+    SecBus("arrmsg2"),
+    Direction("adirection"),
+    BusType("busType1"),
 }
 
 class Common {
     companion object {
         /* https://www.data.go.kr */
         /* 일반 인증키(UTF-8) */
-        val ServiceKey = "SghQzAenAE240oXwJvXRN7X9jv8p1v7AD3tFDqwB0CBKxOWXGLZsbkFoIpWt0PueXq1GQTis5nhVsBDZiRSagw%3D%3D"
+        const val ServiceKey = "SghQzAenAE240oXwJvXRN7X9jv8p1v7AD3tFDqwB0CBKxOWXGLZsbkFoIpWt0PueXq1GQTis5nhVsBDZiRSagw%3D%3D"
     }
 }
 

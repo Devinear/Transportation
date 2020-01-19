@@ -4,13 +4,13 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.custom.transportation.BusStopActivity
 import com.custom.transportation.R
 import com.custom.transportation.data.unit.BusStopData
 import com.custom.transportation.data.unit.BusStopDatabase
+import com.custom.transportation.ui.common.IntentType
 
 class BusStopAdapter : RecyclerView.Adapter<BusStopAdapter.ViewHolder>() {
     var items = ArrayList<BusStopData>()
@@ -23,7 +23,7 @@ class BusStopAdapter : RecyclerView.Adapter<BusStopAdapter.ViewHolder>() {
         }
     }
 
-    inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         init {
             view.setOnClickListener(object : View.OnClickListener {
                 override fun onClick(v: View?) {
@@ -31,15 +31,13 @@ class BusStopAdapter : RecyclerView.Adapter<BusStopAdapter.ViewHolder>() {
                     val position = adapterPosition
                     items[position].arsId
                     val intent = Intent(v.context, BusStopActivity::class.java)
-                    intent.putExtra("BUSSTOPDATA_ARSID", items[position].arsId)
+                    intent.putExtra(IntentType.ArsID.tpye, items[position].arsId)
                     v.context.startActivity(intent)
                 }
             })
         }
-
-        //val iv = view.findViewById<ImageView>(R.id.iv_icon)
-        val tv_location = view.findViewById<TextView>(R.id.tv_location)
-        val tv_number = view.findViewById<TextView>(R.id.tv_number)
+        val tvLocation: TextView = view.findViewById(R.id.tv_location)
+        val tvNumber: TextView = view.findViewById(R.id.tv_number)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -50,8 +48,8 @@ class BusStopAdapter : RecyclerView.Adapter<BusStopAdapter.ViewHolder>() {
     override fun getItemCount(): Int  = items.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.tv_location.text = items[position].stNm
-        holder.tv_number.text = items[position].arsId.toString()
+        holder.tvLocation.text = items[position].stNm
+        holder.tvNumber.text = items[position].arsId.toString()
     }
 
 }

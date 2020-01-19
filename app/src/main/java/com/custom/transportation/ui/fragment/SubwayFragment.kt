@@ -2,7 +2,6 @@ package com.custom.transportation.ui.fragment
 
 import android.content.Context
 import android.graphics.drawable.Drawable
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,18 +16,9 @@ class SubwayFragment : TabFragment() {
 
     override fun getTitle(context: Context) : String = context.getString(R.string.title_subway)
 
-    override fun getDrawable(context: Context): Drawable? {
-        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP)
-            return context.getDrawable(android.R.drawable.ic_dialog_info)
-        else
-            return context.resources.getDrawable(android.R.drawable.ic_dialog_info)
-    }
+    override fun getDrawable(context: Context): Drawable? = context.getDrawable(android.R.drawable.ic_dialog_info)
 
-    override val fabClickListener = object : View.OnClickListener {
-        override fun onClick(v: View?) {
-
-        }
-    }
+    override val fabClickListener = View.OnClickListener { }
 
     companion object {
 //      @Volatile private var instance : SubwayFragment? = null

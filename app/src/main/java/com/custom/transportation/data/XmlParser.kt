@@ -1,12 +1,14 @@
 package com.custom.transportation.data
 
 import android.content.Context
-import android.widget.Toast
+import com.custom.transportation.R
 import com.custom.transportation.data.unit.BusInfoData
 import com.custom.transportation.data.unit.BusInfoDatabase
 import com.custom.transportation.data.unit.BusStopData
 import com.custom.transportation.data.unit.BusStopDatabase
 import com.custom.transportation.ui.common.ParserListener
+import com.custom.transportation.ui.common.TagBusInfo
+import com.custom.transportation.ui.common.TagBusStop
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 import java.io.ByteArrayInputStream
@@ -15,126 +17,195 @@ class XmlParser(val context: Context) {
 
     fun parseByBusStop(response: String, listener: ParserListener?) {
         try {
-            var parser : XmlPullParser = XmlPullParserFactory.newInstance().newPullParser()
+            val parser : XmlPullParser = XmlPullParserFactory.newInstance().newPullParser()
             parser.setInput(ByteArrayInputStream(response.toByteArray()), "UTF-8")
             parser.next()
 
             BusStopDatabase.clear()
-            var index = 0
-            var builder = BusStopData.Builder(index)
+            var builder = BusStopData.Builder(0)
 
             var eventType = parser.eventType
             while (eventType != XmlPullParser.END_DOCUMENT) {
-                when(eventType) {
-                    XmlPullParser.START_DOCUMENT -> { }
-                    XmlPullParser.START_TAG -> {
-                        val tag = parser.name
-                        if(tag.compareTo("itemList", false) == 0) {
+                if(eventType == XmlPullParser.START_TAG) {
+                    when(parser.name) {
+                        TagBusStop.Item.tag -> {
                             builder = BusStopData.Builder(BusStopDatabase.count())
                         }
-                        else if(tag.compareTo("arsId", false) == 0) {
+                        TagBusStop.ID.tag -> {
                             parser.next()
                             builder.setArsId(parser.text.toInt())
                         }
-                        else if(tag.compareTo("posX", false) == 0) {
+                        TagBusStop.PosX.tag -> {
                             parser.next()
                             builder.setPosX(parser.text.toFloat())
                         }
-                        else if(tag.compareTo("posY", false) == 0) {
+                        TagBusStop.PosY.tag -> {
                             parser.next()
                             builder.setPosY(parser.text.toFloat())
                         }
-                        else if(tag.compareTo("stId", false) == 0) {
+                        TagBusStop.StationID.tag -> {
                             parser.next()
                             builder.setStId(parser.text.toInt())
                         }
-                        else if(tag.compareTo("stNm", false) == 0) {
+                        TagBusStop.StationNum.tag -> {
                             parser.next()
                             builder.setStNm(parser.text)
                         }
-                        else if(tag.compareTo("tmX", false) == 0) {
+                        TagBusStop.TmX.tag -> {
                             parser.next()
                             builder.setTmX(parser.text.toFloat())
                         }
-                        else if(tag.compareTo("tmY", false) == 0) {
+                        TagBusStop.TmY.tag -> {
                             parser.next()
                             builder.setTmY(parser.text.toFloat())
                         }
                     }
-                    XmlPullParser.END_TAG -> {
-                        if(parser.name.compareTo("itemList", false) == 0)
-                            BusStopDatabase.add(builder.build())
-                    }
-                    XmlPullParser.TEXT -> { }
                 }
+                else if(eventType == XmlPullParser.END_TAG) {
+                    if(parser.name.compareTo(TagBusStop.Item.tag, false) == 0)
+                        BusStopDatabase.add(builder.build())
+                }
+//
+//                when(eventType) {
+//                    XmlPullParser.START_DOCUMENT -> { }
+//                    XmlPullParser.START_TAG -> {
+//                        val tag = parser.name
+//                        if(tag.compareTo(TagBusStop.Item.tag, false) == 0) {
+//                            builder = BusStopData.Builder(BusStopDatabase.count())
+//                        }
+//                        else if(tag.compareTo(TagBusStop.ID.tag, false) == 0) {
+//                            parser.next()
+//                            builder.setArsId(parser.text.toInt())
+//                        }
+//                        else if(tag.compareTo(TagBusStop.PosX.tag, false) == 0) {
+//                            parser.next()
+//                            builder.setPosX(parser.text.toFloat())
+//                        }
+//                        else if(tag.compareTo(TagBusStop.PosY.tag, false) == 0) {
+//                            parser.next()
+//                            builder.setPosY(parser.text.toFloat())
+//                        }
+//                        else if(tag.compareTo(TagBusStop.StationID.tag, false) == 0) {
+//                            parser.next()
+//                            builder.setStId(parser.text.toInt())
+//                        }
+//                        else if(tag.compareTo(TagBusStop.StationNum.tag, false) == 0) {
+//                            parser.next()
+//                            builder.setStNm(parser.text)
+//                        }
+//                        else if(tag.compareTo(TagBusStop.TmX.tag, false) == 0) {
+//                            parser.next()
+//                            builder.setTmX(parser.text.toFloat())
+//                        }
+//                        else if(tag.compareTo(TagBusStop.TmY.tag, false) == 0) {
+//                            parser.next()
+//                            builder.setTmY(parser.text.toFloat())
+//                        }
+//                    }
+//                    XmlPullParser.END_TAG -> {
+//
+//                    }
+//                    XmlPullParser.TEXT -> { }
+//                }
                 eventType = parser.next()
             }
-
-            listener?.parserFinish(true)
+            listener?.onParserSuccess()
         }
         catch (e: Exception) {
-            listener?.parserFinish(false)
-            Toast.makeText(context, "Parse Exception: ${e.toString()}", Toast.LENGTH_SHORT).show()
+            listener?.onParserFail()
         }
     }
 
     fun parseByBusInfo(response: String, listener: ParserListener?) {
         try {
-            var parser : XmlPullParser = XmlPullParserFactory.newInstance().newPullParser()
+            val parser : XmlPullParser = XmlPullParserFactory.newInstance().newPullParser()
             parser.setInput(ByteArrayInputStream(response.toByteArray()), "UTF-8")
             parser.next()
 
             BusInfoDatabase.clear()
-            var index = 0
-            var builder = BusInfoData.Builder(index)
+            var builder = BusInfoData.Builder(0)
 
             var eventType = parser.eventType
             while (eventType != XmlPullParser.END_DOCUMENT) {
-                when(eventType) {
-                    XmlPullParser.START_DOCUMENT -> { }
-                    XmlPullParser.START_TAG -> {
-                        val tag = parser.name
-                        if(tag.compareTo("itemList", false) == 0) {
+                if(eventType == XmlPullParser.START_TAG) {
+                    when(parser.name) {
+                        TagBusInfo.Item.tag -> {
                             builder = BusInfoData.Builder(BusInfoDatabase.count())
                         }
-                        else if(tag.compareTo("rtNm", false) == 0) {
+                        TagBusInfo.RouteNum.tag -> {
                             parser.next()
                             builder.setName(parser.text)
                         }
-                        else if(tag.compareTo("arrmsg1", false) == 0) {
+                        TagBusInfo.FirBus.tag -> {
                             parser.next()
                             builder.setTime(parser.text)
                         }
-                        else if(tag.compareTo("arrmsg2", false) == 0) {
+                        TagBusInfo.SecBus.tag -> {
                             parser.next()
                             builder.setAfter(parser.text)
                         }
-                        else if(tag.compareTo("adirection", false) == 0) {
+                        TagBusInfo.Direction.tag -> {
                             parser.next()
                             builder.setDirection("${parser.text} 방향")
                         }
-                        else if(tag.compareTo("busType1", false) == 0) {
+                        TagBusInfo.BusType.tag -> {
                             parser.next()
                             when(parser.text.toInt()) {
-                                1 -> {builder.setBefore("저상버스")}
-                                2 -> {builder.setBefore("굴절버스")}
-                                else -> {builder.setBefore("일반버스")}
+                                1 -> {builder.setBefore(context.getString(R.string.bus_low_floor))}
+                                2 -> {builder.setBefore(context.getString(R.string.bus_bendy))}
+                                else -> {builder.setBefore(context.getString(R.string.bus_common))}
                             }
                         }
                     }
-                    XmlPullParser.END_TAG -> {
-                        if(parser.name.compareTo("itemList", false) == 0)
-                            BusInfoDatabase.add(builder.build())
-                    }
-                    XmlPullParser.TEXT -> { }
                 }
+                else if(eventType == XmlPullParser.END_TAG) {
+                    if(parser.name.compareTo(TagBusInfo.Item.tag, false) == 0)
+                        BusInfoDatabase.add(builder.build())
+                }
+//                when(eventType) {
+//                    XmlPullParser.START_DOCUMENT -> { }
+//                    XmlPullParser.START_TAG -> {
+//                        val tag = parser.name
+//                        if(tag.compareTo("itemList", false) == 0) {
+//                            builder = BusInfoData.Builder(BusInfoDatabase.count())
+//                        }
+//                        else if(tag.compareTo("rtNm", false) == 0) {
+//                            parser.next()
+//                            builder.setName(parser.text)
+//                        }
+//                        else if(tag.compareTo("arrmsg1", false) == 0) {
+//                            parser.next()
+//                            builder.setTime(parser.text)
+//                        }
+//                        else if(tag.compareTo("arrmsg2", false) == 0) {
+//                            parser.next()
+//                            builder.setAfter(parser.text)
+//                        }
+//                        else if(tag.compareTo("adirection", false) == 0) {
+//                            parser.next()
+//                            builder.setDirection("${parser.text} 방향")
+//                        }
+//                        else if(tag.compareTo("busType1", false) == 0) {
+//                            parser.next()
+//                            when(parser.text.toInt()) {
+//                                1 -> {builder.setBefore(context.getString(R.string.bus_low_floor))}
+//                                2 -> {builder.setBefore(context.getString(R.string.bus_bendy))}
+//                                else -> {builder.setBefore(context.getString(R.string.bus_common))}
+//                            }
+//                        }
+//                    }
+//                    XmlPullParser.END_TAG -> {
+//                        if(parser.name.compareTo("itemList", false) == 0)
+//                            BusInfoDatabase.add(builder.build())
+//                    }
+//                    XmlPullParser.TEXT -> { }
+//                }
                 eventType = parser.next()
             }
-            listener?.parserFinish(true)
+            listener?.onParserSuccess()
         }
         catch (e: Exception) {
-            listener?.parserFinish(false)
-            Toast.makeText(context, "Parse Exception: ${e.toString()}", Toast.LENGTH_SHORT).show()
+            listener?.onParserFail()
         }
     }
 }

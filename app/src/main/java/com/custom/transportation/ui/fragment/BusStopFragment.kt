@@ -23,40 +23,32 @@ class BusStopFragment : TabFragment(), ParserListener {
     private var busStopAdapter = BusStopAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
         val view : View = inflater.inflate(R.layout.fragment_busstop, container, false)
         val recycler = view.findViewById<RecyclerView>(R.id.recycler)
-
         recycler.layoutManager = LinearLayoutManager(context)
         recycler.adapter = busStopAdapter
-
         return view
     }
 
-    override fun getTitle(context: Context) : String = context.getString(R.string.busStop)
+    override fun getTitle(context: Context) : String = context.getString(R.string.bus_stop)
 
-    override val fabClickListener: View.OnClickListener = object : View.OnClickListener {
-        override fun onClick(v: View?) {
-            val builder = AlertDialog.Builder(context)
-            builder.setTitle("정류장 명칭 검색")
-            val edit = EditText(context)
-            builder.setView(edit)
-            builder.setPositiveButton(context!!.getString(android.R.string.ok), { dialog: DialogInterface?, which:Int ->
-                BusStopDatabase.clear()
-
-                var helper = VolleyHelper.getInstance(context!!)
-                helper.requestByName(edit.text.toString(), this@BusStopFragment)
-            })
-//          builder.setNegativeButton(context!!.getString(android.R.string.cancel), {dialog: DialogInterface?, which: Int -> })
-            builder.create().apply { show() }
+    override val fabClickListener: View.OnClickListener = View.OnClickListener {
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle("정류장 명칭 검색")
+        val edit = EditText(context)
+        builder.setView(edit)
+        builder.setPositiveButton(context!!.getString(android.R.string.ok)) { dialog: DialogInterface?, which:Int ->
+            BusStopDatabase.clear()
+            VolleyHelper.getInstance(context!!).requestByName(edit.text.toString(), this@BusStopFragment)
         }
+        builder.create().run { show() }
     }
 
     override fun getDrawable(context: Context): Drawable? = null
 
     companion object {
         private var instance : BusStopFragment? = null
-        @JvmStatic fun getInstance() : BusStopFragment = instance ?: synchronized(this) {
+        fun getInstance() : BusStopFragment = instance ?: synchronized(this) {
             instance ?: BusStopFragment().also { instance = it }
         }
     }

@@ -15,9 +15,10 @@ import java.net.URLEncoder
 class VolleyHelper(private val context: Context) {
 
     companion object {
-        val TAG = "VolleyHelper"
+        const val TAG = "VolleyHelper"
+
         private var instance : VolleyHelper? = null
-        @JvmStatic fun getInstance(context: Context) : VolleyHelper = instance ?: synchronized(this) {
+        fun getInstance(context: Context) : VolleyHelper = instance ?: synchronized(this) {
             instance ?: VolleyHelper(context).also { instance = it }
         }
     }
@@ -29,7 +30,7 @@ class VolleyHelper(private val context: Context) {
         requestQueue = Volley.newRequestQueue(context)
         val url = "${CallBackUrl.getStationByNameList}?ServiceKey=${Common.ServiceKey}&stSrch=${newName}"
 
-        var stringRequest = StringRequest(Request.Method.GET, url,
+        val stringRequest = StringRequest(Request.Method.GET, url,
             Response.Listener { response -> XmlParser(context).parseByBusStop(response, listener) },
             Response.ErrorListener { Toast.makeText(context, "ERROR", Toast.LENGTH_SHORT).show() })
         stringRequest.tag = TAG
@@ -41,7 +42,7 @@ class VolleyHelper(private val context: Context) {
         requestQueue = Volley.newRequestQueue(context)
         val url = "${CallBackUrl.getStationByUidItem}?ServiceKey=${Common.ServiceKey}&arsId=${arsId}"
 
-        var stringRequest = StringRequest(Request.Method.GET, url,
+        val stringRequest = StringRequest(Request.Method.GET, url,
             Response.Listener { response -> XmlParser(context).parseByBusInfo(response, listener) },
             Response.ErrorListener { Toast.makeText(context, "ERROR", Toast.LENGTH_SHORT).show() })
         stringRequest.tag = TAG

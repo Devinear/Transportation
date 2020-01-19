@@ -6,12 +6,10 @@ import android.content.DialogInterface
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.InputFilter
-import android.text.Spanned
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import androidx.fragment.app.Fragment
 import com.custom.transportation.R
 
 class BusNumberFragment : TabFragment() {
@@ -20,26 +18,24 @@ class BusNumberFragment : TabFragment() {
         return inflater.inflate(R.layout.fragment_subway, container, false)
     }
 
-    override fun getTitle(context: Context) : String = context.getString(R.string.busNumber)
+    override fun getTitle(context: Context) : String = context.getString(R.string.bus_number)
 
     override val fabClickListener: View.OnClickListener = object : View.OnClickListener {
         override fun onClick(v: View?) {
             val builder = AlertDialog.Builder(context)
             builder.setTitle("정류장 번호 검색")
             val edit = EditText(context)
-            edit.filters = Array<InputFilter>(1) {object : InputFilter {
-                override fun filter(source: CharSequence?, start: Int, end: Int, dest: Spanned?, dstart: Int, dend: Int): CharSequence {
+            edit.filters = Array(1) {
+                InputFilter { source, start, end, dest, dstart, dend ->
                     if(source != null && source.matches("^[0-9-]".toRegex()))
-                        return source
+                        source
                     else
-                        return ""
+                        ""
                 }
-            }}
+            }
             builder.setView(edit)
-            builder.setPositiveButton(context!!.getString(android.R.string.ok), { dialog: DialogInterface?, which:Int ->
-
-            })
-//          builder.setNegativeButton(context!!.getString(android.R.string.cancel), {dialog: DialogInterface?, which: Int -> })
+            builder.setPositiveButton(context!!.getString(android.R.string.ok)) { dialog: DialogInterface?, which:Int ->
+            }
             builder.create().apply { show() }
         }
     }
@@ -48,7 +44,7 @@ class BusNumberFragment : TabFragment() {
 
     companion object {
         private var instance : BusNumberFragment? = null
-        @JvmStatic fun getInstance() : BusNumberFragment = instance ?: synchronized(this) {
+        fun getInstance() : BusNumberFragment = instance ?: synchronized(this) {
             instance ?: BusNumberFragment().also { instance = it }
         }
     }
