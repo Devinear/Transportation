@@ -30,5 +30,5 @@ class SectionsPagerAdapter(private val context: Context, private val fm: Fragmen
         }
     }
 
-    override fun getCount(): Int = 3
+    override fun getCount(): Int = 2 // 3 (Subway 비활성화)
 }
