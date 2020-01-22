@@ -35,7 +35,5 @@ class BusStopActivity : AppCompatActivity(), ParserListener {
         busInfoAdapter.notifyDataSetChanged()
     }
 
-    override fun onParserFail() {
-        Toast.makeText(this, "PARSER FAIL!", Toast.LENGTH_SHORT).show()
-    }
+    override fun onParserFail() = Toast.makeText(this, "PARSER FAIL!", Toast.LENGTH_SHORT).show()
 }
