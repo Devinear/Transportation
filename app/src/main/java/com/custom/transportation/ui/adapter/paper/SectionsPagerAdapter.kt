@@ -18,7 +18,10 @@ class SectionsPagerAdapter(private val context: Context, private val fm: Fragmen
                 BusFragment.getInstance()
             }
             MainTab.SUBWAY.pos -> { SubwayFragment.getInstance() }
-            else -> { HomeFragment.getInstance() }
+            else -> {
+                HomeFragment.getInstance().showFragment()
+                HomeFragment.getInstance()
+            }
         }
     }
 

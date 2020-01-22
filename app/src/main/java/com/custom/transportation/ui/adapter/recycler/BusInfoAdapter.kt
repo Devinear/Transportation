@@ -4,8 +4,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.custom.transportation.R
+import com.custom.transportation.data.unit.BookmarkDatabase
 import com.custom.transportation.data.unit.BusInfoData
 import com.custom.transportation.data.unit.BusInfoDatabase
 
@@ -19,6 +21,13 @@ class BusInfoAdapter : RecyclerView.Adapter<BusInfoAdapter.ViewHolder>() {
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        init {
+            view.setOnLongClickListener {v ->
+                BookmarkDatabase.add(items[adapterPosition])
+                Toast.makeText(v.context, v.context.getText(R.string.add_bookmark), Toast.LENGTH_SHORT).show()
+                true
+            }
+        }
         val tvName: TextView    = view.findViewById(R.id.tv_name)
         val tvTime: TextView    = view.findViewById(R.id.tv_time)
         val tvDirection: TextView = view.findViewById(R.id.tv_direction)

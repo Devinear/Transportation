@@ -14,5 +14,7 @@
     <string name="bus_low_floor">저상버스</string>
     <string name="bus_common">일반버스</string>
     <string name="bus_bendy">굴절버스</string>
+    
+    <string name="add_bookmark">즐겨찾기가 추가되었습니다.</string>
 
 </resources>

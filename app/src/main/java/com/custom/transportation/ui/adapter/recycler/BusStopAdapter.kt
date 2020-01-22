@@ -5,9 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.custom.transportation.BusStopActivity
 import com.custom.transportation.R
+import com.custom.transportation.data.unit.BookmarkDatabase
 import com.custom.transportation.data.unit.BusStopData
 import com.custom.transportation.data.unit.BusStopDatabase
 import com.custom.transportation.ui.common.IntentType
@@ -23,14 +25,17 @@ class BusStopAdapter : RecyclerView.Adapter<BusStopAdapter.ViewHolder>() {
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         init {
-            view.setOnClickListener(object : View.OnClickListener {
-                override fun onClick(v: View?) {
-                    v ?: return
-                    v.context.startActivity(Intent(v.context, BusStopActivity::class.java).apply {
-                        putExtra(IntentType.ArsID.tpye, items[adapterPosition].arsId)
-                    })
-                }
+            view.setOnClickListener(View.OnClickListener { v ->
+                v ?: return@OnClickListener
+                v.context.startActivity(Intent(v.context, BusStopActivity::class.java).apply {
+                    putExtra(IntentType.ArsID.tpye, items[adapterPosition].arsId)
+                })
             })
+            view.setOnLongClickListener {v ->
+                BookmarkDatabase.add(items[adapterPosition])
+                Toast.makeText(v.context, v.context.getText(R.string.add_bookmark), Toast.LENGTH_SHORT).show()
+                true
+            }
         }
         val tvLocation: TextView = view.findViewById(R.id.tv_location)
         val tvNumber: TextView = view.findViewById(R.id.tv_number)
