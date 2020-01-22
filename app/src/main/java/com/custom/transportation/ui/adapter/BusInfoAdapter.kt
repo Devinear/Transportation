@@ -18,7 +18,6 @@ class BusInfoAdapter : RecyclerView.Adapter<BusInfoAdapter.ViewHolder>() {
         }
     }
 
-    // 확장함수써보자
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvName: TextView    = view.findViewById(R.id.tv_name)
         val tvTime: TextView    = view.findViewById(R.id.tv_time)
