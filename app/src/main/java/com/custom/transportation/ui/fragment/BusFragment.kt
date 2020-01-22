@@ -22,13 +22,15 @@ class BusFragment : TabFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view : View =  inflater.inflate(R.layout.fragment_bus, container, false)
 
-        if(fm != null && context != null) {
-            val viewPager: ViewPager = view.findViewById(R.id.bus_pager)
-            busAdapter = BusPagerAdapter(context!!, fm!!)
-            viewPager.adapter = busAdapter
-            val tabs: TabLayout = view.findViewById(R.id.bus_tabs)
+        fm ?: return view
+        context ?: return view
 
-            tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+        val viewPager: ViewPager = view.findViewById(R.id.bus_pager)
+        busAdapter = BusPagerAdapter(context!!, fm!!)
+        viewPager.adapter = busAdapter
+
+        view.findViewById<TabLayout>(R.id.bus_tabs)?.run {
+            addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab?) {
                     if(tab == null) return
 
@@ -42,8 +44,9 @@ class BusFragment : TabFragment() {
                 override fun onTabReselected(tab: TabLayout.Tab?) { }
                 override fun onTabUnselected(tab: TabLayout.Tab?) { }
             })
-            tabs.setupWithViewPager(viewPager)
+            setupWithViewPager(viewPager)
         }
+
         return view
     }
 
@@ -51,19 +54,10 @@ class BusFragment : TabFragment() {
 
     override fun getDrawable(context: Context): Drawable? = context.getDrawable(android.R.drawable.ic_search_category_default)
 
-    override var fabClickListener = object : View.OnClickListener {
-        override fun onClick(v: View?) { }
-    }
+    override var fabClickListener = View.OnClickListener { }
 
     companion object {
-        // volatile : 변수를 Main Memory에 저장하겠다라는 것을 명시한다.
-        // 변수의 값을 Read할 때마다 CPU cache에 저장된 값이 아닌 Main Memory에서 읽고, Write할 때마다 Main Memory에 까지 작성한다.
-        // 즉, Multi Thread 환경을 대비하기 위함이다.
-//      @Volatile private var instance : BusFragment? = null
         private var instance : BusFragment? = null
-
-        // Java : Static Method 처럼 사용할 수 있도록 한다.
-        // also : apply와 같이 객체를 반환하며, let과 다르게 내부 결과(it)을 변화시킬 수 없다.
         fun getInstance() : BusFragment = instance ?: synchronized(this) {
             instance ?: BusFragment().also { instance = it }
         }

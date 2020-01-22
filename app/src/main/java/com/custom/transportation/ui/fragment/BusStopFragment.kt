@@ -24,24 +24,26 @@ class BusStopFragment : TabFragment(), ParserListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view : View = inflater.inflate(R.layout.fragment_busstop, container, false)
-        val recycler = view.findViewById<RecyclerView>(R.id.recycler)
-        recycler.layoutManager = LinearLayoutManager(context)
-        recycler.adapter = busStopAdapter
+        view.findViewById<RecyclerView>(R.id.recycler).run {
+            layoutManager = LinearLayoutManager(context)
+            adapter = busStopAdapter
+        }
         return view
     }
 
     override fun getTitle(context: Context) : String = context.getString(R.string.bus_stop)
 
     override val fabClickListener: View.OnClickListener = View.OnClickListener {
-        val builder = AlertDialog.Builder(context)
-        builder.setTitle("정류장 명칭 검색")
-        val edit = EditText(context)
-        builder.setView(edit)
-        builder.setPositiveButton(context!!.getString(android.R.string.ok)) { dialog: DialogInterface?, which:Int ->
-            BusStopDatabase.clear()
-            VolleyHelper.getInstance(context!!).requestByName(edit.text.toString(), this@BusStopFragment)
-        }
-        builder.create().run { show() }
+        AlertDialog.Builder(context).apply {
+            setTitle(context.getString(R.string.search_bus_stop))
+            val edit = EditText(context)
+            setView(edit)
+            setPositiveButton(context!!.getString(android.R.string.ok)) { dialog: DialogInterface?, which: Int ->
+                BusStopDatabase.clear()
+                VolleyHelper.getInstance(context!!)
+                    .requestByName(edit.text.toString(), this@BusStopFragment)
+            }
+        }.create().run { show() }
     }
 
     override fun getDrawable(context: Context): Drawable? = null
@@ -58,7 +60,5 @@ class BusStopFragment : TabFragment(), ParserListener {
         busStopAdapter.notifyDataSetChanged()
     }
 
-    override fun onParserFail() {
-        Toast.makeText(context, "PARSER FAIL!", Toast.LENGTH_SHORT).show()
-    }
+    override fun onParserFail() = Toast.makeText(context, "PARSER FAIL!", Toast.LENGTH_SHORT).show()
 }

@@ -10,9 +10,7 @@ import com.custom.transportation.data.unit.BusInfoData
 import com.custom.transportation.data.unit.BusInfoDatabase
 
 class BusInfoAdapter : RecyclerView.Adapter<BusInfoAdapter.ViewHolder>() {
-    var items = ArrayList<BusInfoData>()
-
-    init { syncItems() }
+    var items = ArrayList<BusInfoData>().apply {syncItems() }
 
     fun syncItems() {
         if(BusInfoDatabase.count() > 0) {
@@ -29,10 +27,8 @@ class BusInfoAdapter : RecyclerView.Adapter<BusInfoAdapter.ViewHolder>() {
         val tvAfter: TextView   = view.findViewById(R.id.tv_after)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view : View = LayoutInflater.from(parent.context).inflate(R.layout.item_businfo, parent,false)
-        return ViewHolder(view)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder
+            = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_businfo, parent,false))
 
     override fun getItemCount(): Int  = items.size
 

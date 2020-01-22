@@ -26,28 +26,27 @@ class VolleyHelper(private val context: Context) {
     private var requestQueue: RequestQueue? = null
 
     fun requestByName(name: String, listener: ParserListener?) {
-        val newName = URLEncoder.encode(name, "utf-8")
         requestQueue = Volley.newRequestQueue(context)
-        val url = "${CallBackUrl.getStationByNameList}?ServiceKey=${Common.ServiceKey}&stSrch=${newName}"
-
-        val stringRequest = StringRequest(Request.Method.GET, url,
+        requestQueue?.add(StringRequest(Request.Method.GET,
+            "${CallBackUrl.getStationByNameList}?ServiceKey=${Common.ServiceKey}&stSrch=${URLEncoder.encode(name, "utf-8")}",
             Response.Listener { response -> XmlParser(context).parseByBusStop(response, listener) },
             Response.ErrorListener { Toast.makeText(context, "ERROR", Toast.LENGTH_SHORT).show() })
-        stringRequest.tag = TAG
-        stringRequest.setShouldCache(false)
-        requestQueue?.add(stringRequest)
+            .apply {
+                tag = TAG
+                setShouldCache(false)
+            })
     }
 
     fun requestByArsId(arsId: Int, listener: ParserListener?) {
         requestQueue = Volley.newRequestQueue(context)
-        val url = "${CallBackUrl.getStationByUidItem}?ServiceKey=${Common.ServiceKey}&arsId=${arsId}"
-
-        val stringRequest = StringRequest(Request.Method.GET, url,
+        requestQueue?.add(StringRequest(Request.Method.GET,
+            "${CallBackUrl.getStationByUidItem}?ServiceKey=${Common.ServiceKey}&arsId=${arsId}",
             Response.Listener { response -> XmlParser(context).parseByBusInfo(response, listener) },
             Response.ErrorListener { Toast.makeText(context, "ERROR", Toast.LENGTH_SHORT).show() })
-        stringRequest.tag = TAG
-        stringRequest.setShouldCache(false)
-        requestQueue?.add(stringRequest)
+            .apply {
+                tag = TAG
+                setShouldCache(false)
+            })
     }
 
     fun cancelAll() {

@@ -18,9 +18,10 @@ class BusStopActivity : AppCompatActivity(), ParserListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_busstop)
 
-        val recycler = findViewById<RecyclerView>(R.id.recycler_busstop)
-        recycler.layoutManager = LinearLayoutManager(this)
-        recycler.adapter = busInfoAdapter
+        findViewById<RecyclerView>(R.id.recycler_busstop).run {
+            layoutManager = LinearLayoutManager(context)
+            adapter = busInfoAdapter
+        }
 
         val arsId = intent.getIntExtra(IntentType.ArsID.tpye, -1)
         if(arsId != -1) {

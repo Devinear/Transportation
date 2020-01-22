@@ -13,9 +13,7 @@ import com.custom.transportation.data.unit.BusStopDatabase
 import com.custom.transportation.ui.common.IntentType
 
 class BusStopAdapter : RecyclerView.Adapter<BusStopAdapter.ViewHolder>() {
-    var items = ArrayList<BusStopData>()
-
-    init { syncItems() }
+    var items = ArrayList<BusStopData>().apply { syncItems() }
 
     fun syncItems() {
         if(BusStopDatabase.count() > 0) {
@@ -27,12 +25,10 @@ class BusStopAdapter : RecyclerView.Adapter<BusStopAdapter.ViewHolder>() {
         init {
             view.setOnClickListener(object : View.OnClickListener {
                 override fun onClick(v: View?) {
-                    if(v == null) return
-                    val position = adapterPosition
-                    items[position].arsId
-                    val intent = Intent(v.context, BusStopActivity::class.java)
-                    intent.putExtra(IntentType.ArsID.tpye, items[position].arsId)
-                    v.context.startActivity(intent)
+                    v ?: return
+                    v.context.startActivity(Intent(v.context, BusStopActivity::class.java).apply {
+                        putExtra(IntentType.ArsID.tpye, items[adapterPosition].arsId)
+                    })
                 }
             })
         }
@@ -40,10 +36,9 @@ class BusStopAdapter : RecyclerView.Adapter<BusStopAdapter.ViewHolder>() {
         val tvNumber: TextView = view.findViewById(R.id.tv_number)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view : View = LayoutInflater.from(parent.context).inflate(R.layout.item_busstop, parent,false)
-        return ViewHolder(view)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder
+            = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_busstop, parent,false))
+
 
     override fun getItemCount(): Int  = items.size
 

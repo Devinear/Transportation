@@ -24,23 +24,24 @@ class MainActivity : AppCompatActivity() {
 
         fab = findViewById(R.id.fab)
 
-        val tabs: TabLayout = findViewById(R.id.tabs)
-        tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                tab ?: return
+        findViewById<TabLayout>(R.id.tabs)?.run {
+            addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                override fun onTabSelected(tab: TabLayout.Tab?) {
+                    tab ?: return
 
-                curTabType = when(tab.position) {
-                    MainTab.BUS.pos -> MainTab.BUS
-                    MainTab.SUBWAY.pos -> MainTab.SUBWAY
-                    else -> MainTab.HOME
+                    curTabType = when(tab.position) {
+                        MainTab.BUS.pos -> MainTab.BUS
+                        MainTab.SUBWAY.pos -> MainTab.SUBWAY
+                        else -> MainTab.HOME
+                    }
+                    val fragment = pagerAdapter.getItem(curTabType.pos)
+                    fab.setImageDrawable(fragment.getDrawable(applicationContext))
+                    fab.setOnClickListener(fragment.fabClickListener)
                 }
-                val fragment = pagerAdapter.getItem(curTabType.pos)
-                fab.setImageDrawable(fragment.getDrawable(applicationContext))
-                fab.setOnClickListener(fragment.fabClickListener)
-            }
-            override fun onTabReselected(tab: TabLayout.Tab?) = Unit
-            override fun onTabUnselected(tab: TabLayout.Tab?) = Unit
-        })
-        tabs.setupWithViewPager(viewPager)
+                override fun onTabReselected(tab: TabLayout.Tab?) = Unit
+                override fun onTabUnselected(tab: TabLayout.Tab?) = Unit
+            })
+            setupWithViewPager(viewPager)
+        }
     }
 }

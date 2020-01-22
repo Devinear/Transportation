@@ -14,30 +14,27 @@ import com.custom.transportation.R
 
 class BusNumberFragment : TabFragment() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_subway, container, false)
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
+            = inflater.inflate(R.layout.fragment_subway, container, false)
 
     override fun getTitle(context: Context) : String = context.getString(R.string.bus_number)
 
-    override val fabClickListener: View.OnClickListener = object : View.OnClickListener {
-        override fun onClick(v: View?) {
-            val builder = AlertDialog.Builder(context)
-            builder.setTitle("정류장 번호 검색")
-            val edit = EditText(context)
-            edit.filters = Array(1) {
-                InputFilter { source, start, end, dest, dstart, dend ->
-                    if(source != null && source.matches("^[0-9-]".toRegex()))
-                        source
-                    else
-                        ""
+    override val fabClickListener: View.OnClickListener = View.OnClickListener {
+        AlertDialog.Builder(context).apply {
+            setTitle(context.getString(R.string.search_bus_number))
+            setView(EditText(context).apply {
+                filters = Array(1) {
+                    InputFilter { source, start, end, dest, dstart, dend ->
+                        if (source != null && source.matches("^[0-9-]".toRegex()))
+                            source
+                        else
+                            ""
+                    }
                 }
+            })
+            setPositiveButton(context!!.getString(android.R.string.ok)) { dialog: DialogInterface?, which:Int ->
             }
-            builder.setView(edit)
-            builder.setPositiveButton(context!!.getString(android.R.string.ok)) { dialog: DialogInterface?, which:Int ->
-            }
-            builder.create().apply { show() }
-        }
+        }.create().run { show() }
     }
 
     override fun getDrawable(context: Context): Drawable? = null
