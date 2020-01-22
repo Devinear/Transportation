@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.custom.transportation.R
 import com.custom.transportation.data.VolleyHelper
 import com.custom.transportation.data.unit.BusStopDatabase
-import com.custom.transportation.ui.adapter.BusStopAdapter
+import com.custom.transportation.ui.adapter.recycler.BusStopAdapter
 import com.custom.transportation.ui.common.ParserListener
 
 class BusStopFragment : TabFragment(), ParserListener {

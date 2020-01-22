@@ -1,4 +1,4 @@
-package com.custom.transportation.ui.adapter
+package com.custom.transportation.ui.adapter.paper
 
 import android.content.Context
 import androidx.fragment.app.FragmentManager

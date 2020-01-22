@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.custom.transportation.data.VolleyHelper
-import com.custom.transportation.ui.adapter.BusInfoAdapter
+import com.custom.transportation.ui.adapter.recycler.BusInfoAdapter
 import com.custom.transportation.ui.common.IntentType
 import com.custom.transportation.ui.common.ParserListener
 

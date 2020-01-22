@@ -1,4 +1,4 @@
-package com.custom.transportation.ui.adapter
+package com.custom.transportation.ui.adapter.recycler
 
 import android.view.LayoutInflater
 import android.view.View

@@ -58,9 +58,7 @@ object BusStopDatabase {
 
     fun count() : Int = database.size
 
-    fun clear() {
-        database.clear()
-    }
+    fun clear() = database.clear()
 
     @Suppress("UNCHECKED_CAST")
     fun clone() = database.clone() as ArrayList<BusStopData>
