@@ -5,12 +5,17 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.custom.transportation.data.VolleyHelper
+import com.custom.transportation.data.retrofit.RetrofitHelper
+import com.custom.transportation.data.retrofit.ServiceResult
+import com.custom.transportation.data.unit.BusInfoDatabase
 import com.custom.transportation.ui.adapter.recycler.BusInfoAdapter
+import com.custom.transportation.ui.common.Common
 import com.custom.transportation.ui.common.IntentType
-import com.custom.transportation.ui.common.ParserListener
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-class BusStopActivity : AppCompatActivity(), ParserListener {
+class BusStopActivity : AppCompatActivity(), Callback<ServiceResult> {
 
     private var busInfoAdapter = BusInfoAdapter()
 
@@ -25,15 +30,34 @@ class BusStopActivity : AppCompatActivity(), ParserListener {
 
         val arsId = intent.getIntExtra(IntentType.ArsID.tpye, -1)
         if(arsId != -1) {
-            VolleyHelper.getInstance(this).cancelAll()
-            VolleyHelper.getInstance(this).requestByArsId(arsId, this@BusStopActivity)
+            RetrofitHelper.getRetrofit(Common.baseUrl)
+                .getStationByUid(Common.ServiceKey, arsId.toString())
+                .enqueue(this@BusStopActivity)
         }
     }
 
-    override fun onParserSuccess() {
-        busInfoAdapter.syncItems()
-        busInfoAdapter.notifyDataSetChanged()
-    }
+    override fun onFailure(call: Call<ServiceResult>, t: Throwable)
+            = Toast.makeText(baseContext, "Failure:["+t.message+"]", Toast.LENGTH_SHORT).show()
 
-    override fun onParserFail() = Toast.makeText(this, "PARSER FAIL!", Toast.LENGTH_SHORT).show()
+    override fun onResponse(call: Call<ServiceResult>, response: Response<ServiceResult>) {
+
+        if(!response.isSuccessful) return
+
+        response.body()?.msgHeader?.run {
+            if(headerCd.toInt() != 0) {
+                Toast.makeText(baseContext, headerMsg, Toast.LENGTH_SHORT).show()
+                return@run
+            }
+        }
+
+        response.body()?.msgBody?.run {
+            BusInfoDatabase.clear()
+            for(item in itemList) {
+                BusInfoDatabase.add(item.rtNm, item.arrmsg1, item.arrmsg2, item.adirection, item.busType1)
+            }
+            busInfoAdapter.syncItems()
+            busInfoAdapter.notifyDataSetChanged()
+        }
+
+    }
 }
