@@ -31,10 +31,6 @@ class Item(
     // bus stop
     @field:Element(name = "arsId", required = false)
     var arsId: String = "",
-    @field:Element(name = "posX", required = false)
-    var posX: String = "",
-    @field:Element(name = "posY", required = false)
-    var posY: String = "",
     @field:Element(name = "stId", required = false)
     var stId: String = "",
     @field:Element(name = "stNm", required = false)

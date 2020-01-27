@@ -76,8 +76,7 @@ class BusStopFragment : TabFragment(), Callback<ServiceResult> {
         response.body()?.msgBody?.run {
             BusStopDatabase.clear()
             for(item in itemList) {
-                BusStopDatabase.add(item.arsId.toInt(),item.posX.toFloat(),item.posY.toFloat(),
-                    item.stId.toInt(),item.stNm,item.tmX.toFloat(),item.tmY.toFloat())
+                BusStopDatabase.add(item.arsId.toInt(),item.stId.toInt(),item.stNm,item.tmX.toFloat(),item.tmY.toFloat())
             }
             busStopAdapter.syncItems()
             busStopAdapter.notifyDataSetChanged()
