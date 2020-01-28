@@ -12,7 +12,7 @@ import com.custom.transportation.ui.common.ParserListener
 
 class BusStopActivity : AppCompatActivity(), ParserListener {
 
-    private var busInfoAdapter = BusInfoAdapter()
+    private val busInfoAdapter = BusInfoAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

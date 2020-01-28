@@ -15,12 +15,11 @@ import com.custom.transportation.data.unit.BusStopDatabase
 import com.custom.transportation.ui.common.IntentType
 
 class BusStopAdapter : RecyclerView.Adapter<BusStopAdapter.ViewHolder>() {
-    var items = ArrayList<BusStopData>().apply { syncItems() }
+    private val items = ArrayList<BusStopData>()
 
     fun syncItems() {
-        if(BusStopDatabase.count() > 0) {
-            items = BusStopDatabase.clone()
-        }
+        items.clear()
+        items.addAll(BusStopDatabase.getAll())
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {

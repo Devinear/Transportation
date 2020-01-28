@@ -49,17 +49,13 @@ object BusStopDatabase {
 
     private var database : ArrayList<BusStopData> = ArrayList()
 
-    fun add(data: BusStopData) : Int {
-        database.add(data)
-        return database.lastIndex
-    }
+    fun add(data: BusStopData) = database.add(data)
 
     fun get(index: Int) : BusStopData = database[index]
+
+    fun getAll() = database
 
     fun count() : Int = database.size
 
     fun clear() = database.clear()
-
-    @Suppress("UNCHECKED_CAST")
-    fun clone() = database.clone() as ArrayList<BusStopData>
 }

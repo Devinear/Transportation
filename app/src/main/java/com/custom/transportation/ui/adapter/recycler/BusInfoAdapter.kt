@@ -12,12 +12,11 @@ import com.custom.transportation.data.unit.BusInfoData
 import com.custom.transportation.data.unit.BusInfoDatabase
 
 class BusInfoAdapter : RecyclerView.Adapter<BusInfoAdapter.ViewHolder>() {
-    var items = ArrayList<BusInfoData>().apply {syncItems() }
+    private val items = ArrayList<BusInfoData>()
 
     fun syncItems() {
-        if(BusInfoDatabase.count() > 0) {
-            items = BusInfoDatabase.clone()
-        }
+        items.clear()
+        items.addAll(BusInfoDatabase.getAll())
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {

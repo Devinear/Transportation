@@ -20,7 +20,7 @@ import com.custom.transportation.ui.common.ParserListener
 
 class BusStopFragment : TabFragment(), ParserListener {
 
-    private var busStopAdapter = BusStopAdapter()
+    private val busStopAdapter = BusStopAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view : View = inflater.inflate(R.layout.fragment_busstop, container, false)

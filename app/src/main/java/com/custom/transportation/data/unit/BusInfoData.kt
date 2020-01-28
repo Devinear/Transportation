@@ -42,17 +42,13 @@ object BusInfoDatabase {
 
     private val database : ArrayList<BusInfoData> = ArrayList()
 
-    fun add(data: BusInfoData) : Int {
-        database.add(data)
-        return database.lastIndex
-    }
+    fun add(data: BusInfoData) = database.add(data)
 
     fun get(index: Int) : BusInfoData = database[index]
+
+    fun getAll() = database
 
     fun count() : Int = database.size
 
     fun clear() = database.clear()
-
-    @Suppress("UNCHECKED_CAST")
-    fun clone() = database.clone() as ArrayList<BusInfoData>
 }

@@ -12,11 +12,11 @@ import com.custom.transportation.data.unit.BusInfoData
 import com.custom.transportation.data.unit.BusStopData
 
 class BookmarkAdapter : RecyclerView.Adapter<BookmarkAdapter.ViewHolder>() {
-    var items = ArrayList<Any>()
+    private val items = ArrayList<Any>()
 
     fun syncItems() {
         items.clear()
-        (0 until BookmarkDatabase.count()).forEach { i -> items.add(BookmarkDatabase.get(i)) }
+        items.addAll(BookmarkDatabase.getAll())
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
