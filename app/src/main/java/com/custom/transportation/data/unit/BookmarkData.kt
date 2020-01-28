@@ -1,14 +1,14 @@
 package com.custom.transportation.data.unit
 
-data class BookmarkData constructor(val bookmark: Any)
-
 object BookmarkDatabase {
 
-    private var database : ArrayList<BookmarkData> = ArrayList()
+    private val database : ArrayList<Any> = ArrayList()
 
-    fun add(data: Any) = database.add(BookmarkData(data))
+    fun add(data: BusStopData) = database.add(data)
 
-    fun get(index: Int) : Any = database[index].bookmark
+    fun add(data: BusInfoData) = database.add(data)
+
+    fun get(index: Int) : Any = database[index]
 
     fun getAll() = database
 }
