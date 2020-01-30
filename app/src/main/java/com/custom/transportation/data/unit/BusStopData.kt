@@ -2,7 +2,7 @@ package com.custom.transportation.data.unit
 
 class BusStopData private constructor(val index: Int, val arsId: Int, posX: Float, posY: Float, stId: Int, val stNm: String, tmX: Float, tmY: Float){
 
-    class Builder(val index: Int) {
+    class Builder(private val index: Int) {
 
         private var arsId: Int      = -1
         private var posX : Float    = -1f
@@ -49,35 +49,13 @@ object BusStopDatabase {
 
     private var database : ArrayList<BusStopData> = ArrayList()
 
-    fun add(data: BusStopData) : Int {
-        database.add(data)
-        return database.lastIndex
-    }
+    fun add(data: BusStopData) = database.add(data)
 
     fun get(index: Int) : BusStopData = database[index]
 
+    fun getAll() = database
+
     fun count() : Int = database.size
 
-    fun getIndexByName(start: Int, stNm: String) : Int {
-        for(i in start until database.size) {
-            if(database[i].stNm.contains(stNm, false))
-                return i
-        }
-        return -1
-    }
-
-    // 정류소 번호이지민 String 비교를 통해 이름을 찾는 것과 동일하게 찾도록 한다.
-    fun getIndexByArsId(start: Int, arsId: Int) : Int {
-        for(i in start until database.size) {
-            if(database[i].arsId.toString().contains(arsId.toString(), false))
-                return i
-        }
-        return -1
-    }
-
-    fun clear() {
-        database.clear()
-    }
-
-    fun clone() = database.clone() as ArrayList<BusStopData>
+    fun clear() = database.clear()
 }

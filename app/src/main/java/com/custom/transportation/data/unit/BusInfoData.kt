@@ -1,9 +1,12 @@
 package com.custom.transportation.data.unit
 
-class BusInfoData private constructor(val index: Int, val name: String, val time: String, val direction: String, val before: String, val after: String){
+class BusInfoData private constructor
+    (val index: Int, val name: String, val time: String, val direction: String, val before: String, val after: String)
+{
 
-    class Builder(val index: Int) {
+    class Builder(private val index: Int) {
 
+        // 커스텀 쎄터
         private var name        : String = ""
         private var time        : String = ""
         private var direction   : String = ""
@@ -37,28 +40,15 @@ class BusInfoData private constructor(val index: Int, val name: String, val time
 
 object BusInfoDatabase {
 
-    private var database : ArrayList<BusInfoData> = ArrayList()
+    private val database : ArrayList<BusInfoData> = ArrayList()
 
-    fun add(data: BusInfoData) : Int {
-        database.add(data)
-        return database.lastIndex
-    }
+    fun add(data: BusInfoData) = database.add(data)
 
     fun get(index: Int) : BusInfoData = database[index]
 
+    fun getAll() = database
+
     fun count() : Int = database.size
 
-    fun getIndexByName(start: Int, name: String) : Int {
-        for(i in start until database.size) {
-            if(database[i].name.contains(name, false))
-                return i
-        }
-        return -1
-    }
-
-    fun clear() {
-        database.clear()
-    }
-
-    fun clone() = database.clone() as ArrayList<BusInfoData>
+    fun clear() = database.clear()
 }

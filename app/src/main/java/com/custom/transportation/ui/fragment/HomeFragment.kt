@@ -2,42 +2,44 @@ package com.custom.transportation.ui.fragment
 
 import android.content.Context
 import android.graphics.drawable.Drawable
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.custom.transportation.R
+import com.custom.transportation.ui.adapter.recycler.BookmarkAdapter
 
 class HomeFragment : TabFragment() {
 
+    private val bookmarkAdapter = BookmarkAdapter()
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
-    }
-
-    override fun getTitle(context: Context) : String = context.getString(R.string.title_home)
-
-    override fun getDrawable(context: Context): Drawable? {
-        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP)
-            return context.getDrawable(android.R.drawable.ic_dialog_dialer)
-        else
-            return context.resources.getDrawable(android.R.drawable.ic_dialog_dialer)
-    }
-
-    override val fabClickListener = object : View.OnClickListener {
-        override fun onClick(v: View?) {
-
+        val view : View = inflater.inflate(R.layout.fragment_home, container, false)
+        view.findViewById<RecyclerView>(R.id.recycler).run {
+            layoutManager = LinearLayoutManager(context)
+            bookmarkAdapter.syncItems()
+            adapter = bookmarkAdapter
         }
+        return view
+    }
+
+    override fun getTitle(context: Context) : String = context.getString(R.string.title_star)
+
+    override fun getDrawable(context: Context): Drawable? = context.getDrawable(android.R.drawable.ic_dialog_dialer)
+
+    override val fabClickListener = View.OnClickListener { }
+
+    fun showFragment() {
+        bookmarkAdapter.syncItems()
+        bookmarkAdapter.notifyDataSetChanged()
     }
 
     companion object {
-//      @Volatile private var instance : HomeFragment? = null
         private var instance : HomeFragment? = null
-
-        // Java : Static Method 처럼 사용할 수 있도록 한다.
-        // also : apply와 같이 객체를 반환하며, let과 다르게 내부 결과(it)을 변화시킬 수 없다.
-        @JvmStatic fun getInstance() : HomeFragment = instance ?: synchronized(this) {
-                instance ?: HomeFragment().also { instance = it }
-            }
+        fun getInstance() : HomeFragment = instance ?: synchronized(this) {
+            instance ?: HomeFragment().also { instance = it }
+        }
     }
 }

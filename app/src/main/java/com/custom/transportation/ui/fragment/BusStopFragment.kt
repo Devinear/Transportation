@@ -9,61 +9,56 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.custom.transportation.R
 import com.custom.transportation.data.VolleyHelper
 import com.custom.transportation.data.unit.BusStopDatabase
-import com.custom.transportation.ui.adapter.BusStopAdapter
+import com.custom.transportation.ui.adapter.recycler.BusStopAdapter
 import com.custom.transportation.ui.common.ParserListener
 
 class BusStopFragment : TabFragment(), ParserListener {
 
-    private var busStopAdapter = BusStopAdapter()
+    private val busStopAdapter = BusStopAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
         val view : View = inflater.inflate(R.layout.fragment_busstop, container, false)
-        val recycler = view.findViewById<RecyclerView>(R.id.recycler)
-
-        recycler.layoutManager = LinearLayoutManager(context)
-        recycler.adapter = busStopAdapter
-
+        view.findViewById<RecyclerView>(R.id.recycler).run {
+            layoutManager = LinearLayoutManager(context)
+            adapter = busStopAdapter
+        }
         return view
     }
 
-    override fun getTitle(context: Context) : String = context.getString(R.string.busStop)
+    override fun getTitle(context: Context) : String = context.getString(R.string.bus_stop)
 
-    override val fabClickListener: View.OnClickListener = object : View.OnClickListener {
-        override fun onClick(v: View?) {
-            val builder = AlertDialog.Builder(context)
-            builder.setTitle("정류장 명칭 검색")
+    override val fabClickListener: View.OnClickListener = View.OnClickListener {
+        AlertDialog.Builder(context).apply {
+            setTitle(context.getString(R.string.search_bus_stop))
             val edit = EditText(context)
-            builder.setView(edit)
-            builder.setPositiveButton(context!!.getString(android.R.string.ok), { dialog: DialogInterface?, which:Int ->
+            setView(edit)
+            setPositiveButton(context!!.getString(android.R.string.ok)) { dialog: DialogInterface?, which: Int ->
                 BusStopDatabase.clear()
-
-                var helper = VolleyHelper.getInstance(context!!)
-                helper.requestByName(edit.text.toString(), this@BusStopFragment)
-            })
-//          builder.setNegativeButton(context!!.getString(android.R.string.cancel), {dialog: DialogInterface?, which: Int -> })
-            builder.create().apply { show() }
-        }
+                VolleyHelper.getInstance(context!!)
+                    .requestByName(edit.text.toString(), this@BusStopFragment)
+            }
+        }.create().run { show() }
     }
 
     override fun getDrawable(context: Context): Drawable? = null
 
     companion object {
         private var instance : BusStopFragment? = null
-        @JvmStatic fun getInstance() : BusStopFragment = instance ?: synchronized(this) {
+        fun getInstance() : BusStopFragment = instance ?: synchronized(this) {
             instance ?: BusStopFragment().also { instance = it }
         }
     }
 
-    override fun parserFinish(success: Boolean) {
-        if(success) {
-            busStopAdapter.syncItems()
-            busStopAdapter.notifyDataSetChanged()
-        }
+    override fun onParserSuccess() {
+        busStopAdapter.syncItems()
+        busStopAdapter.notifyDataSetChanged()
     }
+
+    override fun onParserFail() = Toast.makeText(context, "PARSER FAIL!", Toast.LENGTH_SHORT).show()
 }
