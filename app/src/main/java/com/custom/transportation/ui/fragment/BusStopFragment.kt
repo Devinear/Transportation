@@ -13,12 +13,16 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.custom.transportation.R
-import com.custom.transportation.data.VolleyHelper
+import com.custom.transportation.data.retrofit.RetrofitHelper
+import com.custom.transportation.data.retrofit.ServiceResult
 import com.custom.transportation.data.unit.BusStopDatabase
 import com.custom.transportation.ui.adapter.recycler.BusStopAdapter
-import com.custom.transportation.ui.common.ParserListener
+import com.custom.transportation.ui.common.Common
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-class BusStopFragment : TabFragment(), ParserListener {
+class BusStopFragment : TabFragment(), Callback<ServiceResult> {
 
     private val busStopAdapter = BusStopAdapter()
 
@@ -40,8 +44,9 @@ class BusStopFragment : TabFragment(), ParserListener {
             setView(edit)
             setPositiveButton(context!!.getString(android.R.string.ok)) { dialog: DialogInterface?, which: Int ->
                 BusStopDatabase.clear()
-                VolleyHelper.getInstance(context!!)
-                    .requestByName(edit.text.toString(), this@BusStopFragment)
+                RetrofitHelper.getRetrofit(Common.baseUrl)
+                    .getStationByName(Common.ServiceKey, edit.text.toString())
+                    .enqueue(this@BusStopFragment)
             }
         }.create().run { show() }
     }
@@ -55,10 +60,26 @@ class BusStopFragment : TabFragment(), ParserListener {
         }
     }
 
-    override fun onParserSuccess() {
-        busStopAdapter.syncItems()
-        busStopAdapter.notifyDataSetChanged()
-    }
+    override fun onFailure(call: Call<ServiceResult>, t: Throwable)
+            = Toast.makeText(context, "Failure:["+t.message+"]", Toast.LENGTH_SHORT).show()
 
-    override fun onParserFail() = Toast.makeText(context, "PARSER FAIL!", Toast.LENGTH_SHORT).show()
+    override fun onResponse(call: Call<ServiceResult>, response: Response<ServiceResult>) {
+        if(!response.isSuccessful) return
+
+        response.body()?.msgHeader?.run {
+            if(headerCd.toInt() != 0) {
+                Toast.makeText(context, headerMsg, Toast.LENGTH_SHORT).show()
+                return@run
+            }
+        }
+
+        response.body()?.msgBody?.run {
+            BusStopDatabase.clear()
+            for(item in itemList) {
+                BusStopDatabase.add(item.arsId.toInt(),item.stId.toInt(),item.stNm,item.tmX.toFloat(),item.tmY.toFloat())
+            }
+            busStopAdapter.syncItems()
+            busStopAdapter.notifyDataSetChanged()
+        }
+    }
 }
