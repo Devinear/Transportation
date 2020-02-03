@@ -9,17 +9,19 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.custom.transportation.R
+import com.custom.transportation.presenter.BookmarkPresenter
 import com.custom.transportation.ui.adapter.recycler.BookmarkAdapter
 
 class HomeFragment : TabFragment() {
 
     private val bookmarkAdapter = BookmarkAdapter()
+    private val presenter = BookmarkPresenter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view : View = inflater.inflate(R.layout.fragment_home, container, false)
         view.findViewById<RecyclerView>(R.id.recycler).run {
             layoutManager = LinearLayoutManager(context)
-            bookmarkAdapter.syncItems()
+            bookmarkAdapter.addItems(presenter.getBookmarkData())
             adapter = bookmarkAdapter
         }
         return view
@@ -31,10 +33,7 @@ class HomeFragment : TabFragment() {
 
     override val fabClickListener = View.OnClickListener { }
 
-    fun showFragment() {
-        bookmarkAdapter.syncItems()
-        bookmarkAdapter.notifyDataSetChanged()
-    }
+    fun showFragment() = bookmarkAdapter.addItems(presenter.getBookmarkData())
 
     companion object {
         private var instance : HomeFragment? = null
