@@ -12,7 +12,8 @@ object BusInfoDatabase {
 
     private val database : ArrayList<BusInfoData> = ArrayList()
 
-    fun add(data: BusInfoData) = database.add(data)
+    fun add(name: String, time: String, direction: String, before: String, after: String)
+            = database.add(BusInfoData.makeData(name, time, direction, before, after))
 
     fun get(index: Int) : BusInfoData = database[index]
 

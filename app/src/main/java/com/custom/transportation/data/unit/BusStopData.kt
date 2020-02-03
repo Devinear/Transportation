@@ -12,7 +12,8 @@ object BusStopDatabase {
 
     private val database : ArrayList<BusStopData> = ArrayList()
 
-    fun add(data: BusStopData) = database.add(data)
+    fun add(arsId: Int, stId: Int, stNm: String, tmX: Float, tmY: Float)
+            = database.add(BusStopData.makeData(arsId, stId, stNm, tmX, tmY))
 
     fun get(index: Int) : BusStopData = database[index]
 
