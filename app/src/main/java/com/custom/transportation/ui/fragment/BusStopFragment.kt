@@ -24,7 +24,7 @@ import retrofit2.Response
 
 class BusStopFragment : TabFragment(), Callback<ServiceResult> {
 
-    private var busStopAdapter = BusStopAdapter()
+    private val busStopAdapter = BusStopAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view : View = inflater.inflate(R.layout.fragment_busstop, container, false)

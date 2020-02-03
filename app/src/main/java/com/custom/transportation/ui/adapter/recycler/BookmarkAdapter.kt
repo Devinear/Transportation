@@ -6,17 +6,16 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.custom.transportation.R
-import com.custom.transportation.data.unit.BookmarkData
 import com.custom.transportation.data.unit.BookmarkDatabase
 import com.custom.transportation.data.unit.BusInfoData
 import com.custom.transportation.data.unit.BusStopData
 
 class BookmarkAdapter : RecyclerView.Adapter<BookmarkAdapter.ViewHolder>() {
-    var items = ArrayList<Any>()
+    private val items = ArrayList<Any>()
 
     fun syncItems() {
         items.clear()
-        (0 until BookmarkDatabase.count()).forEach { i -> items.add(BookmarkDatabase.get(i)) }
+        items.addAll(BookmarkDatabase.getAll())
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -30,19 +29,22 @@ class BookmarkAdapter : RecyclerView.Adapter<BookmarkAdapter.ViewHolder>() {
     override fun getItemCount(): Int  = items.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = items[position]
-        var title = ""
-        var sub   = ""
-        if(item is BusStopData) {
-            title = item.stNm
-            sub   = item.arsId.toString()
+        items[position].let {
+            when(it) {
+                is BusStopData -> {
+                    holder.tvTitle.text = it.stNm
+                    holder.tvSub.text = it.arsId.toString()
+                }
+                is BusInfoData -> {
+                    holder.tvTitle.text = it.name
+                    holder.tvSub.text = it.direction
+                }
+                else -> {
+                    holder.tvTitle.text = ""
+                    holder.tvSub.text = ""
+                }
+            }
         }
-        else if(item is BusInfoData) {
-            title = item.name
-            sub   = item.direction
-        }
-        holder.tvTitle.text = title
-        holder.tvSub.text   = sub
     }
 
 }

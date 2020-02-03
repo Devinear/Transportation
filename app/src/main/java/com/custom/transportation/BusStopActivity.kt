@@ -17,7 +17,7 @@ import retrofit2.Response
 
 class BusStopActivity : AppCompatActivity(), Callback<ServiceResult> {
 
-    private var busInfoAdapter = BusInfoAdapter()
+    private val busInfoAdapter = BusInfoAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
