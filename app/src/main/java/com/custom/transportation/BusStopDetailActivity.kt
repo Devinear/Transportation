@@ -5,19 +5,17 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.custom.transportation.data.retrofit.RetrofitHelper
-import com.custom.transportation.data.retrofit.ServiceResult
-import com.custom.transportation.data.unit.BusInfoDatabase
+import com.custom.transportation.data.unit.BookmarkDatabase
+import com.custom.transportation.data.unit.BusInfoData
+import com.custom.transportation.presenter.BusStopDetail
+import com.custom.transportation.presenter.BusStopDetailPresenter
 import com.custom.transportation.ui.adapter.recycler.BusInfoAdapter
-import com.custom.transportation.ui.common.Common
 import com.custom.transportation.ui.common.IntentType
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
-class BusStopDetailActivity : AppCompatActivity(), Callback<ServiceResult> {
+class BusStopDetailActivity : AppCompatActivity(), BusStopDetail.View {
 
-    private val busInfoAdapter = BusInfoAdapter()
+    private val busInfoAdapter = BusInfoAdapter(this)
+    private val presenter: BusStopDetail.Presenter = BusStopDetailPresenter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,34 +28,17 @@ class BusStopDetailActivity : AppCompatActivity(), Callback<ServiceResult> {
 
         val arsId = intent.getIntExtra(IntentType.ArsID.tpye, -1)
         if(arsId != -1) {
-            RetrofitHelper.getRetrofit(Common.baseUrl)
-                .getStationByUid(Common.ServiceKey, arsId.toString())
-                .enqueue(this@BusStopDetailActivity)
+            presenter.searchArsId(arsId)
         }
     }
 
-    override fun onFailure(call: Call<ServiceResult>, t: Throwable)
-            = Toast.makeText(baseContext, "Failure:["+t.message+"]", Toast.LENGTH_SHORT).show()
+    override fun searchSuccess(items: ArrayList<BusInfoData>) = busInfoAdapter.addItems(items)
 
-    override fun onResponse(call: Call<ServiceResult>, response: Response<ServiceResult>) {
+    override fun searchFailure(msg: String)
+            = Toast.makeText(this, "Failure:${msg}", Toast.LENGTH_SHORT).show()
 
-        if(!response.isSuccessful) return
-
-        response.body()?.msgHeader?.run {
-            if(headerCd.toInt() != 0) {
-                Toast.makeText(baseContext, headerMsg, Toast.LENGTH_SHORT).show()
-                return@run
-            }
-        }
-
-        response.body()?.msgBody?.run {
-            BusInfoDatabase.clear()
-            for(item in itemList) {
-                BusInfoDatabase.add(item.rtNm, item.arrmsg1, item.arrmsg2, item.adirection, item.busType1)
-            }
-            busInfoAdapter.syncItems()
-            busInfoAdapter.notifyDataSetChanged()
-        }
-
+    fun onAddStar(data: BusInfoData) {
+        presenter.addBookmark(data)
+        Toast.makeText(this, this.getText(R.string.add_bookmark), Toast.LENGTH_SHORT).show()
     }
 }

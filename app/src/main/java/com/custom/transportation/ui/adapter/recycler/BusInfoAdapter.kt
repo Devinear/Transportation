@@ -4,26 +4,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.custom.transportation.BusStopDetailActivity
 import com.custom.transportation.R
-import com.custom.transportation.data.unit.BookmarkDatabase
 import com.custom.transportation.data.unit.BusInfoData
-import com.custom.transportation.data.unit.BusInfoDatabase
 
-class BusInfoAdapter : RecyclerView.Adapter<BusInfoAdapter.ViewHolder>() {
+class BusInfoAdapter(val activity: BusStopDetailActivity) : RecyclerView.Adapter<BusInfoAdapter.ViewHolder>() {
     private val items = ArrayList<BusInfoData>()
 
-    fun syncItems() {
-        items.clear()
-        items.addAll(BusInfoDatabase.getAll())
+    fun addItems(items : ArrayList<BusInfoData>) {
+        this.items.clear()
+        this.items.addAll(items)
+        notifyDataSetChanged()
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         init {
-            view.setOnLongClickListener {v ->
-                BookmarkDatabase.add(items[adapterPosition])
-                Toast.makeText(v.context, v.context.getText(R.string.add_bookmark), Toast.LENGTH_SHORT).show()
+            view.setOnLongClickListener {
+                activity.onAddStar(items[adapterPosition])
                 true
             }
         }
@@ -46,5 +44,4 @@ class BusInfoAdapter : RecyclerView.Adapter<BusInfoAdapter.ViewHolder>() {
         holder.tvBefore.text    = items[position].before
         holder.tvAfter.text     = items[position].after
     }
-
 }
