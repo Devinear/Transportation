@@ -50,23 +50,16 @@ class BusStopFragment : TabFragment(), BusStop.View {
         }.create().run { show() }
     }
 
-    override fun searchSuccess(items : ArrayList<BusStopData>) {
-        busStopAdapter.addItems(items)
-        busStopAdapter.notifyDataSetChanged()
-    }
+    override fun searchSuccess(items : ArrayList<BusStopData>) = busStopAdapter.addItems(items)
 
     override fun searchFailure(msg: String)
             = Toast.makeText(context, "Failure:${msg}", Toast.LENGTH_SHORT).show()
 
-    fun onItemClick(arsId: Int) {
-        startActivity(Intent(context, BusStopDetailActivity::class.java).apply {
-            putExtra(IntentType.ArsID.tpye, arsId)
-        })
-    }
+    fun onItemClick(arsId: Int)
+            = startActivity(Intent(context, BusStopDetailActivity::class.java)
+        .apply { putExtra(IntentType.ArsID.tpye, arsId) })
 
-    fun onItemLongClick(data: BusStopData) {
-        presenter.addBookmark(data)
-    }
+    fun onItemLongClick(data: BusStopData) = presenter.addBookmark(data)
 
     companion object {
         private var instance : BusStopFragment? = null

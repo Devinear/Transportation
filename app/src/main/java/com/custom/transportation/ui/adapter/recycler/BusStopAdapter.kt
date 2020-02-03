@@ -15,6 +15,7 @@ class BusStopAdapter(val fragment: BusStopFragment) : RecyclerView.Adapter<BusSt
     fun addItems(items : ArrayList<BusStopData>) {
         this.items.clear()
         this.items.addAll(items)
+        notifyDataSetChanged()
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {

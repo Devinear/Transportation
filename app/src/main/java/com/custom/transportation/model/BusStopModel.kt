@@ -13,22 +13,17 @@ import retrofit2.Response
 
 class BusStopModel(private val presenter: BusStopPresenter) : Callback<ServiceResult> {
 
-    fun searchWord(search: String) {
-        BusStopDatabase.clear()
-        RetrofitHelper.getRetrofit(Common.baseUrl)
+    fun searchWord(search: String)
+            = RetrofitHelper.getRetrofit(Common.baseUrl)
             .getStationByName(Common.ServiceKey, search)
             .enqueue(this@BusStopModel)
-    }
 
-    fun addBookmark(data: BusStopData) {
-        BookmarkDatabase.add(data)
-    }
+    fun addBookmark(data: BusStopData) { BookmarkDatabase.add(data) }
 
     fun getBusStopData(): ArrayList<BusStopData> = BusStopDatabase.getAll()
 
-    override fun onFailure(call: Call<ServiceResult>, t: Throwable) {
-        presenter.searchFailure(t.message?:"NONE")
-    }
+    override fun onFailure(call: Call<ServiceResult>, t: Throwable)
+            = presenter.searchFailure(t.message?:"NONE")
 
     override fun onResponse(call: Call<ServiceResult>, response: Response<ServiceResult>) {
         if(!response.isSuccessful) {

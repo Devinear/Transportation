@@ -21,20 +21,14 @@ class BusStopPresenter(val view: BusStop.View) : BusStop.Presenter {
 
     private val model = BusStopModel(this)
 
-    override fun searchWord(search: String) {
-        model.searchWord(search)
-    }
+    override fun searchWord(search: String) = model.searchWord(search)
 
-    override fun addBookmark(data: BusStopData) {
-        model.addBookmark(data)
-    }
+    override fun addBookmark(data: BusStopData) = model.addBookmark(data)
 
     override fun getBusStopData(): ArrayList<BusStopData> = model.getBusStopData()
 
     /* Search CallBack */
     fun searchFailure(msg: String) = view.searchFailure(msg)
 
-    fun searchSuccess(items : ArrayList<BusStopData>) {
-        view.searchSuccess(items)
-    }
+    fun searchSuccess(items : ArrayList<BusStopData>) = view.searchSuccess(items)
 }
