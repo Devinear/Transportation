@@ -7,24 +7,23 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.custom.transportation.R
 import com.custom.transportation.data.unit.BusStopData
-import com.custom.transportation.data.unit.BusStopDatabase
 import com.custom.transportation.ui.fragment.BusStopFragment
 
 class BusStopAdapter(val fragment: BusStopFragment) : RecyclerView.Adapter<BusStopAdapter.ViewHolder>() {
     private val items = ArrayList<BusStopData>()
 
-    fun syncItems() {
-        items.clear()
-        items.addAll(BusStopDatabase.getAll())
+    fun addItems(items : ArrayList<BusStopData>) {
+        this.items.clear()
+        this.items.addAll(items)
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         init {
             view.setOnClickListener{
-                fragment.onItemClick{ items[adapterPosition].arsId }
+                fragment.onItemClick(items[adapterPosition].arsId)
             }
             view.setOnLongClickListener {
-                fragment.onItemLongClick{ items[adapterPosition] }
+                fragment.onItemLongClick(items[adapterPosition])
                 return@setOnLongClickListener true
             }
         }
