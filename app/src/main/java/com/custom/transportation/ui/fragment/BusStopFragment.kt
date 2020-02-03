@@ -3,6 +3,7 @@ package com.custom.transportation.ui.fragment
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,19 +13,23 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.custom.transportation.BusStopActivity
 import com.custom.transportation.R
 import com.custom.transportation.data.retrofit.RetrofitHelper
 import com.custom.transportation.data.retrofit.ServiceResult
+import com.custom.transportation.data.unit.BookmarkDatabase
+import com.custom.transportation.data.unit.BusStopData
 import com.custom.transportation.data.unit.BusStopDatabase
 import com.custom.transportation.ui.adapter.recycler.BusStopAdapter
 import com.custom.transportation.ui.common.Common
+import com.custom.transportation.ui.common.IntentType
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class BusStopFragment : TabFragment(), Callback<ServiceResult> {
 
-    private val busStopAdapter = BusStopAdapter()
+    private val busStopAdapter = BusStopAdapter(this)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view : View = inflater.inflate(R.layout.fragment_busstop, container, false)
@@ -81,5 +86,17 @@ class BusStopFragment : TabFragment(), Callback<ServiceResult> {
             busStopAdapter.syncItems()
             busStopAdapter.notifyDataSetChanged()
         }
+    }
+
+    @Suppress("CAST_NEVER_SUCCEEDS")
+    fun onItemClick(arsId: () -> Int) {
+        startActivity(Intent(context, BusStopActivity::class.java).apply {
+            putExtra(IntentType.ArsID.tpye, arsId as Int)
+        })
+    }
+
+    @Suppress("CAST_NEVER_SUCCEEDS")
+    fun onItemLongClick(data: () -> BusStopData) {
+        BookmarkDatabase.add(data as BusStopData)
     }
 }
