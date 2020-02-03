@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".BusStopActivity"
+            android:name=".BusStopDetailActivity"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 

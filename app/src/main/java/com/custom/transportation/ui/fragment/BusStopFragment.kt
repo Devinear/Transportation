@@ -13,7 +13,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.custom.transportation.BusStopActivity
+import com.custom.transportation.BusStopDetailActivity
 import com.custom.transportation.R
 import com.custom.transportation.data.retrofit.RetrofitHelper
 import com.custom.transportation.data.retrofit.ServiceResult
@@ -90,7 +90,7 @@ class BusStopFragment : TabFragment(), Callback<ServiceResult> {
 
     @Suppress("CAST_NEVER_SUCCEEDS")
     fun onItemClick(arsId: () -> Int) {
-        startActivity(Intent(context, BusStopActivity::class.java).apply {
+        startActivity(Intent(context, BusStopDetailActivity::class.java).apply {
             putExtra(IntentType.ArsID.tpye, arsId as Int)
         })
     }

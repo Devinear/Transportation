@@ -15,7 +15,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class BusStopActivity : AppCompatActivity(), Callback<ServiceResult> {
+class BusStopDetailActivity : AppCompatActivity(), Callback<ServiceResult> {
 
     private val busInfoAdapter = BusInfoAdapter()
 
@@ -32,7 +32,7 @@ class BusStopActivity : AppCompatActivity(), Callback<ServiceResult> {
         if(arsId != -1) {
             RetrofitHelper.getRetrofit(Common.baseUrl)
                 .getStationByUid(Common.ServiceKey, arsId.toString())
-                .enqueue(this@BusStopActivity)
+                .enqueue(this@BusStopDetailActivity)
         }
     }
 
