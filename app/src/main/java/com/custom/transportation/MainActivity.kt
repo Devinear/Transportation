@@ -10,6 +10,7 @@ import com.google.android.material.tabs.TabLayout
 
 class MainActivity : AppCompatActivity() {
 
+    lateinit var fab: FloatingActionButton
     val pagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
     var curTabType = MainTab.HOME
 
@@ -20,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         val viewPager: ViewPager = findViewById(R.id.view_pager)
         viewPager.adapter = pagerAdapter
 
+        fab = findViewById(R.id.fab)
         findViewById<TabLayout>(R.id.tabs)?.run {
             addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -30,10 +32,8 @@ class MainActivity : AppCompatActivity() {
                         MainTab.SUBWAY.pos -> MainTab.SUBWAY
                         else -> MainTab.HOME
                     }
-                    findViewById<FloatingActionButton>(R.id.fab).let {
-                        it.setImageDrawable(pagerAdapter.getItem(curTabType.pos).getDrawable(applicationContext))
-                        it.setOnClickListener(pagerAdapter.getItem(curTabType.pos).fabClickListener)
-                    }
+                    fab.setImageDrawable(pagerAdapter.getItem(curTabType.pos).getDrawable(applicationContext))
+                    fab.setOnClickListener(pagerAdapter.getItem(curTabType.pos).fabClickListener)
                 }
                 override fun onTabReselected(tab: TabLayout.Tab?) = Unit
                 override fun onTabUnselected(tab: TabLayout.Tab?) = Unit
