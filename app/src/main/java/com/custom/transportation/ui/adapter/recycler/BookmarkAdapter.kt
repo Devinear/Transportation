@@ -13,8 +13,10 @@ class BookmarkAdapter : RecyclerView.Adapter<BookmarkAdapter.ViewHolder>() {
     private val items = mutableListOf<Any>()
 
     fun addItems(items : List<Any>) {
-        this.items.clear()
-        this.items.addAll(items)
+        with(this.items) {
+            clear()
+            addAll(items)
+        }
         notifyDataSetChanged()
     }
 
@@ -30,18 +32,20 @@ class BookmarkAdapter : RecyclerView.Adapter<BookmarkAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         items[position].let {
-            when(it) {
-                is BusStopData -> {
-                    holder.tvTitle.text = it.stNm
-                    holder.tvSub.text = it.arsId.toString()
-                }
-                is BusInfoData -> {
-                    holder.tvTitle.text = it.name
-                    holder.tvSub.text = it.direction
-                }
-                else -> {
-                    holder.tvTitle.text = ""
-                    holder.tvSub.text = ""
+            with(holder) {
+                when(it) {
+                    is BusStopData -> {
+                        tvTitle.text = it.stNm
+                        tvSub.text = it.arsId.toString()
+                    }
+                    is BusInfoData -> {
+                        tvTitle.text = it.name
+                        tvSub.text = it.direction
+                    }
+                    else -> {
+                        tvTitle.text = ""
+                        tvSub.text = ""
+                    }
                 }
             }
         }

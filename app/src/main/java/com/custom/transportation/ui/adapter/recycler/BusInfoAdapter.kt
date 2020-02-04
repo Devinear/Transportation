@@ -14,8 +14,10 @@ class BusInfoAdapter(val presenter: BusStopDetail.Presenter) : RecyclerView.Adap
     private val items = mutableListOf<BusInfoData>()
 
     fun addItems(items : List<BusInfoData>) {
-        this.items.clear()
-        this.items.addAll(items)
+        with(this.items) {
+            clear()
+            addAll(items)
+        }
         notifyDataSetChanged()
     }
 
@@ -40,10 +42,12 @@ class BusInfoAdapter(val presenter: BusStopDetail.Presenter) : RecyclerView.Adap
     override fun getItemCount(): Int  = items.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.tvName.text      = items[position].name
-        holder.tvTime.text      = items[position].time
-        holder.tvDirection.text = items[position].direction
-        holder.tvBefore.text    = items[position].before
-        holder.tvAfter.text     = items[position].after
+        with(holder) {
+            tvName.text      = items[position].name
+            tvTime.text      = items[position].time
+            tvDirection.text = items[position].direction
+            tvBefore.text    = items[position].before
+            tvAfter.text     = items[position].after
+        }
     }
 }

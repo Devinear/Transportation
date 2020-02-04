@@ -16,8 +16,10 @@ class BusStopAdapter(val presenter: BusStop.Presenter) : RecyclerView.Adapter<Bu
     private val items = mutableListOf<BusStopData>()
 
     fun addItems(items : List<BusStopData>) {
-        this.items.clear()
-        this.items.addAll(items)
+        with(this.items) {
+            clear()
+            addAll(items)
+        }
         notifyDataSetChanged()
     }
 
@@ -43,8 +45,10 @@ class BusStopAdapter(val presenter: BusStop.Presenter) : RecyclerView.Adapter<Bu
     override fun getItemCount(): Int  = items.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.tvLocation.text = items[position].stNm
-        holder.tvNumber.text = items[position].arsId.toString()
+        with(holder) {
+            tvLocation.text = items[position].stNm
+            tvNumber.text = items[position].arsId.toString()
+        }
     }
 
 }
