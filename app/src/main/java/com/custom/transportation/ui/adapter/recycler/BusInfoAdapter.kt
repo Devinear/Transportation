@@ -5,11 +5,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.custom.transportation.BusStopDetailActivity
 import com.custom.transportation.R
 import com.custom.transportation.data.unit.BusInfoData
+import com.custom.transportation.presenter.BusStopDetail
+import com.google.android.material.snackbar.Snackbar
 
-class BusInfoAdapter(val activity: BusStopDetailActivity) : RecyclerView.Adapter<BusInfoAdapter.ViewHolder>() {
+class BusInfoAdapter(val presenter: BusStopDetail.Presenter) : RecyclerView.Adapter<BusInfoAdapter.ViewHolder>() {
     private val items = mutableListOf<BusInfoData>()
 
     fun addItems(items : List<BusInfoData>) {
@@ -21,7 +22,8 @@ class BusInfoAdapter(val activity: BusStopDetailActivity) : RecyclerView.Adapter
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         init {
             view.setOnLongClickListener {
-                activity.onAddStar(items[adapterPosition])
+                presenter.addBookmark(items[adapterPosition])
+                Snackbar.make(it, it.context.getText(R.string.add_bookmark), Snackbar.LENGTH_SHORT).show()
                 true
             }
         }

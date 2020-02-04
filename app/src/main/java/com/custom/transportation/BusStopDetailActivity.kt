@@ -14,8 +14,8 @@ import com.custom.transportation.ui.common.IntentType
 
 class BusStopDetailActivity : AppCompatActivity(), BusStopDetail.View {
 
-    private val busInfoAdapter = BusInfoAdapter(this)
     private val presenter: BusStopDetail.Presenter = BusStopDetailPresenter(this)
+    private val busInfoAdapter = BusInfoAdapter(presenter)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,9 +36,4 @@ class BusStopDetailActivity : AppCompatActivity(), BusStopDetail.View {
 
     override fun searchFailure(msg: String)
             = Toast.makeText(this, "Failure:${msg}", Toast.LENGTH_SHORT).show()
-
-    fun onAddStar(data: BusInfoData) {
-        presenter.addBookmark(data)
-        Toast.makeText(this, this.getText(R.string.add_bookmark), Toast.LENGTH_SHORT).show()
-    }
 }

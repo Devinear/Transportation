@@ -1,15 +1,18 @@
 package com.custom.transportation.ui.adapter.recycler
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.custom.transportation.BusStopDetailActivity
 import com.custom.transportation.R
 import com.custom.transportation.data.unit.BusStopData
-import com.custom.transportation.ui.fragment.BusStopFragment
+import com.custom.transportation.presenter.BusStop
+import com.custom.transportation.ui.common.IntentType
 
-class BusStopAdapter(val fragment: BusStopFragment) : RecyclerView.Adapter<BusStopAdapter.ViewHolder>() {
+class BusStopAdapter(val presenter: BusStop.Presenter) : RecyclerView.Adapter<BusStopAdapter.ViewHolder>() {
     private val items = mutableListOf<BusStopData>()
 
     fun addItems(items : List<BusStopData>) {
@@ -21,10 +24,12 @@ class BusStopAdapter(val fragment: BusStopFragment) : RecyclerView.Adapter<BusSt
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         init {
             view.setOnClickListener{
-                fragment.onItemClick(items[adapterPosition].arsId)
+                it.context.startActivity(
+                    Intent(it.context, BusStopDetailActivity::class.java)
+                    .apply { putExtra(IntentType.ArsID.tpye, items[adapterPosition].arsId) })
             }
             view.setOnLongClickListener {
-                fragment.onItemLongClick(items[adapterPosition])
+                presenter.addBookmark(items[adapterPosition])
                 return@setOnLongClickListener true
             }
         }
