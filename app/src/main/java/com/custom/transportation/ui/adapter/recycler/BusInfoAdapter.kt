@@ -10,9 +10,9 @@ import com.custom.transportation.R
 import com.custom.transportation.data.unit.BusInfoData
 
 class BusInfoAdapter(val activity: BusStopDetailActivity) : RecyclerView.Adapter<BusInfoAdapter.ViewHolder>() {
-    private val items = ArrayList<BusInfoData>()
+    private val items = mutableListOf<BusInfoData>()
 
-    fun addItems(items : ArrayList<BusInfoData>) {
+    fun addItems(items : List<BusInfoData>) {
         this.items.clear()
         this.items.addAll(items)
         notifyDataSetChanged()

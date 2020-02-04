@@ -32,7 +32,7 @@ class BusStopDetailActivity : AppCompatActivity(), BusStopDetail.View {
         }
     }
 
-    override fun searchSuccess(items: ArrayList<BusInfoData>) = busInfoAdapter.addItems(items)
+    override fun searchSuccess(items: List<BusInfoData>) = busInfoAdapter.addItems(items)
 
     override fun searchFailure(msg: String)
             = Toast.makeText(this, "Failure:${msg}", Toast.LENGTH_SHORT).show()

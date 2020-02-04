@@ -10,9 +10,9 @@ import com.custom.transportation.data.unit.BusInfoData
 import com.custom.transportation.data.unit.BusStopData
 
 class BookmarkAdapter : RecyclerView.Adapter<BookmarkAdapter.ViewHolder>() {
-    private val items = ArrayList<Any>()
+    private val items = mutableListOf<Any>()
 
-    fun addItems(items : ArrayList<Any>) {
+    fun addItems(items : List<Any>) {
         this.items.clear()
         this.items.addAll(items)
         notifyDataSetChanged()

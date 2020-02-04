@@ -50,7 +50,7 @@ class BusStopFragment : TabFragment(), BusStop.View {
         }.create().run { show() }
     }
 
-    override fun searchSuccess(items : ArrayList<BusStopData>) = busStopAdapter.addItems(items)
+    override fun searchSuccess(items : List<BusStopData>) = busStopAdapter.addItems(items)
 
     override fun searchFailure(msg: String)
             = Toast.makeText(context, "Failure:${msg}", Toast.LENGTH_SHORT).show()

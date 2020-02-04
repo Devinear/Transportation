@@ -5,7 +5,7 @@ import com.custom.transportation.model.BookmarkModel
 interface Bookmark {
 
     interface Presenter {
-        fun getBookmarkData() : ArrayList<Any>
+        fun getBookmarkData() : List<Any>
     }
 }
 
@@ -13,5 +13,5 @@ class BookmarkPresenter : Bookmark.Presenter {
 
     private val model = BookmarkModel()
 
-    override fun getBookmarkData(): ArrayList<Any> = model.getBookmarkData()
+    override fun getBookmarkData(): List<Any> = model.getBookmarkData()
 }

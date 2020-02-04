@@ -10,9 +10,9 @@ import com.custom.transportation.data.unit.BusStopData
 import com.custom.transportation.ui.fragment.BusStopFragment
 
 class BusStopAdapter(val fragment: BusStopFragment) : RecyclerView.Adapter<BusStopAdapter.ViewHolder>() {
-    private val items = ArrayList<BusStopData>()
+    private val items = mutableListOf<BusStopData>()
 
-    fun addItems(items : ArrayList<BusStopData>) {
+    fun addItems(items : List<BusStopData>) {
         this.items.clear()
         this.items.addAll(items)
         notifyDataSetChanged()

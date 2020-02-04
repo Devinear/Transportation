@@ -20,7 +20,7 @@ class BusStopModel(private val presenter: BusStopPresenter) : Callback<ServiceRe
 
     fun addBookmark(data: BusStopData) { BookmarkDatabase.add(data) }
 
-    fun getBusStopData(): ArrayList<BusStopData> = BusStopDatabase.getAll()
+    fun getBusStopData(): List<BusStopData> = BusStopDatabase.getAll()
 
     override fun onFailure(call: Call<ServiceResult>, t: Throwable)
             = presenter.searchFailure(t.message?:"NONE")
