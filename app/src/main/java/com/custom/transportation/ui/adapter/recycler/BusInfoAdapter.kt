@@ -4,26 +4,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.custom.transportation.R
-import com.custom.transportation.data.unit.BookmarkDatabase
 import com.custom.transportation.data.unit.BusInfoData
-import com.custom.transportation.data.unit.BusInfoDatabase
+import com.custom.transportation.presenter.BusStopDetail
+import com.google.android.material.snackbar.Snackbar
 
-class BusInfoAdapter : RecyclerView.Adapter<BusInfoAdapter.ViewHolder>() {
-    private val items = ArrayList<BusInfoData>()
+class BusInfoAdapter(val presenter: BusStopDetail.Presenter) : RecyclerView.Adapter<BusInfoAdapter.ViewHolder>() {
+    private val items = mutableListOf<BusInfoData>()
 
-    fun syncItems() {
-        items.clear()
-        items.addAll(BusInfoDatabase.getAll())
+    fun addItems(items : List<BusInfoData>) {
+        with(this.items) {
+            clear()
+            addAll(items)
+        }
+        notifyDataSetChanged()
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         init {
-            view.setOnLongClickListener {v ->
-                BookmarkDatabase.add(items[adapterPosition])
-                Toast.makeText(v.context, v.context.getText(R.string.add_bookmark), Toast.LENGTH_SHORT).show()
+            view.setOnLongClickListener {
+                presenter.addBookmark(items[adapterPosition])
+                Snackbar.make(it, it.context.getText(R.string.add_bookmark), Snackbar.LENGTH_SHORT).show()
                 true
             }
         }
@@ -40,11 +42,12 @@ class BusInfoAdapter : RecyclerView.Adapter<BusInfoAdapter.ViewHolder>() {
     override fun getItemCount(): Int  = items.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.tvName.text      = items[position].name
-        holder.tvTime.text      = items[position].time
-        holder.tvDirection.text = items[position].direction
-        holder.tvBefore.text    = items[position].before
-        holder.tvAfter.text     = items[position].after
+        with(holder) {
+            tvName.text      = items[position].name
+            tvTime.text      = items[position].time
+            tvDirection.text = items[position].direction
+            tvBefore.text    = items[position].before
+            tvAfter.text     = items[position].after
+        }
     }
-
 }

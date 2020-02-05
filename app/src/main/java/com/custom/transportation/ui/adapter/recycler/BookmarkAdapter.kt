@@ -6,16 +6,18 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.custom.transportation.R
-import com.custom.transportation.data.unit.BookmarkDatabase
 import com.custom.transportation.data.unit.BusInfoData
 import com.custom.transportation.data.unit.BusStopData
 
 class BookmarkAdapter : RecyclerView.Adapter<BookmarkAdapter.ViewHolder>() {
-    private val items = ArrayList<Any>()
+    private val items = mutableListOf<Any>()
 
-    fun syncItems() {
-        items.clear()
-        items.addAll(BookmarkDatabase.getAll())
+    fun addItems(items : List<Any>) {
+        with(this.items) {
+            clear()
+            addAll(items)
+        }
+        notifyDataSetChanged()
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -30,18 +32,20 @@ class BookmarkAdapter : RecyclerView.Adapter<BookmarkAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         items[position].let {
-            when(it) {
-                is BusStopData -> {
-                    holder.tvTitle.text = it.stNm
-                    holder.tvSub.text = it.arsId.toString()
-                }
-                is BusInfoData -> {
-                    holder.tvTitle.text = it.name
-                    holder.tvSub.text = it.direction
-                }
-                else -> {
-                    holder.tvTitle.text = ""
-                    holder.tvSub.text = ""
+            with(holder) {
+                when(it) {
+                    is BusStopData -> {
+                        tvTitle.text = it.stNm
+                        tvSub.text = it.arsId.toString()
+                    }
+                    is BusInfoData -> {
+                        tvTitle.text = it.name
+                        tvSub.text = it.direction
+                    }
+                    else -> {
+                        tvTitle.text = ""
+                        tvSub.text = ""
+                    }
                 }
             }
         }
