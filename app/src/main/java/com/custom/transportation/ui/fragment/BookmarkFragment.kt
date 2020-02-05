@@ -12,7 +12,7 @@ import com.custom.transportation.R
 import com.custom.transportation.presenter.BookmarkPresenter
 import com.custom.transportation.ui.adapter.recycler.BookmarkAdapter
 
-class HomeFragment : TabFragment() {
+class BookmarkFragment : TabFragment() {
 
     private val bookmarkAdapter = BookmarkAdapter()
     private val presenter = BookmarkPresenter()
@@ -36,9 +36,9 @@ class HomeFragment : TabFragment() {
     fun showFragment() = bookmarkAdapter.addItems(presenter.getBookmarkData())
 
     companion object {
-        private var instance : HomeFragment? = null
-        fun getInstance() : HomeFragment = instance ?: synchronized(this) {
-            instance ?: HomeFragment().also { instance = it }
+        private var instance : BookmarkFragment? = null
+        fun getInstance() : BookmarkFragment = instance ?: synchronized(this) {
+            instance ?: BookmarkFragment().also { instance = it }
         }
     }
 }

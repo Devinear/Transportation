@@ -5,7 +5,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.custom.transportation.ui.common.MainTab
 import com.custom.transportation.ui.fragment.BusFragment
-import com.custom.transportation.ui.fragment.HomeFragment
+import com.custom.transportation.ui.fragment.BookmarkFragment
 import com.custom.transportation.ui.fragment.SubwayFragment
 import com.custom.transportation.ui.fragment.TabFragment
 
@@ -19,8 +19,8 @@ class SectionsPagerAdapter(private val context: Context, private val fm: Fragmen
             }
             MainTab.SUBWAY.pos -> { SubwayFragment.getInstance() }
             else -> {
-                HomeFragment.getInstance().showFragment()
-                HomeFragment.getInstance()
+                BookmarkFragment.getInstance().showFragment()
+                BookmarkFragment.getInstance()
             }
         }
     }
@@ -29,7 +29,7 @@ class SectionsPagerAdapter(private val context: Context, private val fm: Fragmen
         return when(position) {
             MainTab.BUS.pos -> { BusFragment.getInstance().getTitle(context) }
             MainTab.SUBWAY.pos -> { SubwayFragment.getInstance().getTitle(context) }
-            else -> { HomeFragment.getInstance().getTitle(context) }
+            else -> { BookmarkFragment.getInstance().getTitle(context) }
         }
     }
 
