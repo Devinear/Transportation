@@ -6,7 +6,6 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.custom.transportation.ui.common.MainTab
 import com.custom.transportation.ui.fragment.BusFragment
 import com.custom.transportation.ui.fragment.BookmarkFragment
-import com.custom.transportation.ui.fragment.SubwayFragment
 import com.custom.transportation.ui.fragment.TabFragment
 
 class SectionsPagerAdapter(private val context: Context, private val fm: FragmentManager) : FragmentPagerAdapter(fm) {
@@ -17,7 +16,6 @@ class SectionsPagerAdapter(private val context: Context, private val fm: Fragmen
                 BusFragment.getInstance().fm = fm
                 BusFragment.getInstance()
             }
-            MainTab.SUBWAY.pos -> { SubwayFragment.getInstance() }
             else -> {
                 BookmarkFragment.getInstance().showFragment()
                 BookmarkFragment.getInstance()
@@ -28,10 +26,9 @@ class SectionsPagerAdapter(private val context: Context, private val fm: Fragmen
     override fun getPageTitle(position: Int): CharSequence? {
         return when(position) {
             MainTab.BUS.pos -> { BusFragment.getInstance().getTitle(context) }
-            MainTab.SUBWAY.pos -> { SubwayFragment.getInstance().getTitle(context) }
             else -> { BookmarkFragment.getInstance().getTitle(context) }
         }
     }
 
-    override fun getCount(): Int = 2 // 3 (Subway 비활성화)
+    override fun getCount(): Int = 2
 }

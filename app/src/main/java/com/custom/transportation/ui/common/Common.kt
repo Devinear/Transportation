@@ -5,7 +5,7 @@ enum class IntentType(val tpye: String) {
 }
 
 enum class MainTab(val pos: Int) {
-    HOME(0), BUS(1), SUBWAY(2)
+    BOOKMARK(0), BUS(1)
 }
 
 enum class BusTab(val pos: Int) {
