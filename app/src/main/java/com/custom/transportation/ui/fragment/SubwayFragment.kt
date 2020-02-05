@@ -15,10 +15,6 @@ class SubwayFragment : TabFragment() {
 
     override fun getTitle(context: Context) : String = context.getString(R.string.title_subway)
 
-    override fun getDrawable(context: Context): Drawable? = context.getDrawable(android.R.drawable.ic_dialog_info)
-
-    override val fabClickListener = View.OnClickListener { }
-
     companion object {
         private var instance : SubwayFragment? = null
         fun getInstance() : SubwayFragment = instance ?: synchronized(this) {

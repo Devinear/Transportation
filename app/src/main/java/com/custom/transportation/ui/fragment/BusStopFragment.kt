@@ -17,6 +17,7 @@ import com.custom.transportation.data.unit.BusStopData
 import com.custom.transportation.presenter.BusStop
 import com.custom.transportation.presenter.BusStopPresenter
 import com.custom.transportation.ui.adapter.recycler.BusStopAdapter
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class BusStopFragment : TabFragment(), BusStop.View {
 
@@ -29,23 +30,21 @@ class BusStopFragment : TabFragment(), BusStop.View {
             layoutManager = LinearLayoutManager(context)
             adapter = busStopAdapter
         }
+
+        view.findViewById<FloatingActionButton>(R.id.fab).setOnClickListener {
+            AlertDialog.Builder(context).apply {
+                setTitle(context.getString(R.string.search_bus_stop))
+                val edit = EditText(context)
+                setView(edit)
+                setPositiveButton(context.getString(android.R.string.ok)) { _: DialogInterface?, _: Int ->
+                    presenter.searchWord(edit.text.toString())
+                }
+            }.create().run { show() }
+        }
         return view
     }
 
     override fun getTitle(context: Context) : String = context.getString(R.string.bus_stop)
-
-    override fun getDrawable(context: Context): Drawable? = null
-
-    override val fabClickListener: View.OnClickListener = View.OnClickListener {
-        AlertDialog.Builder(context).apply {
-            setTitle(context.getString(R.string.search_bus_stop))
-            val edit = EditText(context)
-            setView(edit)
-            setPositiveButton(context.getString(android.R.string.ok)) { _: DialogInterface?, _: Int ->
-                presenter.searchWord(edit.text.toString())
-            }
-        }.create().run { show() }
-    }
 
     override fun searchSuccess(items : List<BusStopData>) = busStopAdapter.addItems(items)
 

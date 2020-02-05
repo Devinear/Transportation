@@ -29,10 +29,6 @@ class BookmarkFragment : TabFragment() {
 
     override fun getTitle(context: Context) : String = context.getString(R.string.title_star)
 
-    override fun getDrawable(context: Context): Drawable? = context.getDrawable(android.R.drawable.ic_dialog_dialer)
-
-    override val fabClickListener = View.OnClickListener { }
-
     fun showFragment() = bookmarkAdapter.addItems(presenter.getBookmarkData())
 
     companion object {
