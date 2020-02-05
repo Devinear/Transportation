@@ -32,13 +32,8 @@ class BusFragment : TabFragment() {
         view.findViewById<TabLayout>(R.id.bus_tabs)?.run {
             addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab?) {
-                    if(tab == null) return
-
-                    curTabType = if(tab.position == BusTab.NUMBER.pos)
-                        BusTab.NUMBER
-                    else
-                        BusTab.STOP
-
+                    tab ?: return
+                    curTabType = BusTab.values()[tab.position]
                     fabClickListener = (busAdapter.getItem(curTabType.pos) as TabFragment).fabClickListener
                 }
                 override fun onTabReselected(tab: TabLayout.Tab?) { }

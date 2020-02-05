@@ -26,12 +26,8 @@ class MainActivity : AppCompatActivity() {
             addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab?) {
                     tab ?: return
+                    curTabType = MainTab.values()[tab.position]
 
-                    curTabType = when(tab.position) {
-                        MainTab.BUS.pos -> MainTab.BUS
-                        MainTab.SUBWAY.pos -> MainTab.SUBWAY
-                        else -> MainTab.HOME
-                    }
                     fab.setImageDrawable(pagerAdapter.getItem(curTabType.pos).getDrawable(applicationContext))
                     fab.setOnClickListener(pagerAdapter.getItem(curTabType.pos).fabClickListener)
                 }
