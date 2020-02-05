@@ -40,7 +40,7 @@ class BusStopAdapter(val presenter: BusStop.Presenter) : RecyclerView.Adapter<Bu
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder
-            = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_busstop, parent,false))
+            = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_bus_stop, parent,false))
 
     override fun getItemCount(): Int  = items.size
 

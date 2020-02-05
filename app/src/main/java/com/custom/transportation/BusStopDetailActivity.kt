@@ -5,7 +5,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.custom.transportation.data.unit.BookmarkDatabase
 import com.custom.transportation.data.unit.BusInfoData
 import com.custom.transportation.presenter.BusStopDetail
 import com.custom.transportation.presenter.BusStopDetailPresenter
@@ -19,7 +18,7 @@ class BusStopDetailActivity : AppCompatActivity(), BusStopDetail.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_busstop)
+        setContentView(R.layout.activity_bus_stop)
 
         findViewById<RecyclerView>(R.id.recycler_busstop).run {
             layoutManager = LinearLayoutManager(context)

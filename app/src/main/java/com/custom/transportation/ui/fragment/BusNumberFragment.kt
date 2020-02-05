@@ -10,7 +10,7 @@ import com.custom.transportation.R
 class BusNumberFragment : TabFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
-            = inflater.inflate(R.layout.fragment_subway, container, false)
+            = inflater.inflate(R.layout.fragment_bus_num, container, false)
 
     override fun getTitle(context: Context) : String = context.getString(R.string.bus_number)
 

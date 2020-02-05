@@ -3,7 +3,6 @@ package com.custom.transportation.ui.fragment
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -25,7 +24,7 @@ class BusStopFragment : TabFragment(), BusStop.View {
     private val busStopAdapter = BusStopAdapter(presenter)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view : View = inflater.inflate(R.layout.fragment_busstop, container, false)
+        val view : View = inflater.inflate(R.layout.fragment_bus_stop, container, false)
         view.findViewById<RecyclerView>(R.id.recycler).run {
             layoutManager = LinearLayoutManager(context)
             adapter = busStopAdapter
