@@ -1,4 +1,4 @@
-package com.custom.transportation.data.unit
+package com.custom.transportation.repository.unit
 
 class BusStopData private constructor
     (val arsId: Int,  val stId: Int, val stNm: String, val tmX: Float, val tmY: Float) {

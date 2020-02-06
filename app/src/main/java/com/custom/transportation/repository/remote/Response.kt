@@ -1,4 +1,4 @@
-package com.custom.transportation.data.retrofit
+package com.custom.transportation.repository.remote
 
 import org.simpleframework.xml.Element
 import org.simpleframework.xml.ElementList

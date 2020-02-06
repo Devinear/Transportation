@@ -3,7 +3,7 @@ package com.custom.transportation.ui.adapter.paper
 import android.content.Context
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.custom.transportation.ui.common.MainTab
+import com.custom.transportation.common.MainTab
 import com.custom.transportation.ui.fragment.BusFragment
 import com.custom.transportation.ui.fragment.BookmarkFragment
 import com.custom.transportation.ui.fragment.TabFragment

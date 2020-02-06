@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.custom.transportation.ui.common.BusTab
+import com.custom.transportation.common.BusTab
 import com.custom.transportation.ui.fragment.BusNumberFragment
 import com.custom.transportation.ui.fragment.BusStopFragment
 

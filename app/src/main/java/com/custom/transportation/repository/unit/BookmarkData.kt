@@ -1,4 +1,4 @@
-package com.custom.transportation.data.unit
+package com.custom.transportation.repository.unit
 
 object BookmarkDatabase {
 

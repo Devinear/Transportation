@@ -1,4 +1,4 @@
-package com.custom.transportation.ui.common
+package com.custom.transportation.common
 
 enum class IntentType(val tpye: String) {
     ArsID("ArsID")

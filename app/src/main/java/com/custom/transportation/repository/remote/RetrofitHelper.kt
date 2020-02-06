@@ -1,4 +1,4 @@
-package com.custom.transportation.data.retrofit
+package com.custom.transportation.repository.remote
 
 import com.android.volley.BuildConfig
 import okhttp3.OkHttpClient

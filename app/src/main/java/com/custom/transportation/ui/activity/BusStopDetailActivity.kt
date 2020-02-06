@@ -1,19 +1,20 @@
-package com.custom.transportation
+package com.custom.transportation.ui.activity
 
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.custom.transportation.data.unit.BusInfoData
-import com.custom.transportation.presenter.BusStopDetail
-import com.custom.transportation.presenter.BusStopDetailPresenter
+import com.custom.transportation.R
+import com.custom.transportation.repository.unit.BusInfoData
+import com.custom.transportation.ui.contract.BusStopDetailContract
+import com.custom.transportation.ui.contract.BusStopDetailPresenter
 import com.custom.transportation.ui.adapter.recycler.BusInfoAdapter
-import com.custom.transportation.ui.common.IntentType
+import com.custom.transportation.common.IntentType
 
-class BusStopDetailActivity : AppCompatActivity(), BusStopDetail.View {
+class BusStopDetailActivity : AppCompatActivity(), BusStopDetailContract.View {
 
-    private val presenter: BusStopDetail.Presenter = BusStopDetailPresenter(this)
+    private val presenter: BusStopDetailContract.Presenter = BusStopDetailPresenter(this)
     private val busInfoAdapter = BusInfoAdapter(presenter)
 
     override fun onCreate(savedInstanceState: Bundle?) {

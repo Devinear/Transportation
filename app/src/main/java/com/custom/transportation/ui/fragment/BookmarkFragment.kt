@@ -1,7 +1,6 @@
 package com.custom.transportation.ui.fragment
 
 import android.content.Context
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.custom.transportation.R
-import com.custom.transportation.presenter.BookmarkPresenter
+import com.custom.transportation.ui.contract.BookmarkPresenter
 import com.custom.transportation.ui.adapter.recycler.BookmarkAdapter
 
 class BookmarkFragment : TabFragment() {

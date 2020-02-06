@@ -1,12 +1,12 @@
-package com.custom.transportation.model
+package com.custom.transportation.repository.model
 
-import com.custom.transportation.data.retrofit.RetrofitHelper
-import com.custom.transportation.data.retrofit.ServiceResult
-import com.custom.transportation.data.unit.BookmarkDatabase
-import com.custom.transportation.data.unit.BusStopData
-import com.custom.transportation.data.unit.BusStopDatabase
-import com.custom.transportation.presenter.BusStopPresenter
-import com.custom.transportation.ui.common.Common
+import com.custom.transportation.repository.remote.RetrofitHelper
+import com.custom.transportation.repository.remote.ServiceResult
+import com.custom.transportation.repository.unit.BookmarkDatabase
+import com.custom.transportation.repository.unit.BusStopData
+import com.custom.transportation.repository.unit.BusStopDatabase
+import com.custom.transportation.ui.contract.BusStopPresenter
+import com.custom.transportation.common.Common
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

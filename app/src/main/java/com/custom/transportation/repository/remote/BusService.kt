@@ -1,4 +1,4 @@
-package com.custom.transportation.data.retrofit
+package com.custom.transportation.repository.remote
 
 import retrofit2.Call
 import retrofit2.http.GET

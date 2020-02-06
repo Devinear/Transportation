@@ -1,4 +1,4 @@
-package com.custom.transportation.data.unit
+package com.custom.transportation.repository.unit
 
 class BusInfoData private constructor
     (val name: String, val time: String, val direction: String, val before: String, val after: String) {

@@ -12,15 +12,15 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.custom.transportation.R
-import com.custom.transportation.data.unit.BusStopData
-import com.custom.transportation.presenter.BusStop
-import com.custom.transportation.presenter.BusStopPresenter
+import com.custom.transportation.repository.unit.BusStopData
+import com.custom.transportation.ui.contract.BusStopContract
+import com.custom.transportation.ui.contract.BusStopPresenter
 import com.custom.transportation.ui.adapter.recycler.BusStopAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class BusStopFragment : TabFragment(), BusStop.View {
+class BusStopFragment : TabFragment(), BusStopContract.View {
 
-    private val presenter: BusStop.Presenter = BusStopPresenter(this)
+    private val presenter: BusStopContract.Presenter = BusStopPresenter(this)
     private val busStopAdapter = BusStopAdapter(presenter)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

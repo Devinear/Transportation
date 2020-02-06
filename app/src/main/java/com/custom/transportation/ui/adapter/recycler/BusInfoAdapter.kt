@@ -6,11 +6,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.custom.transportation.R
-import com.custom.transportation.data.unit.BusInfoData
-import com.custom.transportation.presenter.BusStopDetail
+import com.custom.transportation.repository.unit.BusInfoData
+import com.custom.transportation.ui.contract.BusStopDetailContract
 import com.google.android.material.snackbar.Snackbar
 
-class BusInfoAdapter(val presenter: BusStopDetail.Presenter) : RecyclerView.Adapter<BusInfoAdapter.ViewHolder>() {
+class BusInfoAdapter(val presenter: BusStopDetailContract.Presenter) : RecyclerView.Adapter<BusInfoAdapter.ViewHolder>() {
     private val items = mutableListOf<BusInfoData>()
 
     fun addItems(items : List<BusInfoData>) {
