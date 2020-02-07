@@ -10,9 +10,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import com.custom.transportation.R
+import com.custom.transportation.base.BaseFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class BusNumberFragment : TabFragment() {
+class BusNumberFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view : View = inflater.inflate(R.layout.fragment_bus_num, container, false)

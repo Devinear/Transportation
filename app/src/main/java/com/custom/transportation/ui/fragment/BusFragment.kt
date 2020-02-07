@@ -8,10 +8,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.viewpager.widget.ViewPager
 import com.custom.transportation.R
+import com.custom.transportation.base.BaseFragment
 import com.custom.transportation.ui.adapter.paper.BusPagerAdapter
 import com.google.android.material.tabs.TabLayout
 
-class BusFragment : TabFragment() {
+class BusFragment : BaseFragment() {
 
     private lateinit var busAdapter : BusPagerAdapter
 
