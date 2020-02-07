@@ -26,7 +26,7 @@ class BusStopDetailActivity : AppCompatActivity(), BusStopDetailContract.View {
             adapter = busInfoAdapter
         }
 
-        val arsId = intent.getIntExtra(IntentType.ArsID.tpye, -1)
+        val arsId = intent.getIntExtra(IntentType.ArsID.type, -1)
         if(arsId != -1) {
             presenter.search(arsId.toString())
         }

@@ -28,7 +28,7 @@ class BusStopAdapter(val presenter: BusStopContract.Presenter) : RecyclerView.Ad
             view.setOnClickListener{
                 it.context.startActivity(
                     Intent(it.context, BusStopDetailActivity::class.java)
-                    .apply { putExtra(IntentType.ArsID.tpye, items[adapterPosition].arsId) })
+                    .apply { putExtra(IntentType.ArsID.type, items[adapterPosition].arsId) })
             }
             view.setOnLongClickListener {
                 presenter.addBookmark(items[adapterPosition])

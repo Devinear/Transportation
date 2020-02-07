@@ -1,6 +1,6 @@
 package com.custom.transportation.common
 
-enum class IntentType(val tpye: String) {
+enum class IntentType(val type: String) {
     ArsID("ArsID")
 }
 
