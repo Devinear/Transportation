@@ -12,23 +12,12 @@ class SectionsPagerAdapter(private val context: Context, private val fm: Fragmen
 
     override fun getItem(position: Int): TabFragment {
         return when(position) {
-            MainTab.BUS.pos -> {
-                BusFragment.getInstance().fm = fm
-                BusFragment.getInstance()
-            }
-            else -> {
-                BookmarkFragment.getInstance().showFragment()
-                BookmarkFragment.getInstance()
-            }
+            MainTab.BUS.pos -> BusFragment.getInstance()
+            else -> BookmarkFragment.getInstance()
         }
     }
 
-    override fun getPageTitle(position: Int): CharSequence? {
-        return when(position) {
-            MainTab.BUS.pos -> { BusFragment.getInstance().getTitle(context) }
-            else -> { BookmarkFragment.getInstance().getTitle(context) }
-        }
-    }
+    override fun getPageTitle(position: Int): CharSequence? = getItem(position).getTitle(context)
 
     override fun getCount(): Int = 2
 }

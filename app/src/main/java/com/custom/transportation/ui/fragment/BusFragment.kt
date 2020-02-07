@@ -13,24 +13,24 @@ import com.google.android.material.tabs.TabLayout
 
 class BusFragment : TabFragment() {
 
-    var fm : FragmentManager? = null
-    lateinit var busAdapter : BusPagerAdapter
+    private lateinit var busAdapter : BusPagerAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view : View =  inflater.inflate(R.layout.fragment_bus, container, false)
 
-        fm ?: return view
         context ?: return view
+        fragmentManager ?: return view
+        busAdapter = BusPagerAdapter(context!!, fragmentManager!!)
 
         val viewPager: ViewPager = view.findViewById(R.id.bus_pager)
-        busAdapter = BusPagerAdapter(context!!, fm!!)
         viewPager.adapter = busAdapter
-
         view.findViewById<TabLayout>(R.id.bus_tabs)?.run {
             setupWithViewPager(viewPager)
         }
         return view
     }
+
+    override fun showFragment() = Unit
 
     override fun getTitle(context: Context) : String = context.getString(R.string.title_bus)
 

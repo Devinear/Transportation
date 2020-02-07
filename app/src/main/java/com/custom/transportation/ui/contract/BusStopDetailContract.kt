@@ -1,17 +1,14 @@
 package com.custom.transportation.ui.contract
 
+import com.custom.transportation.base.BaseContract
 import com.custom.transportation.repository.unit.BusInfoData
 import com.custom.transportation.repository.model.BusStopDetailModel
 
 interface BusStopDetailContract {
-    interface View {
-        fun searchSuccess(items : List<BusInfoData>)
-        fun searchFailure(msg : String)
-    }
 
-    interface Presenter {
-        fun searchArsId(arsId: Int)
-        fun addBookmark(data: BusInfoData)
-        fun getBusInfoData() : List<BusInfoData>
+    interface View : BaseContract.View
+
+    interface Presenter : BaseContract.Presenter {
+        fun getData() : List<BusInfoData>
     }
 }

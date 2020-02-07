@@ -36,16 +36,18 @@ class BusStopFragment : TabFragment(), BusStopContract.View {
                 val edit = EditText(context)
                 setView(edit)
                 setPositiveButton(context.getString(android.R.string.ok)) { _: DialogInterface?, _: Int ->
-                    presenter.searchWord(edit.text.toString())
+                    presenter.search(edit.text.toString())
                 }
             }.create().run { show() }
         }
         return view
     }
 
+    override fun showFragment() = Unit
+
     override fun getTitle(context: Context) : String = context.getString(R.string.bus_stop)
 
-    override fun searchSuccess(items : List<BusStopData>) = busStopAdapter.addItems(items)
+    override fun searchSuccess() = busStopAdapter.addItems(presenter.getData())
 
     override fun searchFailure(msg: String)
             = Toast.makeText(context, "Failure:${msg}", Toast.LENGTH_SHORT).show()

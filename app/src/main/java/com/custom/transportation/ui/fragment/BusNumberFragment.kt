@@ -36,6 +36,8 @@ class BusNumberFragment : TabFragment() {
         return view
     }
 
+    override fun showFragment() = Unit
+
     override fun getTitle(context: Context) : String = context.getString(R.string.bus_number)
 
     companion object {

@@ -41,7 +41,7 @@ class BusStopModel(private val presenter: BusStopPresenter) : Callback<ServiceRe
             for(item in itemList) {
                 BusStopDatabase.add(item.arsId.toInt(),item.stId.toInt(),item.stNm,item.tmX.toFloat(),item.tmY.toFloat())
             }
-            presenter.searchSuccess(BusStopDatabase.getAll())
+            presenter.searchSuccess()
         }
     }
 }

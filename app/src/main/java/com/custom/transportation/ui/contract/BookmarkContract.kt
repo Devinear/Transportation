@@ -1,10 +1,10 @@
 package com.custom.transportation.ui.contract
 
-import com.custom.transportation.repository.model.BookmarkModel
+import com.custom.transportation.base.BaseContract
 
 interface BookmarkContract {
 
-    interface Presenter {
-        fun getBookmarkData() : List<Any>
+    interface Presenter : BaseContract.Presenter {
+        fun getData() : List<Any>
     }
 }

@@ -13,12 +13,12 @@ import retrofit2.Response
 
 class BusStopDetailModel(private val presenter: BusStopDetailPresenter) : Callback<ServiceResult> {
 
-    fun searchArsId(arsId: Int)
+    fun searchArsId(arsId: String)
             = RetrofitHelper.getRetrofit(Common.baseUrl)
-            .getStationByUid(Common.ServiceKey, arsId.toString())
+            .getStationByUid(Common.ServiceKey, arsId)
             .enqueue(this@BusStopDetailModel)
 
-    fun addBookmark(data: BusInfoData) { BookmarkDatabase.add(data) }
+    fun addBookmark(data: BusInfoData) = BookmarkDatabase.add(data)
 
     fun getBusStopData(): List<BusInfoData> = BusInfoDatabase.getAll()
 

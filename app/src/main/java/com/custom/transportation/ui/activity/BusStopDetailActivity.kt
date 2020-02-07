@@ -28,11 +28,11 @@ class BusStopDetailActivity : AppCompatActivity(), BusStopDetailContract.View {
 
         val arsId = intent.getIntExtra(IntentType.ArsID.tpye, -1)
         if(arsId != -1) {
-            presenter.searchArsId(arsId)
+            presenter.search(arsId.toString())
         }
     }
 
-    override fun searchSuccess(items: List<BusInfoData>) = busInfoAdapter.addItems(items)
+    override fun searchSuccess() = busInfoAdapter.addItems(presenter.getData())
 
     override fun searchFailure(msg: String)
             = Toast.makeText(this, "Failure:${msg}", Toast.LENGTH_SHORT).show()

@@ -6,5 +6,9 @@ class BookmarkPresenter : BookmarkContract.Presenter {
 
     private val model = BookmarkModel()
 
-    override fun getBookmarkData(): List<Any> = model.getBookmarkData()
+    override fun getData(): List<Any> = model.getBookmarkData()
+
+    override fun search(search: String) = Unit
+
+    override fun addBookmark(bookmark: Any) = Unit
 }

@@ -20,7 +20,7 @@ class BookmarkFragment : TabFragment() {
         val view : View = inflater.inflate(R.layout.fragment_home, container, false)
         view.findViewById<RecyclerView>(R.id.recycler).run {
             layoutManager = LinearLayoutManager(context)
-            bookmarkAdapter.addItems(presenter.getBookmarkData())
+            bookmarkAdapter.addItems(presenter.getData())
             adapter = bookmarkAdapter
         }
         return view
@@ -28,7 +28,7 @@ class BookmarkFragment : TabFragment() {
 
     override fun getTitle(context: Context) : String = context.getString(R.string.title_star)
 
-    fun showFragment() = bookmarkAdapter.addItems(presenter.getBookmarkData())
+    override fun showFragment() = bookmarkAdapter.addItems(presenter.getData())
 
     companion object {
         private var instance : BookmarkFragment? = null

@@ -7,14 +7,17 @@ class BusStopPresenter(val view: BusStopContract.View) : BusStopContract.Present
 
     private val model = BusStopModel(this)
 
-    override fun searchWord(search: String) = model.searchWord(search)
+    override fun search(search: String) = model.searchWord(search)
 
-    override fun addBookmark(data: BusStopData) = model.addBookmark(data)
+    override fun getData(): List<BusStopData> = model.getBusStopData()
 
-    override fun getBusStopData(): List<BusStopData> = model.getBusStopData()
+    override fun addBookmark(bookmark: Any) {
+        if(bookmark is BusStopData)
+            model.addBookmark(bookmark)
+    }
 
     /* Search CallBack */
     fun searchFailure(msg: String) = view.searchFailure(msg)
 
-    fun searchSuccess(items : List<BusStopData>) = view.searchSuccess(items)
+    fun searchSuccess() = view.searchSuccess()
 }
