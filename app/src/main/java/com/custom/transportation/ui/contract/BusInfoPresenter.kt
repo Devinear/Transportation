@@ -1,11 +1,11 @@
 package com.custom.transportation.ui.contract
 
-import com.custom.transportation.repository.model.BusStopDetailModel
+import com.custom.transportation.repository.model.BusInfoModel
 import com.custom.transportation.repository.unit.BusInfoData
 
-class BusStopDetailPresenter(val view: BusStopDetailContract.View) : BusStopDetailContract.Presenter {
+class BusInfoPresenter(val view: BusInfoContract.View) : BusInfoContract.Presenter {
 
-    private val model = BusStopDetailModel(this)
+    private val model = BusInfoModel(this)
 
     override fun getData(): List<BusInfoData> = model.getBusStopData()
 

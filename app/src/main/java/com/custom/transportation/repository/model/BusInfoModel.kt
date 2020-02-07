@@ -5,18 +5,18 @@ import com.custom.transportation.repository.remote.ServiceResult
 import com.custom.transportation.repository.unit.BookmarkDatabase
 import com.custom.transportation.repository.unit.BusInfoData
 import com.custom.transportation.repository.unit.BusInfoDatabase
-import com.custom.transportation.ui.contract.BusStopDetailPresenter
+import com.custom.transportation.ui.contract.BusInfoPresenter
 import com.custom.transportation.common.Common
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class BusStopDetailModel(private val presenter: BusStopDetailPresenter) : Callback<ServiceResult> {
+class BusInfoModel(private val presenter: BusInfoPresenter) : Callback<ServiceResult> {
 
     fun searchArsId(arsId: String)
             = RetrofitHelper.getRetrofit(Common.baseUrl)
             .getStationByUid(Common.ServiceKey, arsId)
-            .enqueue(this@BusStopDetailModel)
+            .enqueue(this@BusInfoModel)
 
     fun addBookmark(data: BusInfoData) = BookmarkDatabase.add(data)
 

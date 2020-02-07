@@ -6,15 +6,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.custom.transportation.R
-import com.custom.transportation.repository.unit.BusInfoData
-import com.custom.transportation.ui.contract.BusStopDetailContract
-import com.custom.transportation.ui.contract.BusStopDetailPresenter
+import com.custom.transportation.ui.contract.BusInfoContract
+import com.custom.transportation.ui.contract.BusInfoPresenter
 import com.custom.transportation.ui.adapter.recycler.BusInfoAdapter
 import com.custom.transportation.common.IntentType
 
-class BusStopDetailActivity : AppCompatActivity(), BusStopDetailContract.View {
+class BusInfoActivity : AppCompatActivity(), BusInfoContract.View {
 
-    private val presenter: BusStopDetailContract.Presenter = BusStopDetailPresenter(this)
+    private val presenter: BusInfoContract.Presenter = BusInfoPresenter(this)
     private val busInfoAdapter = BusInfoAdapter(presenter)
 
     override fun onCreate(savedInstanceState: Bundle?) {
