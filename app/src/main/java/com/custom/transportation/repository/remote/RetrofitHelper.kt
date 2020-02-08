@@ -1,6 +1,6 @@
 package com.custom.transportation.repository.remote
 
-import com.android.volley.BuildConfig
+import com.custom.transportation.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
