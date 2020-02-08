@@ -14,13 +14,13 @@ import com.custom.transportation.common.IntentType
 class BusInfoActivity : AppCompatActivity(), BusInfoContract.View {
 
     private val presenter: BusInfoContract.Presenter = BusInfoPresenter(this)
-    private val busInfoAdapter = BusInfoAdapter(presenter)
+    private val busInfoAdapter = BusInfoAdapter(presenter, this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_bus_stop)
+        setContentView(R.layout.activity_bus_info)
 
-        findViewById<RecyclerView>(R.id.recycler_busstop).run {
+        findViewById<RecyclerView>(R.id.recycler).run {
             layoutManager = LinearLayoutManager(context)
             adapter = busInfoAdapter
         }

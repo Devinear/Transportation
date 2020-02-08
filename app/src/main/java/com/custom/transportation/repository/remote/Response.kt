@@ -50,5 +50,9 @@ class Item(
     @field:Element(name = "adirection", required = false)
     var adirection: String = "",
     @field:Element(name = "busType1", required = false)
-    var busType1: String = ""
+    var busType1: String = "",
+    @field:Element(name = "routeType", required = false)
+    var routeType: String = "",
+    @field:Element(name = "rerideNum1", required = false)
+    var rerideNum1: String = ""
 )

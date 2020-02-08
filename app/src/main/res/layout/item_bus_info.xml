@@ -5,68 +5,148 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="@dimen/item_height"
+    android:layout_margin="@dimen/item_margin">
+
+    <View
+        android:id="@+id/view_type"
+        android:layout_width="10dp"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/iv_icon"
+        tools:background="@color/bus_town"/>
+
+    <ImageView
+        android:id="@+id/iv_icon"
+        android:layout_width="@dimen/icon_width"
+        android:layout_height="@dimen/icon_height"
+        android:layout_margin="10dp"
+        android:src="@drawable/ic_directions_bus_2x"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/view_type"
+        app:layout_constraintEnd_toStartOf="@id/tv_name" />
 
     <TextView
         android:id="@+id/tv_name"
         android:layout_width="0dp"
         app:layout_constraintHorizontal_weight="1"
         android:layout_height="wrap_content"
-        android:text="Name"
         android:textSize="@dimen/bus_name_text_size"
         android:textStyle="bold"
         android:layout_marginStart="10dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/tv_direction"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/tv_time" />
+        app:layout_constraintStart_toEndOf="@id/iv_icon"
+        app:layout_constraintEnd_toStartOf="@id/tv_time"
+        tools:text="영등포09"/>
 
     <TextView
         android:id="@+id/tv_time"
         android:layout_width="wrap_content"
         app:layout_constraintHorizontal_weight="1"
         android:layout_height="wrap_content"
-        android:text="Time"
         android:textSize="@dimen/bus_sub_text_size"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="10dp"
         app:layout_constraintTop_toTopOf="@id/tv_name"
         app:layout_constraintStart_toEndOf="@id/tv_name"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="3분12초후[2번째 전]"/>
 
     <TextView
         android:id="@+id/tv_direction"
         android:layout_width="wrap_content"
         app:layout_constraintHorizontal_weight="1"
         android:layout_height="wrap_content"
-        android:text="Direction"
         android:textSize="@dimen/bus_sub_text_size"
         app:layout_constraintTop_toBottomOf="@id/tv_name"
-        app:layout_constraintBottom_toTopOf="@id/tv_before"
-        app:layout_constraintStart_toStartOf="@id/tv_name" />
+        app:layout_constraintBottom_toTopOf="@id/tv_this_type"
+        app:layout_constraintStart_toStartOf="@id/tv_name"
+        tools:text="영등포역후문 방향"/>
 
     <TextView
-        android:id="@+id/tv_before"
+        android:id="@+id/tv_this_title"
         android:layout_width="wrap_content"
         app:layout_constraintHorizontal_weight="1"
         android:layout_height="wrap_content"
-        android:text="Before"
         android:textSize="@dimen/item_sub_text_size"
         android:textStyle="bold"
+        android:text="@string/bus_info_this_title"
         app:layout_constraintTop_toBottomOf="@id/tv_direction"
-        app:layout_constraintBottom_toTopOf="@id/tv_after"
-        app:layout_constraintStart_toStartOf="@id/tv_name" />
+        app:layout_constraintBottom_toTopOf="@id/tv_after_title"
+        app:layout_constraintStart_toStartOf="@id/tv_name"
+        tools:text="이번 버스: "/>
+
+    <TextView
+        android:id="@+id/tv_this_type"
+        android:layout_width="wrap_content"
+        app:layout_constraintHorizontal_weight="1"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/item_sub_text_size"
+        app:layout_constraintTop_toTopOf="@id/tv_this_title"
+        app:layout_constraintBottom_toBottomOf="@id/tv_this_title"
+        app:layout_constraintStart_toEndOf="@id/tv_this_title"
+        tools:text="일반 버스"/>
+
+    <TextView
+        android:id="@+id/tv_this_seperator"
+        android:layout_width="wrap_content"
+        app:layout_constraintHorizontal_weight="1"
+        android:layout_height="wrap_content"
+        android:text="@string/bus_seperator"
+        android:textSize="@dimen/item_sub_text_size"
+        app:layout_constraintTop_toTopOf="@id/tv_this_title"
+        app:layout_constraintBottom_toBottomOf="@id/tv_this_title"
+        app:layout_constraintStart_toEndOf="@id/tv_this_type"
+        tools:text="/"/>
+
+    <TextView
+        android:id="@+id/tv_this_count"
+        android:layout_width="wrap_content"
+        app:layout_constraintHorizontal_weight="1"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/item_sub_text_size"
+        app:layout_constraintTop_toTopOf="@id/tv_this_title"
+        app:layout_constraintBottom_toBottomOf="@id/tv_this_title"
+        app:layout_constraintStart_toEndOf="@id/tv_this_seperator"
+        tools:text="10"/>
+
+    <TextView
+        android:id="@+id/tv_this_count_msg"
+        android:layout_width="wrap_content"
+        app:layout_constraintHorizontal_weight="1"
+        android:layout_height="wrap_content"
+        android:text="@string/bus_this_count_msg"
+        android:textSize="@dimen/item_sub_text_size"
+        app:layout_constraintTop_toTopOf="@id/tv_this_title"
+        app:layout_constraintBottom_toBottomOf="@id/tv_this_title"
+        app:layout_constraintStart_toEndOf="@id/tv_this_count"
+        tools:text="명 탑승"/>
+
+    <TextView
+        android:id="@+id/tv_after_title"
+        android:layout_width="wrap_content"
+        app:layout_constraintHorizontal_weight="1"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/item_sub_text_size"
+        android:textStyle="bold"
+        android:text="@string/bus_info_after_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_this_title"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tv_name"
+        tools:text="다음 버스: "/>
 
     <TextView
         android:id="@+id/tv_after"
         android:layout_width="wrap_content"
         app:layout_constraintHorizontal_weight="1"
         android:layout_height="wrap_content"
-        android:text="After"
         android:textSize="@dimen/bus_sub_text_size"
-        app:layout_constraintTop_toBottomOf="@id/tv_before"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@id/tv_name" />
+        app:layout_constraintTop_toTopOf="@id/tv_after_title"
+        app:layout_constraintBottom_toBottomOf="@id/tv_after_title"
+        app:layout_constraintStart_toEndOf="@id/tv_after_title"
+        tools:text="10분19초후[8번째 전]"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,12 +9,13 @@
     tools:context=".ui.view.activity.BusInfoActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_busstop"
+        android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintVertical_weight="1"
         android:scrollbars="vertical"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:listitem="@layout/item_bus_info"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

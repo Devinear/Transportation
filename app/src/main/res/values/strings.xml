@@ -15,5 +15,19 @@
     <string name="bus_bendy">굴절버스</string>
     
     <string name="add_bookmark">즐겨찾기가 추가되었습니다.</string>
+    <string name="bus_info_after_title">다음 버스:</string>
+    <string name="bus_info_this_title">이번 버스:</string>
+    <string name="bus_seperator">/</string>
 
+    <string name="route_air">공항버스</string>
+    <string name="route_town">마을버스</string>
+    <string name="route_blue">간선버스</string>
+    <string name="route_green">지선버스</string>
+    <string name="route_yellow">순환버스</string>
+    <string name="route_red">광역버스</string>
+    <string name="route_incheon">인천버스</string>
+    <string name="route_gteonggi">경기버스</string>
+    <string name="route_remove">폐지</string>
+    <string name="route_common">공용</string>
+    <string name="bus_this_count_msg">명 탑승</string>
 </resources>
