@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.custom.transportation.R
-import com.custom.transportation.repository.unit.BusInfoData
+import com.custom.transportation.repository.model.BusInfoData
 import com.custom.transportation.ui.contract.BusInfoContract
 import com.google.android.material.snackbar.Snackbar
 
