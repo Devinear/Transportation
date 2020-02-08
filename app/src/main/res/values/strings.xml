@@ -30,4 +30,6 @@
     <string name="route_remove">폐지</string>
     <string name="route_common">공용</string>
     <string name="bus_this_count_msg">명 탑승</string>
+    <string name="map">MAP</string>
+    <string name="bus_direction_msg">" 방향"</string>
 </resources>

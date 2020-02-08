@@ -13,7 +13,7 @@
         android:layout_width="@dimen/item_type_width"
         android:layout_height="match_parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/iv_icon"
+        app:layout_constraintEnd_toStartOf="@id/tv_name"
         tools:background="@color/bus_town"/>
 
     <View
@@ -24,28 +24,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:background="@color/bus_town"/>
 
-    <ImageView
-        android:id="@+id/iv_icon"
-        android:layout_width="@dimen/icon_width"
-        android:layout_height="@dimen/icon_height"
-        android:layout_margin="10dp"
-        android:src="@drawable/ic_directions_bus_2x"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/view_front"
-        app:layout_constraintEnd_toStartOf="@id/tv_name" />
-
     <TextView
         android:id="@+id/tv_name"
         android:layout_width="0dp"
         app:layout_constraintHorizontal_weight="1"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/item_margin"
         android:textSize="@dimen/bus_name_text_size"
         android:textStyle="bold"
-        android:layout_marginStart="10dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/tv_direction"
-        app:layout_constraintStart_toEndOf="@id/iv_icon"
+        app:layout_constraintStart_toEndOf="@id/view_front"
         app:layout_constraintEnd_toStartOf="@id/tv_time"
         tools:text="영등포09"/>
 
@@ -72,7 +61,18 @@
         app:layout_constraintTop_toBottomOf="@id/tv_name"
         app:layout_constraintBottom_toTopOf="@id/tv_this_type"
         app:layout_constraintStart_toStartOf="@id/tv_name"
-        tools:text="영등포역후문 방향"/>
+        tools:text="영등포역후문"/>
+
+    <TextView
+        android:id="@+id/tv_direction_msg"
+        android:layout_width="wrap_content"
+        app:layout_constraintHorizontal_weight="1"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/bus_sub_text_size"
+        android:text="@string/bus_direction_msg"
+        app:layout_constraintTop_toBottomOf="@id/tv_name"
+        app:layout_constraintBottom_toBottomOf="@id/tv_direction"
+        app:layout_constraintStart_toEndOf="@id/tv_direction"/>
 
     <TextView
         android:id="@+id/tv_this_title"
