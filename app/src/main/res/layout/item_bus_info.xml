@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/item_height"
+    android:layout_height="@dimen/item_bus_info_height"
     android:layout_margin="@dimen/item_margin">
 
     <View
