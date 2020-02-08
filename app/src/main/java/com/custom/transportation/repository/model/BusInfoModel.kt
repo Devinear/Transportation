@@ -1,26 +1,26 @@
 package com.custom.transportation.repository.model
 
+import com.custom.transportation.common.Common
 import com.custom.transportation.repository.remote.RetrofitHelper
 import com.custom.transportation.repository.remote.ServiceResult
-import com.custom.transportation.repository.unit.BookmarkDatabase
-import com.custom.transportation.repository.unit.BusInfoData
-import com.custom.transportation.repository.unit.BusInfoDatabase
 import com.custom.transportation.ui.contract.BusInfoPresenter
-import com.custom.transportation.common.Common
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class BusInfoModel(private val presenter: BusInfoPresenter) : Callback<ServiceResult> {
+data class BusInfoData
+    (val name: String, val time: String, val direction: String, val before: String, val after: String)
+
+class BusInfoModel(private var presenter: BusInfoPresenter) : Callback<ServiceResult> {
+
+    private val infoList : ArrayList<BusInfoData> = ArrayList()
 
     fun searchArsId(arsId: String)
             = RetrofitHelper.getRetrofit(Common.baseUrl)
             .getStationByUid(Common.ServiceKey, arsId)
             .enqueue(this@BusInfoModel)
 
-    fun addBookmark(data: BusInfoData) = BookmarkDatabase.add(data)
-
-    fun getBusStopData(): List<BusInfoData> = BusInfoDatabase.getAll()
+    fun getBusStopData(): List<BusInfoData> = infoList
 
     override fun onFailure(call: Call<ServiceResult>, t: Throwable)
             = presenter.searchFailure(t.message?:"NONE")
@@ -37,12 +37,20 @@ class BusInfoModel(private val presenter: BusInfoPresenter) : Callback<ServiceRe
             }
         }
         response.body()?.msgBody?.run {
-            BusInfoDatabase.clear()
+            infoList.clear()
             for(item in itemList) {
-                BusInfoDatabase.add(item.rtNm, item.arrmsg1, item.arrmsg2, item.adirection, item.busType1)
+                infoList.add(BusInfoData(item.rtNm, item.arrmsg1, item.arrmsg2, item.adirection, item.busType1))
             }
-            presenter.searchSuccess(BusInfoDatabase.getAll())
+            presenter.searchSuccess()
         }
     }
 
+    companion object {
+        private var instance : BusInfoModel? = null
+        fun getInstance(newPresenter: BusInfoPresenter) : BusInfoModel {
+            instance ?: return BusInfoModel(newPresenter)
+            instance!!.presenter = newPresenter
+            return instance!!
+        }
+    }
 }

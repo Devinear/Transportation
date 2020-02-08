@@ -1,4 +1,4 @@
-package com.custom.transportation.ui.fragment
+package com.custom.transportation.ui.view.fragment
 
 import android.app.AlertDialog
 import android.content.Context

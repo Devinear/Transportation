@@ -1,26 +1,27 @@
 package com.custom.transportation.repository.model
 
+import com.custom.transportation.common.Common
 import com.custom.transportation.repository.remote.RetrofitHelper
 import com.custom.transportation.repository.remote.ServiceResult
-import com.custom.transportation.repository.unit.BookmarkDatabase
-import com.custom.transportation.repository.unit.BusStopData
-import com.custom.transportation.repository.unit.BusStopDatabase
+import com.custom.transportation.ui.contract.BusInfoPresenter
 import com.custom.transportation.ui.contract.BusStopPresenter
-import com.custom.transportation.common.Common
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class BusStopModel(private val presenter: BusStopPresenter) : Callback<ServiceResult> {
+data class BusStopData
+    (val arsId: Int,  val stId: Int, val stNm: String, val tmX: Float, val tmY: Float)
+
+class BusStopModel(private var presenter: BusStopPresenter) : Callback<ServiceResult> {
+
+    private val stopList : ArrayList<BusStopData> = ArrayList()
 
     fun searchWord(search: String)
             = RetrofitHelper.getRetrofit(Common.baseUrl)
             .getStationByName(Common.ServiceKey, search)
             .enqueue(this@BusStopModel)
 
-    fun addBookmark(data: BusStopData) { BookmarkDatabase.add(data) }
-
-    fun getBusStopData(): List<BusStopData> = BusStopDatabase.getAll()
+    fun getBusStopData(): List<BusStopData> = stopList
 
     override fun onFailure(call: Call<ServiceResult>, t: Throwable)
             = presenter.searchFailure(t.message?:"NONE")
@@ -37,11 +38,20 @@ class BusStopModel(private val presenter: BusStopPresenter) : Callback<ServiceRe
             }
         }
         response.body()?.msgBody?.run {
-            BusStopDatabase.clear()
+            stopList.clear()
             for(item in itemList) {
-                BusStopDatabase.add(item.arsId.toInt(),item.stId.toInt(),item.stNm,item.tmX.toFloat(),item.tmY.toFloat())
+                stopList.add(BusStopData(item.arsId.toInt(),item.stId.toInt(),item.stNm,item.tmX.toFloat(),item.tmY.toFloat()))
             }
             presenter.searchSuccess()
+        }
+    }
+
+    companion object {
+        private var instance : BusStopModel? = null
+        fun getInstance(newPresenter: BusStopPresenter) : BusStopModel {
+            instance ?: return BusStopModel(newPresenter)
+            instance!!.presenter = newPresenter
+            return instance!!
         }
     }
 }

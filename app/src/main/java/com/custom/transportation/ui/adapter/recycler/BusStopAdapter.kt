@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.custom.transportation.ui.activity.BusInfoActivity
+import com.custom.transportation.ui.view.activity.BusInfoActivity
 import com.custom.transportation.R
 import com.custom.transportation.repository.unit.BusStopData
 import com.custom.transportation.ui.contract.BusStopContract

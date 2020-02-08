@@ -4,9 +4,9 @@ import com.custom.transportation.repository.model.BookmarkModel
 
 class BookmarkPresenter : BookmarkContract.Presenter {
 
-    private val model = BookmarkModel()
+    private val model = BookmarkModel.getInstance()
 
-    override fun getData(): List<Any> = model.getBookmarkData()
+    override fun getData(): List<Any> = model.getBookmarkAll()
 
     override fun search(search: String) = Unit
 

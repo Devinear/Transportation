@@ -1,4 +1,4 @@
-package com.custom.transportation.ui.activity
+package com.custom.transportation.ui.view.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

@@ -1,4 +1,4 @@
-package com.custom.transportation.ui.fragment
+package com.custom.transportation.ui.view.fragment
 
 import android.content.Context
 import android.os.Bundle

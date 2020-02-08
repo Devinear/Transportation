@@ -1,13 +1,11 @@
 package com.custom.transportation.ui.adapter.paper
 
 import android.content.Context
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.custom.transportation.base.BaseFragment
 import com.custom.transportation.common.BusTab
-import com.custom.transportation.common.MainTab
-import com.custom.transportation.ui.fragment.*
+import com.custom.transportation.ui.view.fragment.*
 
 class BusPagerAdapter(private val context: Context, fm: FragmentManager) : FragmentPagerAdapter(fm) {
 

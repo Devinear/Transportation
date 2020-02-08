@@ -5,8 +5,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.custom.transportation.base.BaseFragment
 import com.custom.transportation.common.MainTab
-import com.custom.transportation.ui.fragment.BookmarkFragment
-import com.custom.transportation.ui.fragment.BusFragment
+import com.custom.transportation.ui.view.fragment.BookmarkFragment
+import com.custom.transportation.ui.view.fragment.BusFragment
 
 class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) : FragmentPagerAdapter(fm) {
 

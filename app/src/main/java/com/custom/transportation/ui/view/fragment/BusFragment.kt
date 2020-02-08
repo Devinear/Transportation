@@ -1,11 +1,10 @@
-package com.custom.transportation.ui.fragment
+package com.custom.transportation.ui.view.fragment
 
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentManager
 import androidx.viewpager.widget.ViewPager
 import com.custom.transportation.R
 import com.custom.transportation.base.BaseFragment
