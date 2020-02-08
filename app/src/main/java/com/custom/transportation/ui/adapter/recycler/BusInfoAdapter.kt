@@ -30,7 +30,8 @@ class BusInfoAdapter(val presenter: BusInfoContract.Presenter, val context: Cont
                 true
             }
         }
-        val viewType: View        = view.findViewById(R.id.view_type)
+        val viewFront: View        = view.findViewById(R.id.view_front)
+        val viewBack: View        = view.findViewById(R.id.view_back)
         val tvName: TextView      = view.findViewById(R.id.tv_name)
         val tvTime: TextView      = view.findViewById(R.id.tv_time)
         val tvDirection: TextView = view.findViewById(R.id.tv_direction)
@@ -46,7 +47,8 @@ class BusInfoAdapter(val presenter: BusInfoContract.Presenter, val context: Cont
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
-            viewType.setBackgroundColor(context.getColor(items[position].routeType.colorId))
+            viewFront.setBackgroundColor(context.getColor(items[position].routeType.colorId))
+            viewBack.setBackgroundColor(context.getColor(items[position].routeType.colorId))
             tvName.text      = items[position].name
             tvTime.text      = items[position].time
             tvDirection.text = items[position].direction
