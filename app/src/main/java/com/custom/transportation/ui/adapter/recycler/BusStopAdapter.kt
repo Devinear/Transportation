@@ -11,6 +11,7 @@ import com.custom.transportation.R
 import com.custom.transportation.ui.contract.BusStopContract
 import com.custom.transportation.common.IntentType
 import com.custom.transportation.repository.model.BusStopData
+import com.google.android.material.snackbar.Snackbar
 
 class BusStopAdapter(val presenter: BusStopContract.Presenter) : RecyclerView.Adapter<BusStopAdapter.ViewHolder>() {
     private val items = mutableListOf<BusStopData>()
@@ -32,6 +33,7 @@ class BusStopAdapter(val presenter: BusStopContract.Presenter) : RecyclerView.Ad
             }
             view.setOnLongClickListener {
                 presenter.addBookmark(items[adapterPosition])
+                Snackbar.make(it, it.context.getText(R.string.add_bookmark), Snackbar.LENGTH_SHORT).show()
                 return@setOnLongClickListener true
             }
         }
