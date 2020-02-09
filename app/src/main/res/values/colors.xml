@@ -11,4 +11,6 @@
     <color name="bus_blue">#3476d4</color> // 간선버스
     <color name="bus_red">#e3482d</color> // 광역버스
     <color name="bus_yellow">#d1b03e</color> // 순환버스
+
+    <color name="stop_common">#33CCFF</color>
 </resources>

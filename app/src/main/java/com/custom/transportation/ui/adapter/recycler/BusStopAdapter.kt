@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.custom.transportation.ui.view.activity.BusInfoActivity
 import com.custom.transportation.R
-import com.custom.transportation.ui.contract.BusStopContract
 import com.custom.transportation.common.IntentType
 import com.custom.transportation.repository.model.BusStopData
+import com.custom.transportation.ui.contract.BusStopContract
+import com.custom.transportation.ui.view.activity.BusInfoActivity
 import com.google.android.material.snackbar.Snackbar
 
 class BusStopAdapter(val presenter: BusStopContract.Presenter) : RecyclerView.Adapter<BusStopAdapter.ViewHolder>() {
@@ -49,7 +49,7 @@ class BusStopAdapter(val presenter: BusStopContract.Presenter) : RecyclerView.Ad
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
             tvLocation.text = items[position].stNm
-            tvNumber.text = items[position].arsId.toString()
+            tvNumber.text   = "${items[position].arsId.toString().substring(0,2)}-${items[position].arsId.toString().substring(2)}"
         }
     }
 

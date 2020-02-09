@@ -9,13 +9,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.custom.transportation.R
 import com.custom.transportation.base.BaseFragment
-import com.custom.transportation.ui.contract.BookmarkPresenter
 import com.custom.transportation.ui.adapter.recycler.BookmarkAdapter
+import com.custom.transportation.ui.contract.BookmarkPresenter
 
 class BookmarkFragment : BaseFragment() {
 
-    private val bookmarkAdapter = BookmarkAdapter()
     private val presenter = BookmarkPresenter()
+    private val bookmarkAdapter = BookmarkAdapter(presenter)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view : View = inflater.inflate(R.layout.fragment_home, container, false)

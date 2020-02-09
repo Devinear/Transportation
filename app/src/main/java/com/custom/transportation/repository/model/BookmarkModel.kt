@@ -11,6 +11,8 @@ class BookmarkModel {
             bookmarks.add(bookmark)
     }
 
+    fun deleteBookmark(bookmark: Any) : Boolean = bookmarks.remove(bookmark)
+
     private fun isDuplicate(bookmark: Any) : Boolean {
         if(bookmarks.size == 0) return false
         for(item in bookmarks) {

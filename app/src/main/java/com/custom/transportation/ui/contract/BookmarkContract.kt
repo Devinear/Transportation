@@ -6,5 +6,6 @@ interface BookmarkContract {
 
     interface Presenter : BaseContract.Presenter {
         fun getData() : List<Any>
+        fun deleteBookmark(bookmark: Any) : Boolean
     }
 }

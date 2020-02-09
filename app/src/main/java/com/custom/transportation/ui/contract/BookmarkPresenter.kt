@@ -11,4 +11,6 @@ class BookmarkPresenter : BookmarkContract.Presenter {
     override fun search(search: String) = Unit
 
     override fun addBookmark(bookmark: Any) = Unit
+
+    override fun deleteBookmark(bookmark: Any) : Boolean = model.deleteBookmark(bookmark)
 }

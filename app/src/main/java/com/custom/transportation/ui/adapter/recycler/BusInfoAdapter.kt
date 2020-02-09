@@ -11,7 +11,7 @@ import com.custom.transportation.repository.model.BusInfoData
 import com.custom.transportation.ui.contract.BusInfoContract
 import com.google.android.material.snackbar.Snackbar
 
-class BusInfoAdapter(val presenter: BusInfoContract.Presenter, val context: Context) : RecyclerView.Adapter<BusInfoAdapter.ViewHolder>() {
+class BusInfoAdapter(val presenter: BusInfoContract.Presenter) : RecyclerView.Adapter<BusInfoAdapter.ViewHolder>() {
     private val items = mutableListOf<BusInfoData>()
 
     fun addItems(items : List<BusInfoData>) {
@@ -22,7 +22,7 @@ class BusInfoAdapter(val presenter: BusInfoContract.Presenter, val context: Cont
         notifyDataSetChanged()
     }
 
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class ViewHolder(val context: Context, view: View) : RecyclerView.ViewHolder(view) {
         init {
             view.setOnLongClickListener {
                 presenter.addBookmark(items[adapterPosition])
@@ -41,7 +41,7 @@ class BusInfoAdapter(val presenter: BusInfoContract.Presenter, val context: Cont
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder
-            = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_bus_info, parent,false))
+            = ViewHolder(parent.context, LayoutInflater.from(parent.context).inflate(R.layout.item_bus_info, parent,false))
 
     override fun getItemCount(): Int  = items.size
 
