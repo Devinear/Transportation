@@ -24,7 +24,7 @@
         </activity>
         <activity
             android:name="com.custom.transportation.ui.view.activity.BusInfoActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            />
     </application>
 
 </manifest>

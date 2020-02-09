@@ -10,6 +10,7 @@ import com.custom.transportation.ui.contract.BusInfoContract
 import com.custom.transportation.ui.contract.BusInfoPresenter
 import com.custom.transportation.ui.adapter.recycler.BusInfoAdapter
 import com.custom.transportation.common.IntentType
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class BusInfoActivity : AppCompatActivity(), BusInfoContract.View {
 
@@ -27,6 +28,10 @@ class BusInfoActivity : AppCompatActivity(), BusInfoContract.View {
 
         val arsId = intent.getIntExtra(IntentType.ArsID.type, -1)
         if(arsId != -1) {
+            presenter.search(arsId.toString())
+        }
+
+        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener {
             presenter.search(arsId.toString())
         }
     }
