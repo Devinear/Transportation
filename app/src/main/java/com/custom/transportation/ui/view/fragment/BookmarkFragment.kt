@@ -10,11 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.custom.transportation.R
 import com.custom.transportation.base.BaseFragment
 import com.custom.transportation.ui.adapter.recycler.BookmarkAdapter
+import com.custom.transportation.ui.contract.BookmarkContract
 import com.custom.transportation.ui.contract.BookmarkPresenter
 
-class BookmarkFragment : BaseFragment() {
+class BookmarkFragment : BaseFragment(), BookmarkContract.View {
 
-    private val presenter = BookmarkPresenter()
+    private val presenter = BookmarkPresenter(this)
     private val bookmarkAdapter = BookmarkAdapter(presenter)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -30,6 +31,12 @@ class BookmarkFragment : BaseFragment() {
     override fun getTitle(context: Context) : String = context.getString(R.string.title_star)
 
     override fun showFragment() = bookmarkAdapter.addItems(presenter.getData())
+
+    override fun updateData() = bookmarkAdapter.addItems(presenter.getData())
+
+    override fun searchSuccess() = Unit
+
+    override fun searchFailure(msg: String) = Unit
 
     companion object {
         private var instance : BookmarkFragment? = null

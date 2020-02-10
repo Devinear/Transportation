@@ -2,9 +2,13 @@ package com.custom.transportation.ui.contract
 
 import com.custom.transportation.repository.model.BookmarkModel
 
-class BookmarkPresenter : BookmarkContract.Presenter {
+class BookmarkPresenter(val view: BookmarkContract.View) : BookmarkContract.Presenter {
 
-    private val model = BookmarkModel.getInstance()
+    private val model = BookmarkModel.getInstance(this)
+
+    override fun requestData() = model.reloadData()
+
+    override fun updateBookmark() = view.updateData()
 
     override fun getData(): List<Any> = model.getBookmarkAll()
 

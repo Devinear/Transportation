@@ -9,5 +9,6 @@ interface BaseContract {
     interface Presenter {
         fun search(search : String)
         fun addBookmark(bookmark: Any)
+        fun updateBookmark()
     }
 }

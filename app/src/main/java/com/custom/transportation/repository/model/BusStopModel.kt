@@ -1,9 +1,8 @@
 package com.custom.transportation.repository.model
 
-import com.custom.transportation.common.Common
+import com.custom.transportation.common.CommonData
 import com.custom.transportation.repository.remote.RetrofitHelper
 import com.custom.transportation.repository.remote.ServiceResult
-import com.custom.transportation.ui.contract.BusInfoPresenter
 import com.custom.transportation.ui.contract.BusStopPresenter
 import retrofit2.Call
 import retrofit2.Callback
@@ -17,8 +16,8 @@ class BusStopModel(private var presenter: BusStopPresenter) : Callback<ServiceRe
     private val stopList : ArrayList<BusStopData> = ArrayList()
 
     fun searchWord(search: String)
-            = RetrofitHelper.getRetrofit(Common.baseUrl)
-            .getStationByName(Common.ServiceKey, search)
+            = RetrofitHelper.getRetrofit(CommonData.baseUrl)
+            .getStationByName(CommonData.ServiceKey, search)
             .enqueue(this@BusStopModel)
 
     fun getBusStopData(): List<BusStopData> = stopList
