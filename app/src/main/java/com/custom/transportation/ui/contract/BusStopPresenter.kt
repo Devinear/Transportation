@@ -6,14 +6,11 @@ import com.custom.transportation.repository.model.BusStopModel
 
 class BusStopPresenter(val view: BusStopContract.View) : BusStopContract.Presenter {
 
-    private val busStopModel = BusStopModel.getInstance(this)
-    private val bookmarkModel = BookmarkModel.getInstance(this)
+    override fun search(search: String) = BusStopModel.getInstance(this).searchWord(search)
 
-    override fun search(search: String) = busStopModel.searchWord(search)
+    override fun getData(): List<BusStopData> = BusStopModel.getInstance(this).getBusStopData()
 
-    override fun getData(): List<BusStopData> = busStopModel.getBusStopData()
-
-    override fun addBookmark(bookmark: Any) = bookmarkModel.addBookmark(bookmark)
+    override fun addBookmark(bookmark: Any) = BookmarkModel.getInstance(this).addBookmark(bookmark)
 
     override fun updateBookmark() = Unit
 

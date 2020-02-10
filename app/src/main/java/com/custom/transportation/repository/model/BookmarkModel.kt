@@ -66,8 +66,10 @@ class BookmarkModel(private var presenter: BaseContract.Presenter) {
     companion object {
         private var instance : BookmarkModel? = null
         fun getInstance(newPresenter: BaseContract.Presenter) : BookmarkModel {
-            instance ?: return BookmarkModel(newPresenter)
-            instance!!.presenter = newPresenter
+            instance ?: return BookmarkModel(newPresenter).also {
+                it.presenter = newPresenter
+                instance = it
+            }
             return instance!!
         }
     }
