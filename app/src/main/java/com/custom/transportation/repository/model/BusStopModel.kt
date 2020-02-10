@@ -69,9 +69,9 @@ class BusStopModel(private var presenter: BusStopPresenter) : Callback<ServiceRe
         private var instance : BusStopModel? = null
         fun getInstance(newPresenter: BusStopPresenter) : BusStopModel {
             instance ?: return BusStopModel(newPresenter).also {
-                it.presenter = newPresenter
                 instance = it
             }
+            instance!!.presenter = newPresenter
             return instance!!
         }
     }

@@ -67,9 +67,9 @@ class BookmarkModel(private var presenter: BaseContract.Presenter) {
         private var instance : BookmarkModel? = null
         fun getInstance(newPresenter: BaseContract.Presenter) : BookmarkModel {
             instance ?: return BookmarkModel(newPresenter).also {
-                it.presenter = newPresenter
                 instance = it
             }
+            instance!!.presenter = newPresenter
             return instance!!
         }
     }

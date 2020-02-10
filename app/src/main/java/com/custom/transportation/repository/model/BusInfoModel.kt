@@ -54,9 +54,9 @@ class BusInfoModel(private var presenter: BusInfoPresenter) : Callback<ServiceRe
         private var instance : BusInfoModel? = null
         fun getInstance(newPresenter: BusInfoPresenter) : BusInfoModel {
             instance ?: return BusInfoModel(newPresenter).also {
-                it.presenter = newPresenter
                 instance = it
             }
+            instance!!.presenter = newPresenter
             return instance!!
         }
     }
