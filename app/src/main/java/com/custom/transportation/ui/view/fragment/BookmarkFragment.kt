@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.custom.transportation.R
@@ -17,22 +18,27 @@ class BookmarkFragment : BaseFragment(), BookmarkContract.View {
 
     private val presenter = BookmarkPresenter(this)
     private val bookmarkAdapter = BookmarkAdapter(presenter)
+    private var tvEmpty : TextView? = null // lateinit 의 경우 CreateView 생성 시점때문
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view : View = inflater.inflate(R.layout.fragment_bookmark, container, false)
         view.findViewById<RecyclerView>(R.id.recycler).run {
             layoutManager = LinearLayoutManager(context)
-            bookmarkAdapter.addItems(presenter.getData())
             adapter = bookmarkAdapter
         }
+        tvEmpty = view.findViewById(R.id.tv_empty)
+        updateData()
         return view
     }
 
     override fun getTitle(context: Context) : String = context.getString(R.string.title_star)
 
-    override fun showFragment() = bookmarkAdapter.addItems(presenter.getData())
+    override fun showFragment() = updateData()
 
-    override fun updateData() = bookmarkAdapter.addItems(presenter.getData())
+    override fun updateData() {
+        bookmarkAdapter.addItems(presenter.getData())
+        tvEmpty?.visibility = if(bookmarkAdapter.itemCount == 0) View.VISIBLE else View.GONE
+    }
 
     override fun searchSuccess() = Unit
 

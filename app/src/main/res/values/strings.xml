@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Custom-made Transportation</string>
+    <string name="app_name">자작타는버스</string>
 
     <string name="title_star">즐겨찾기</string>
     <string name="title_bus">버스</string>
@@ -10,7 +10,9 @@
     <string name="bus_number">버스 번호</string>
     <string name="search_bus_stop">정류장 명칭 또는 번호를 입력하세요.</string>
     <string name="search_bus_number">버스 노선 번호를 입력하세요.</string>
+    <string name="not_result">검색된 결과가 없습니다.</string>
 
+    <string name="empty_bookmark">저장된 즐겨찾기가 없습니다.</string>
     <string name="add_bookmark">즐겨찾기가 추가되었습니다.</string>
     <string name="del_bookmark">즐겨찾기를 삭제하시겠습니까?</string>
     <string name="del_bookmark_success">즐겨찾기가 삭제되었습니다.</string>

@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,6 +23,7 @@ class BusStopFragment : BaseFragment(), BusStopContract.View {
 
     private val presenter: BusStopContract.Presenter = BusStopPresenter(this)
     private val busStopAdapter = BusStopAdapter(presenter)
+    private lateinit var tvEmpty : TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view : View = inflater.inflate(R.layout.fragment_bus_stop, container, false)
@@ -40,6 +42,8 @@ class BusStopFragment : BaseFragment(), BusStopContract.View {
                 }
             }.create().run { show() }
         }
+        tvEmpty = view.findViewById(R.id.tv_empty)
+        tvEmpty.visibility = View.VISIBLE
         return view
     }
 
@@ -47,7 +51,10 @@ class BusStopFragment : BaseFragment(), BusStopContract.View {
 
     override fun getTitle(context: Context) : String = context.getString(R.string.bus_stop)
 
-    override fun searchSuccess() = busStopAdapter.addItems(presenter.getData())
+    override fun searchSuccess() {
+        busStopAdapter.addItems(presenter.getData())
+        tvEmpty.visibility = if(busStopAdapter.itemCount == 0) View.VISIBLE else View.GONE
+    }
 
     override fun searchFailure(msg: String)
             = Toast.makeText(context, "Failure:${msg}", Toast.LENGTH_SHORT).show()
