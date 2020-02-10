@@ -49,7 +49,7 @@ class BusStopAdapter(val presenter: BusStopContract.Presenter) : RecyclerView.Ad
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
             tvLocation.text = items[position].stNm
-            tvNumber.text   = "${items[position].arsId.toString().substring(0,2)}-${items[position].arsId.toString().substring(2)}"
+            tvNumber.text   = "${items[position].arsId.substring(0,2)}-${items[position].arsId.substring(2)}"
         }
     }
 

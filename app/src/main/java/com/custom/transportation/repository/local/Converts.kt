@@ -12,7 +12,7 @@ class Converts {
         data ?: return null
         val splits = data.split('/')
         return if(splits.size != 5)  null
-        else BusStopData(splits[0].toInt(), splits[1].toInt(), splits[2], splits[3].toFloat(), splits[4].toFloat())
+        else BusStopData(splits[0], splits[1], splits[2], splits[3].toFloat(), splits[4].toFloat())
     }
 
     @TypeConverter

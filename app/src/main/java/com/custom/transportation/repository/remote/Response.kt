@@ -39,6 +39,11 @@ class Item(
     var tmX: String = "",
     @field:Element(name = "tmY", required = false)
     var tmY: String = "",
+    @field:Element(name = "gpsX", required = false)
+    var gpsX: String = "",
+    @field:Element(name = "gpsY", required = false)
+    var gpsY: String = "",
+
 
     // bus info
     @field:Element(name = "rtNm", required = false)

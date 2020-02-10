@@ -8,8 +8,8 @@
 
     <string name="bus_stop">버스 정류장</string>
     <string name="bus_number">버스 번호</string>
-    <string name="search_bus_stop">정류장 명칭 검색</string>
-    <string name="search_bus_number">정류장 번호 검색</string>
+    <string name="search_bus_stop">정류장 명칭 또는 번호를 입력하세요.</string>
+    <string name="search_bus_number">버스 노선 번호를 입력하세요.</string>
 
     <string name="add_bookmark">즐겨찾기가 추가되었습니다.</string>
     <string name="del_bookmark">즐겨찾기를 삭제하시겠습니까?</string>

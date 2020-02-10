@@ -9,16 +9,33 @@ import retrofit2.Callback
 import retrofit2.Response
 
 data class BusStopData
-    (val arsId: Int,  val stId: Int, val stNm: String, val tmX: Float, val tmY: Float)
+    (val arsId: String,  val stId: String, val stNm: String, val tmX: Float, val tmY: Float)
 
 class BusStopModel(private var presenter: BusStopPresenter) : Callback<ServiceResult> {
 
     private val stopList : ArrayList<BusStopData> = ArrayList()
 
-    fun searchWord(search: String)
-            = RetrofitHelper.getRetrofit(CommonData.baseUrl)
-            .getStationByName(CommonData.ServiceKey, search)
-            .enqueue(this@BusStopModel)
+    fun searchWord(search: String) {
+
+        for(ch: Char in search.toCharArray()) {
+            if((ch < '0' || ch > '9') && ch != '-') {
+                searchName(search)
+                return
+            }
+        }
+
+        // 실제 검색시 '19-406'으로는 검색을 하지 못한다.
+        searchArsId(search.replace("-", ""))
+    }
+
+    private fun searchName(search: String) = RetrofitHelper.getRetrofit(CommonData.baseUrl)
+        .getStationByName(CommonData.ServiceKey, search)
+        .enqueue(this@BusStopModel)
+
+    private fun searchArsId(search: String) = RetrofitHelper.getRetrofit(CommonData.baseUrl)
+        .getStationByUid(CommonData.ServiceKey, search)
+        .enqueue(this@BusStopModel)
+
 
     fun getBusStopData(): List<BusStopData> = stopList
 
@@ -39,7 +56,10 @@ class BusStopModel(private var presenter: BusStopPresenter) : Callback<ServiceRe
         response.body()?.msgBody?.run {
             stopList.clear()
             for(item in itemList) {
-                stopList.add(BusStopData(item.arsId.toInt(),item.stId.toInt(),item.stNm,item.tmX.toFloat(),item.tmY.toFloat()))
+                if(item.tmX != "")
+                    stopList.add(BusStopData(item.arsId,item.stId,item.stNm,item.tmX.toFloat(),item.tmY.toFloat()))
+                else
+                    stopList.add(BusStopData(item.arsId,item.stId,item.stNm,item.gpsX.toFloat(),item.gpsY.toFloat()))
             }
             presenter.searchSuccess()
         }

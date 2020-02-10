@@ -26,13 +26,16 @@ class BusInfoActivity : AppCompatActivity(), BusInfoContract.View {
             adapter = busInfoAdapter
         }
 
-        val arsId = intent.getIntExtra(IntentType.ArsID.type, -1)
-        if(arsId != -1) {
-            presenter.search(arsId.toString())
+        val arsId : String? = intent.getStringExtra(IntentType.ArsID.type)
+        if(arsId != null) {
+            presenter.search(arsId)
         }
 
-        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener {
-            presenter.search(arsId.toString())
+        findViewById<FloatingActionButton>(R.id.fab).apply {
+            isEnabled = arsId != null
+        }.setOnClickListener {
+            if(arsId != null)
+            presenter.search(arsId)
         }
     }
 

@@ -79,7 +79,7 @@ class BookmarkAdapter(val presenter: BookmarkPresenter) : RecyclerView.Adapter<B
                         laStop.visibility = View.VISIBLE
                         laInfo.visibility = View.GONE
                         tvStopTitle.text  = it.stNm
-                        tvStopSub.text    = "${it.arsId.toString().substring(0,2)}-${it.arsId.toString().substring(2)}"
+                        tvStopSub.text    = "${it.arsId.substring(0,2)}-${it.arsId.substring(2)}"
                     }
                     is BusInfoData -> {
                         vFront.setBackgroundColor(context.getColor(it.routeType.colorId))
