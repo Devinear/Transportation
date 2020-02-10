@@ -19,7 +19,7 @@ class BookmarkFragment : BaseFragment(), BookmarkContract.View {
     private val bookmarkAdapter = BookmarkAdapter(presenter)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view : View = inflater.inflate(R.layout.fragment_home, container, false)
+        val view : View = inflater.inflate(R.layout.fragment_bookmark, container, false)
         view.findViewById<RecyclerView>(R.id.recycler).run {
             layoutManager = LinearLayoutManager(context)
             bookmarkAdapter.addItems(presenter.getData())
