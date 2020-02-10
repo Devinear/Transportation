@@ -47,16 +47,16 @@ object ConvertUtil {
 
     // 노선유형 (1:공항, 2:마을, 3:간선, 4:지선, 5:순환, 6:광역, 7:인천, 8:경기, 9:폐지, 0:공용)
     fun fromRouteType(route: String) : RouteType {
-        return when {
-            route.compareTo("1") == 0 -> RouteType.AIRPORT
-            route.compareTo("2") == 0 -> RouteType.TOWN
-            route.compareTo("3") == 0 -> RouteType.BLUE
-            route.compareTo("4") == 0 -> RouteType.GREEN
-            route.compareTo("5") == 0 -> RouteType.YELLOW
-            route.compareTo("6") == 0 -> RouteType.RED
-            route.compareTo("7") == 0 -> RouteType.INCHEON
-            route.compareTo("8") == 0 -> RouteType.GTEONGGI
-            route.compareTo("9") == 0 -> RouteType.REMOVE
+        return when (route) {
+            "1" -> RouteType.AIRPORT
+            "2" -> RouteType.TOWN
+            "3" -> RouteType.BLUE
+            "4" -> RouteType.GREEN
+            "5" -> RouteType.YELLOW
+            "6" -> RouteType.RED
+            "7" -> RouteType.INCHEON
+            "8" -> RouteType.GTEONGGI
+            "9" -> RouteType.REMOVE
             else // if(route.compareTo("0", false) == 0) {
             -> RouteType.COMMON
         }
@@ -78,9 +78,9 @@ object ConvertUtil {
 
     // 차량유형 (0:일반버스, 1:저상버스, 2:굴절버스)
     fun fromBusType(type: String) : BusType {
-        return when {
-            type.compareTo("2") == 0 -> BusType.BENDY
-            type.compareTo("1") == 0 -> BusType.LOW
+        return when (type) {
+            "2"  -> BusType.BENDY
+            "1"  -> BusType.LOW
             else -> BusType.COMMON
         }
     }
