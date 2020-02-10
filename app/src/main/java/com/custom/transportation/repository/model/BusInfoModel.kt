@@ -50,10 +50,6 @@ class BusInfoModel(private var presenter: BusInfoPresenter) : Callback<ServiceRe
         }
     }
 
-    private fun loadDatabase() {
-//        BookmarkDatabase.getInstance(applicationContext)
-    }
-
     companion object {
         private var instance : BusInfoModel? = null
         fun getInstance(newPresenter: BusInfoPresenter) : BusInfoModel {
