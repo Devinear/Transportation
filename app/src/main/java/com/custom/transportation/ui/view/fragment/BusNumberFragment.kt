@@ -22,14 +22,13 @@ class BusNumberFragment : BaseFragment() {
             AlertDialog.Builder(context).apply {
                 setTitle(context.getString(R.string.search_bus_number))
                 setView(EditText(context).apply {
-                    filters = Array(1) {
-                        InputFilter { source, start, end, dest, dstart, dend ->
+                    filters = arrayOf(InputFilter { source, _, _, _, _, _ ->
                             if (source != null && source.matches("^[0-9-]".toRegex()))
                                 source
                             else
                                 ""
                         }
-                    }
+                    )
                 })
                 setPositiveButton(context.getString(android.R.string.ok)) { _: DialogInterface?, _:Int -> }
             }.create().run { show() }
