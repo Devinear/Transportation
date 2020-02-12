@@ -25,7 +25,7 @@
         android:id="@+id/iv_icon"
         android:layout_width="@dimen/icon_width"
         android:layout_height="@dimen/icon_height"
-        android:layout_margin="15dp"
+        android:layout_margin="@dimen/item_icon_margin"
         android:src="@drawable/ic_bus_stop"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

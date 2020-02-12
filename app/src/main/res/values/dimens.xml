@@ -20,4 +20,5 @@
     <dimen name="icon_height">40dp</dimen>
     <dimen name="item_margin">10dp</dimen>
     <dimen name="item_type_width">5dp</dimen>
+    <dimen name="item_icon_margin">16dp</dimen>
 </resources>
