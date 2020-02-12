@@ -31,7 +31,7 @@ class BusNumberFragment : BaseFragment() {
                         }
                     }
                 })
-                setPositiveButton(context.getString(android.R.string.ok)) { dialog: DialogInterface?, which:Int -> }
+                setPositiveButton(context.getString(android.R.string.ok)) { _: DialogInterface?, _:Int -> }
             }.create().run { show() }
         }
         return view
