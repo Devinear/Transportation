@@ -9,6 +9,14 @@ interface BaseContract {
     interface Presenter {
         fun search(search : String)
         fun addBookmark(bookmark: Any)
-        fun updateBookmark()
+    }
+
+    interface RemoteCallback {
+        fun onSuccess()
+        fun onFailure(msg: String)
+    }
+
+    interface LocalCallback {
+        fun onComplete()
     }
 }

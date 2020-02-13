@@ -1,21 +1,19 @@
 package com.custom.transportation.ui.contract
 
-import com.custom.transportation.repository.model.BookmarkModel
-import com.custom.transportation.repository.model.BusStopData
-import com.custom.transportation.repository.model.BusStopModel
+import com.custom.transportation.repository.*
 
-class BusStopPresenter(val view: BusStopContract.View) : BusStopContract.Presenter {
+class BusStopPresenter(val view: BusStopContract.View) : BusStopContract.Presenter, BusStopContract.Callback {
 
-    override fun search(search: String) = BusStopModel.getInstance(this).searchWord(search)
+    private val busStop : BusStopDataSource = BusStopDataSourceImpl.getInstance()
+    private val bookmark : BookmarkDataSource = BookmarkDataSourceImpl.getInstance()
 
-    override fun getData(): List<BusStopData> = BusStopModel.getInstance(this).getBusStopData()
+    override fun search(search: String) = busStop.search(search, this)
 
-    override fun addBookmark(bookmark: Any) = BookmarkModel.getInstance(this).addBookmark(bookmark)
+    override fun getData(): List<BusStopData> = busStop.getAll()
 
-    override fun updateBookmark() = Unit
+    override fun addBookmark(bookmark: Any) = this.bookmark.insert(bookmark)
 
-    /* Search CallBack */
-    fun searchFailure(msg: String) = view.searchFailure(msg)
+    override fun onSuccess() = view.searchSuccess()
 
-    fun searchSuccess() = view.searchSuccess()
+    override fun onFailure(msg: String) = view.searchFailure(msg)
 }

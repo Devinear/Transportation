@@ -13,4 +13,6 @@ interface BookmarkContract {
         fun getData() : List<Any>
         fun deleteBookmark(bookmark: Any) : Boolean
     }
+
+    interface Callback : BaseContract.LocalCallback
 }

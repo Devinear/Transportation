@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.custom.transportation.R
 import com.custom.transportation.common.IntentType
-import com.custom.transportation.repository.model.BusStopData
+import com.custom.transportation.repository.BusStopData
 import com.custom.transportation.ui.contract.BusStopContract
 import com.custom.transportation.ui.view.activity.BusInfoActivity
 import com.google.android.material.snackbar.Snackbar
