@@ -4,21 +4,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="@dimen/item_common_height"
+    android:layout_margin="@dimen/item_margin">
+
+    <View
+        android:id="@+id/view_front"
+        android:layout_width="@dimen/item_type_width"
+        android:layout_height="match_parent"
+        android:background="@color/stop_common"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:id="@+id/view_back"
+        android:layout_width="@dimen/item_type_width"
+        android:layout_height="match_parent"
+        android:background="@color/stop_common"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageView
         android:id="@+id/iv_icon"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_margin="10dp"
-        android:src="@drawable/ic_directions_bus_2x"
+        android:layout_width="@dimen/icon_width"
+        android:layout_height="@dimen/icon_height"
+        android:layout_margin="@dimen/item_icon_margin"
+        android:src="@drawable/ic_bus_stop"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/layout_stop" />
+        app:layout_constraintEnd_toStartOf="@id/layout_text" />
 
     <LinearLayout
-        android:id="@+id/layout_stop"
+        android:id="@+id/layout_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintHorizontal_weight="1"
@@ -28,30 +43,67 @@
         app:layout_constraintStart_toEndOf="@id/iv_icon"
         app:layout_constraintEnd_toStartOf="@id/ib_delete" >
 
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/item_main_text_size"
-            android:textStyle="bold" />
+        <LinearLayout
+            android:id="@+id/layout_stop_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/tv_sub"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/item_sub_text_size" />
+            <TextView
+                android:id="@+id/tv_stop_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:textSize="@dimen/item_main_text_size"
+                android:textStyle="bold"
+                tools:text="크라운사거리"/>
+
+            <TextView
+                android:id="@+id/tv_stop_sub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/item_sub_text_size"
+                tools:text="19-367"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_info_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tv_info_sub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:textSize="@dimen/item_sub_text_size"
+                tools:text="[마을버스]"/>
+
+            <TextView
+                android:id="@+id/tv_info_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/item_main_text_size"
+                android:textStyle="bold"
+                tools:text="영등포09"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
     <ImageButton
         android:id="@+id/ib_delete"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_margin="10dp"
-        android:background="@color/colorAccent"
+        android:background="@drawable/ic_delete"
+        android:scaleType="fitCenter"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/layout_stop"
+        app:layout_constraintStart_toEndOf="@id/layout_text"
         app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

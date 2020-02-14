@@ -6,13 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.custom.transportation.BusStopDetailActivity
 import com.custom.transportation.R
-import com.custom.transportation.data.unit.BusStopData
-import com.custom.transportation.presenter.BusStop
-import com.custom.transportation.ui.common.IntentType
+import com.custom.transportation.common.IntentType
+import com.custom.transportation.repository.BusStopData
+import com.custom.transportation.ui.contract.BusStopContract
+import com.custom.transportation.ui.view.activity.BusInfoActivity
+import com.google.android.material.snackbar.Snackbar
 
-class BusStopAdapter(val presenter: BusStop.Presenter) : RecyclerView.Adapter<BusStopAdapter.ViewHolder>() {
+class BusStopAdapter(val presenter: BusStopContract.Presenter) : RecyclerView.Adapter<BusStopAdapter.ViewHolder>() {
     private val items = mutableListOf<BusStopData>()
 
     fun addItems(items : List<BusStopData>) {
@@ -27,11 +28,12 @@ class BusStopAdapter(val presenter: BusStop.Presenter) : RecyclerView.Adapter<Bu
         init {
             view.setOnClickListener{
                 it.context.startActivity(
-                    Intent(it.context, BusStopDetailActivity::class.java)
-                    .apply { putExtra(IntentType.ArsID.tpye, items[adapterPosition].arsId) })
+                    Intent(it.context, BusInfoActivity::class.java)
+                    .apply { putExtra(IntentType.ArsID.type, items[adapterPosition].arsId) })
             }
             view.setOnLongClickListener {
                 presenter.addBookmark(items[adapterPosition])
+                Snackbar.make(it, it.context.getText(R.string.add_bookmark), Snackbar.LENGTH_SHORT).show()
                 return@setOnLongClickListener true
             }
         }
@@ -40,14 +42,16 @@ class BusStopAdapter(val presenter: BusStop.Presenter) : RecyclerView.Adapter<Bu
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder
-            = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_busstop, parent,false))
+            = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_bus_stop, parent,false))
 
     override fun getItemCount(): Int  = items.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
             tvLocation.text = items[position].stNm
-            tvNumber.text = items[position].arsId.toString()
+            tvNumber.text = if(items[position].arsId.length >= 5)
+                "${items[position].arsId.substring(0,2)}-${items[position].arsId.substring(2)}"
+            else items[position].arsId
         }
     }
 

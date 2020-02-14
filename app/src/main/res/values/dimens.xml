@@ -6,9 +6,19 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="appbar_padding_top">8dp</dimen>
 
-    <dimen name="item_main_text_size">15sp</dimen>
-    <dimen name="item_sub_text_size">13sp</dimen>
+    <dimen name="item_main_text_size">17dp</dimen>
+    <dimen name="item_sub_text_size">13dp</dimen>
+
+    <dimen name="item_bookmark_main_text">17dp</dimen>
+    <dimen name="item_empty_text">25dp</dimen>
 
     <dimen name="bus_name_text_size">20sp</dimen>
     <dimen name="bus_sub_text_size">12sp</dimen>
+    <dimen name="item_common_height">60dp</dimen>
+    <dimen name="item_bus_info_height">80dp</dimen>
+    <dimen name="icon_width">40dp</dimen>
+    <dimen name="icon_height">40dp</dimen>
+    <dimen name="item_margin">10dp</dimen>
+    <dimen name="item_type_width">5dp</dimen>
+    <dimen name="item_icon_margin">16dp</dimen>
 </resources>
