@@ -2,8 +2,8 @@ package com.custom.transportation.repository.local
 
 import androidx.room.TypeConverter
 import com.custom.transportation.common.ConvertUtil
-import com.custom.transportation.repository.model.BusInfoData
-import com.custom.transportation.repository.model.BusStopData
+import com.custom.transportation.repository.BusInfoData
+import com.custom.transportation.repository.BusStopData
 
 class Converts {
 

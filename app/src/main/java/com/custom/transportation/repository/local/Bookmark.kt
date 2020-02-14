@@ -2,8 +2,8 @@ package com.custom.transportation.repository.local
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.custom.transportation.repository.model.BusInfoData
-import com.custom.transportation.repository.model.BusStopData
+import com.custom.transportation.repository.BusInfoData
+import com.custom.transportation.repository.BusStopData
 
 @Entity(tableName = "bookmarks")
 data class Bookmark(@PrimaryKey(autoGenerate = true)
