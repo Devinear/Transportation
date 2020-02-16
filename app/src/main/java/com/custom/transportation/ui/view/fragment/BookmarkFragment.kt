@@ -13,6 +13,9 @@ import com.custom.transportation.base.BaseFragment
 import com.custom.transportation.ui.adapter.recycler.BookmarkAdapter
 import com.custom.transportation.ui.contract.BookmarkContract
 import com.custom.transportation.ui.contract.BookmarkPresenter
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class BookmarkFragment : BaseFragment(), BookmarkContract.View {
 
@@ -36,8 +39,11 @@ class BookmarkFragment : BaseFragment(), BookmarkContract.View {
     override fun showFragment() = updateData()
 
     override fun updateData() {
-        bookmarkAdapter.addItems(presenter.getData())
-        tvEmpty?.visibility = if(bookmarkAdapter.itemCount == 0) View.VISIBLE else View.GONE
+        CoroutineScope(Dispatchers.Main).launch {
+            presenter.requestData()
+            bookmarkAdapter.addItems(presenter.getData())
+            tvEmpty?.visibility = if(bookmarkAdapter.itemCount == 0) View.VISIBLE else View.GONE
+        }
     }
 
     override fun searchSuccess() = Unit

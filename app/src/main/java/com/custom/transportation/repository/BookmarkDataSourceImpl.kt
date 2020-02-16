@@ -1,10 +1,13 @@
 package com.custom.transportation.repository
 
-import com.custom.transportation.base.BaseContract
 import com.custom.transportation.common.CommonData
 import com.custom.transportation.repository.local.Bookmark
 import com.custom.transportation.repository.local.BookmarkDB
 import com.custom.transportation.repository.local.BookmarkDao
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 
 class BookmarkDataSourceImpl : BookmarkDataSource {
 
@@ -14,25 +17,25 @@ class BookmarkDataSourceImpl : BookmarkDataSource {
         if(isDuplicate(bookmark)) return
 
         bookmarks.add(bookmark)
-        synchronized(this) {
-            Thread(Runnable {
-                when (bookmark) {
-                    is BusStopData -> loadDatabaseDao()?.insertBookmark(Bookmark(true, bookmark, null))
-                    is BusInfoData -> loadDatabaseDao()?.insertBookmark(Bookmark(false, null, bookmark))
-                }
-            }).start()
+
+        CoroutineScope(Dispatchers.IO).launch {
+            when (bookmark) {
+                is BusStopData -> loadDatabaseDao()?.insertBookmark(Bookmark(true, bookmark, null))
+                is BusInfoData -> loadDatabaseDao()?.insertBookmark(Bookmark(false, null, bookmark))
+            }
         }
     }
 
     override fun delete(bookmark: Any) : Boolean {
-        synchronized(this) {
-            Thread(Runnable {
-                when (bookmark) {
-                    is BusStopData -> loadDatabaseDao()?.deleteBookmark(Bookmark(true,bookmark,null))
-                    is BusInfoData -> loadDatabaseDao()?.deleteBookmark(Bookmark(false,null,bookmark))
-                }
-            }).start()
+        if(!isDuplicate(bookmark)) return false
+
+        CoroutineScope(Dispatchers.IO).launch {
+            when (bookmark) {
+                is BusStopData -> loadDatabaseDao()?.deleteBookmark(Bookmark(true,bookmark,null))
+                is BusInfoData -> loadDatabaseDao()?.deleteBookmark(Bookmark(false,null,bookmark))
+            }
         }
+
         return bookmarks.remove(bookmark)
     }
 
@@ -44,17 +47,24 @@ class BookmarkDataSourceImpl : BookmarkDataSource {
         return false
     }
 
-    override fun reloadData(callback: BaseContract.LocalCallback) {
-        Thread(Runnable {
-            val items: List<Bookmark> = loadDatabaseDao()?.getAll() ?: return@Runnable
-            for(item: Bookmark in items) {
+    override suspend fun reloadData() {
+        val job = CoroutineScope(Dispatchers.IO).launch {
+
+            val items: List<Bookmark>? = loadDatabaseDao()?.getAll()
+            // items가 Null인 경우 Coroutine 종료
+            items ?: cancel()
+
+            bookmarks.clear()
+            for(item: Bookmark in items!!) {
                 @Suppress("IMPLICIT_CAST_TO_ANY")
                 val data: Any? = if(item.isBusStop) item.station else item.busInfo
-                data ?: return@Runnable
-                bookmarks.add(data)
+                data ?: cancel()
+                bookmarks.add(data!!)
             }
-            callback.onComplete()
-        }).start()
+        }
+
+        // job이 종료될때까지 join하게 되면 callback이 필요없다.
+        job.join()
     }
 
     override fun getAll(): List<Any> = bookmarks

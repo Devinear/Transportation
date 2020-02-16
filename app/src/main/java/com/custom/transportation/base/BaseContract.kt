@@ -15,8 +15,4 @@ interface BaseContract {
         fun onSuccess()
         fun onFailure(msg: String)
     }
-
-    interface LocalCallback {
-        fun onComplete()
-    }
 }

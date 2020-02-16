@@ -1,7 +1,5 @@
 package com.custom.transportation.repository
 
-import com.custom.transportation.base.BaseContract
-
 interface BookmarkDataSource {
 
     fun insert(bookmark : Any)
@@ -12,5 +10,5 @@ interface BookmarkDataSource {
 
     fun getAll() : List<Any>
 
-    fun reloadData(callback: BaseContract.LocalCallback)
+    suspend fun reloadData()
 }

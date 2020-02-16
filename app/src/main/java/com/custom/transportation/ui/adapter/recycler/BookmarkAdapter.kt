@@ -13,6 +13,9 @@ import com.custom.transportation.R
 import com.custom.transportation.repository.BusInfoData
 import com.custom.transportation.repository.BusStopData
 import com.custom.transportation.ui.contract.BookmarkPresenter
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class BookmarkAdapter(val presenter: BookmarkPresenter) : RecyclerView.Adapter<BookmarkAdapter.ViewHolder>() {
     private val items = mutableListOf<Any>()

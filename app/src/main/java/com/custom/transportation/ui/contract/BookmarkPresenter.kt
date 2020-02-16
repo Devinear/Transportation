@@ -3,7 +3,7 @@ package com.custom.transportation.ui.contract
 import com.custom.transportation.repository.BookmarkDataSource
 import com.custom.transportation.repository.BookmarkDataSourceImpl
 
-class BookmarkPresenter(val view: BookmarkContract.View) : BookmarkContract.Presenter, BookmarkContract.Callback {
+class BookmarkPresenter(val view: BookmarkContract.View) : BookmarkContract.Presenter {
 
     private val bookmark: BookmarkDataSource = BookmarkDataSourceImpl.getInstance()
 
@@ -15,7 +15,5 @@ class BookmarkPresenter(val view: BookmarkContract.View) : BookmarkContract.Pres
 
     override fun deleteBookmark(bookmark: Any) : Boolean = this.bookmark.delete(bookmark)
 
-    override fun requestData() = bookmark.reloadData(this)
-
-    override fun onComplete() = view.updateData()
+    override suspend fun requestData() = bookmark.reloadData()
 }

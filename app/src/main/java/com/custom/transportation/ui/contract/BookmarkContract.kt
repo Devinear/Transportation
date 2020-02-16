@@ -9,10 +9,8 @@ interface BookmarkContract {
     }
 
     interface Presenter : BaseContract.Presenter {
-        fun requestData()
-        fun getData() : List<Any>
-        fun deleteBookmark(bookmark: Any) : Boolean
+        suspend fun requestData()
+        fun deleteBookmark(bookmark: Any): Boolean
+        fun getData(): List<Any>
     }
-
-    interface Callback : BaseContract.LocalCallback
 }
