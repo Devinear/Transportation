@@ -8,16 +8,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.custom.transportation.R
 import com.custom.transportation.repository.BusInfoData
 import com.custom.transportation.repository.BusStopData
 import com.custom.transportation.ui.contract.BookmarkPresenter
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
-class BookmarkAdapter(val presenter: BookmarkPresenter) : RecyclerView.Adapter<BookmarkAdapter.ViewHolder>() {
+class BookmarkAdapter(val presenter: BookmarkPresenter) : RecyclerView.Adapter<BookmarkAdapter.ViewHolder>(), ItemMoveListener{
     private val items = mutableListOf<Any>()
 
     fun addItems(items : List<Any>) {
@@ -98,4 +96,29 @@ class BookmarkAdapter(val presenter: BookmarkPresenter) : RecyclerView.Adapter<B
         }
     }
 
+    override fun onItemMove(fromPosition: Int, toPosition: Int) {
+
+    }
+}
+
+interface ItemMoveListener {
+    fun onItemMove(fromPosition: Int, toPosition: Int)
+}
+
+class BookmarkTouchHelperCallback(val moveListener: ItemMoveListener) : ItemTouchHelper.Callback() {
+
+    override fun getMovementFlags(recyclerView: RecyclerView,viewHolder: RecyclerView.ViewHolder): Int {
+        val dragFlags: Int = ItemTouchHelper.UP or ItemTouchHelper.DOWN
+        val swipeFlags: Int = ItemTouchHelper.START or ItemTouchHelper.END
+        return makeMovementFlags(dragFlags, swipeFlags)
+    }
+
+    override fun onMove(recyclerView: RecyclerView,viewHolder: RecyclerView.ViewHolder,target: RecyclerView.ViewHolder): Boolean {
+        moveListener.onItemMove(viewHolder.adapterPosition, target.adapterPosition)
+        return true
+    }
+
+    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+
+    }
 }
