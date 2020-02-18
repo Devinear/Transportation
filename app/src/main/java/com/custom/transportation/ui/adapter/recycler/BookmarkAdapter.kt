@@ -14,9 +14,12 @@ import com.custom.transportation.R
 import com.custom.transportation.repository.BusInfoData
 import com.custom.transportation.repository.BusStopData
 import com.custom.transportation.ui.contract.BookmarkPresenter
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.*
 
-class BookmarkAdapter(val presenter: BookmarkPresenter, val dragListener: OnStartDragListener) : RecyclerView.Adapter<BookmarkAdapter.ViewHolder>(), OnItemMoveListener{
+class BookmarkAdapter(val presenter: BookmarkPresenter, private val dragListener: OnDragListener) : RecyclerView.Adapter<BookmarkAdapter.ViewHolder>(), OnItemMoveListener{
     private val items = mutableListOf<Any>()
 
     fun addItems(items : List<Any>) {
@@ -106,5 +109,8 @@ class BookmarkAdapter(val presenter: BookmarkPresenter, val dragListener: OnStar
     override fun onItemMove(fromPosition: Int, toPosition: Int) {
         Collections.swap(items, fromPosition, toPosition)
         notifyItemMoved(fromPosition, toPosition)
+        CoroutineScope(Dispatchers.IO).launch {
+            presenter.moveBookmark(fromPosition, toPosition)
+        }
     }
 }

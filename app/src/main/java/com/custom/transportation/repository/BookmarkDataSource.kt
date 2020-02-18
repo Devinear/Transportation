@@ -6,6 +6,8 @@ interface BookmarkDataSource {
 
     fun delete(bookmark : Any) : Boolean
 
+    suspend fun move(fromIndex: Int, toIndex: Int)
+
     fun isDuplicate(bookmark: Any) : Boolean
 
     fun getAll() : List<Any>

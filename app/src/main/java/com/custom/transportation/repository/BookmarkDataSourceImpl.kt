@@ -1,5 +1,6 @@
 package com.custom.transportation.repository
 
+import android.util.Log
 import com.custom.transportation.common.CommonData
 import com.custom.transportation.repository.local.Bookmark
 import com.custom.transportation.repository.local.BookmarkDB
@@ -8,6 +9,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import kotlin.math.max
+import kotlin.math.min
 
 class BookmarkDataSourceImpl : BookmarkDataSource {
 
@@ -36,6 +39,22 @@ class BookmarkDataSourceImpl : BookmarkDataSource {
         }
 
         return bookmarks.remove(bookmark)
+    }
+
+    override suspend fun move(fromIndex: Int, toIndex: Int) {
+        Log.d("DB", "move:${fromIndex}>${toIndex}")
+
+        val job = CoroutineScope(Dispatchers.IO).launch {
+
+            val list = loadDatabaseDao()?.getBetweenIndex(min(fromIndex, toIndex), max(fromIndex, toIndex))
+            list ?: return@launch
+
+
+
+        }
+
+
+
     }
 
     override fun isDuplicate(bookmark: Any) : Boolean {

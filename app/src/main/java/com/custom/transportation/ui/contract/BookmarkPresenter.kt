@@ -15,5 +15,7 @@ class BookmarkPresenter(val view: BookmarkContract.View) : BookmarkContract.Pres
 
     override fun deleteBookmark(bookmark: Any) : Boolean = this.bookmark.delete(bookmark)
 
+    override suspend fun moveBookmark(fromIndex: Int, toIndex: Int) = bookmark.move(fromIndex, toIndex)
+
     override suspend fun requestData() = bookmark.reloadData()
 }

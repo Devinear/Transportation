@@ -13,14 +13,14 @@ import com.custom.transportation.R
 import com.custom.transportation.base.BaseFragment
 import com.custom.transportation.ui.adapter.recycler.BookmarkAdapter
 import com.custom.transportation.ui.adapter.recycler.BookmarkTouchHelper
-import com.custom.transportation.ui.adapter.recycler.OnStartDragListener
+import com.custom.transportation.ui.adapter.recycler.OnDragListener
 import com.custom.transportation.ui.contract.BookmarkContract
 import com.custom.transportation.ui.contract.BookmarkPresenter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class BookmarkFragment : BaseFragment(), BookmarkContract.View, OnStartDragListener {
+class BookmarkFragment : BaseFragment(), BookmarkContract.View, OnDragListener {
 
     private val presenter = BookmarkPresenter(this)
     private val bookmarkAdapter = BookmarkAdapter(presenter, this)

@@ -3,7 +3,7 @@ package com.custom.transportation.ui.adapter.recycler
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 
-interface OnStartDragListener {
+interface OnDragListener {
     fun onStartDrag(holder: BookmarkAdapter.ViewHolder)
 }
 
@@ -11,7 +11,7 @@ interface OnItemMoveListener {
     fun onItemMove(fromPosition: Int, toPosition: Int)
 }
 
-class BookmarkTouchHelper(val moveListener: OnItemMoveListener) : ItemTouchHelper.Callback() {
+class BookmarkTouchHelper(private val moveListener: OnItemMoveListener) : ItemTouchHelper.Callback() {
 
     override fun getMovementFlags(recyclerView: RecyclerView,viewHolder: RecyclerView.ViewHolder)
             : Int = makeMovementFlags(ItemTouchHelper.UP or ItemTouchHelper.DOWN,ItemTouchHelper.START or ItemTouchHelper.END)
@@ -22,7 +22,5 @@ class BookmarkTouchHelper(val moveListener: OnItemMoveListener) : ItemTouchHelpe
         return true
     }
 
-    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) = Unit
 }

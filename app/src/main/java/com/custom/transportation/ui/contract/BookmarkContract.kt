@@ -11,6 +11,7 @@ interface BookmarkContract {
     interface Presenter : BaseContract.Presenter {
         suspend fun requestData()
         fun deleteBookmark(bookmark: Any): Boolean
+        suspend fun moveBookmark(fromIndex: Int, toIndex: Int)
         fun getData(): List<Any>
     }
 }
