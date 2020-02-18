@@ -6,7 +6,8 @@ import com.custom.transportation.repository.BusInfoData
 import com.custom.transportation.repository.BusStopData
 
 @Entity(tableName = "bookmarks")
-data class Bookmark(@PrimaryKey(autoGenerate = true)
+data class Bookmark(@PrimaryKey/*(autoGenerate = true)*/
+                    val id: Int,
                     val isBusStop: Boolean,
                     val station: BusStopData?,
                     val busInfo: BusInfoData?)

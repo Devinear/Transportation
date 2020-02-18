@@ -17,11 +17,10 @@ class BookmarkDataSourceImpl : BookmarkDataSource {
         if(isDuplicate(bookmark)) return
 
         bookmarks.add(bookmark)
-
         CoroutineScope(Dispatchers.IO).launch {
             when (bookmark) {
-                is BusStopData -> loadDatabaseDao()?.insertBookmark(Bookmark(true, bookmark, null))
-                is BusInfoData -> loadDatabaseDao()?.insertBookmark(Bookmark(false, null, bookmark))
+                is BusStopData -> loadDatabaseDao()?.insertBookmark(Bookmark(bookmarks.indexOf(bookmark),true, bookmark, null))
+                is BusInfoData -> loadDatabaseDao()?.insertBookmark(Bookmark(bookmarks.indexOf(bookmark),false, null, bookmark))
             }
         }
     }
@@ -31,8 +30,8 @@ class BookmarkDataSourceImpl : BookmarkDataSource {
 
         CoroutineScope(Dispatchers.IO).launch {
             when (bookmark) {
-                is BusStopData -> loadDatabaseDao()?.deleteBookmark(Bookmark(true,bookmark,null))
-                is BusInfoData -> loadDatabaseDao()?.deleteBookmark(Bookmark(false,null,bookmark))
+                is BusStopData -> loadDatabaseDao()?.deleteBookmark(Bookmark(bookmarks.indexOf(bookmark), true, bookmark,null))
+                is BusInfoData -> loadDatabaseDao()?.deleteBookmark(Bookmark(bookmarks.indexOf(bookmark), false,null,bookmark))
             }
         }
 
