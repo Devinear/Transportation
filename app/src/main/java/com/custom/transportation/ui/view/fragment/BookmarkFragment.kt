@@ -6,26 +6,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.custom.transportation.R
 import com.custom.transportation.base.BaseFragment
 import com.custom.transportation.ui.adapter.recycler.BookmarkAdapter
+import com.custom.transportation.ui.adapter.recycler.BookmarkTouchHelper
+import com.custom.transportation.ui.adapter.recycler.OnStartDragListener
 import com.custom.transportation.ui.contract.BookmarkContract
 import com.custom.transportation.ui.contract.BookmarkPresenter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class BookmarkFragment : BaseFragment(), BookmarkContract.View {
+class BookmarkFragment : BaseFragment(), BookmarkContract.View, OnStartDragListener {
 
     private val presenter = BookmarkPresenter(this)
-    private val bookmarkAdapter = BookmarkAdapter(presenter)
+    private val bookmarkAdapter = BookmarkAdapter(presenter, this)
+    private val bookmarkHelper = ItemTouchHelper(BookmarkTouchHelper(bookmarkAdapter))
     private var tvEmpty : TextView? = null // lateinit 의 경우 CreateView 생성 시점때문
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view : View = inflater.inflate(R.layout.fragment_bookmark, container, false)
         view.findViewById<RecyclerView>(R.id.recycler).run {
+            bookmarkHelper.attachToRecyclerView(this)
             layoutManager = LinearLayoutManager(context)
             adapter = bookmarkAdapter
         }
@@ -49,6 +54,8 @@ class BookmarkFragment : BaseFragment(), BookmarkContract.View {
     override fun searchSuccess() = Unit
 
     override fun searchFailure(msg: String) = Unit
+
+    override fun onStartDrag(holder: BookmarkAdapter.ViewHolder) = bookmarkHelper.startDrag(holder)
 
     companion object {
         private var instance : BookmarkFragment? = null

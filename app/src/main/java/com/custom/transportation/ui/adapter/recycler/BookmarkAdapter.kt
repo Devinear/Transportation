@@ -5,17 +5,18 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.custom.transportation.R
 import com.custom.transportation.repository.BusInfoData
 import com.custom.transportation.repository.BusStopData
 import com.custom.transportation.ui.contract.BookmarkPresenter
+import java.util.*
 
-class BookmarkAdapter(val presenter: BookmarkPresenter) : RecyclerView.Adapter<BookmarkAdapter.ViewHolder>(), ItemMoveListener{
+class BookmarkAdapter(val presenter: BookmarkPresenter, val dragListener: OnStartDragListener) : RecyclerView.Adapter<BookmarkAdapter.ViewHolder>(), OnItemMoveListener{
     private val items = mutableListOf<Any>()
 
     fun addItems(items : List<Any>) {
@@ -94,31 +95,16 @@ class BookmarkAdapter(val presenter: BookmarkPresenter) : RecyclerView.Adapter<B
                 }
             }
         }
+
+        holder.itemView.setOnTouchListener { _, event ->
+            if(event.action == MotionEvent.ACTION_DOWN)
+                dragListener.onStartDrag(holder)
+            return@setOnTouchListener false
+        }
     }
 
     override fun onItemMove(fromPosition: Int, toPosition: Int) {
-
-    }
-}
-
-interface ItemMoveListener {
-    fun onItemMove(fromPosition: Int, toPosition: Int)
-}
-
-class BookmarkTouchHelperCallback(val moveListener: ItemMoveListener) : ItemTouchHelper.Callback() {
-
-    override fun getMovementFlags(recyclerView: RecyclerView,viewHolder: RecyclerView.ViewHolder): Int {
-        val dragFlags: Int = ItemTouchHelper.UP or ItemTouchHelper.DOWN
-        val swipeFlags: Int = ItemTouchHelper.START or ItemTouchHelper.END
-        return makeMovementFlags(dragFlags, swipeFlags)
-    }
-
-    override fun onMove(recyclerView: RecyclerView,viewHolder: RecyclerView.ViewHolder,target: RecyclerView.ViewHolder): Boolean {
-        moveListener.onItemMove(viewHolder.adapterPosition, target.adapterPosition)
-        return true
-    }
-
-    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-
+        Collections.swap(items, fromPosition, toPosition)
+        notifyItemMoved(fromPosition, toPosition)
     }
 }
