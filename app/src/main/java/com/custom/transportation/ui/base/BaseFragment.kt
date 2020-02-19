@@ -1,4 +1,4 @@
-package com.custom.transportation.base
+package com.custom.transportation.ui.base
 
 import android.content.Context
 import androidx.fragment.app.Fragment

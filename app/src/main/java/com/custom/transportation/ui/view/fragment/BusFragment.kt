@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager.widget.ViewPager
 import com.custom.transportation.R
-import com.custom.transportation.base.BaseFragment
+import com.custom.transportation.ui.base.BaseFragment
 import com.custom.transportation.ui.adapter.paper.BusPagerAdapter
 import com.google.android.material.tabs.TabLayout
 

@@ -1,6 +1,6 @@
 package com.custom.transportation.repository
 
-import com.custom.transportation.base.BaseContract
+import com.custom.transportation.ui.base.BaseContract
 import com.custom.transportation.common.CommonData
 import com.custom.transportation.repository.remote.RetrofitHelper
 import com.custom.transportation.repository.remote.ServiceResult

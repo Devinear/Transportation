@@ -1,6 +1,6 @@
 package com.custom.transportation.ui.contract
 
-import com.custom.transportation.base.BaseContract
+import com.custom.transportation.ui.base.BaseContract
 
 interface BookmarkContract {
 
