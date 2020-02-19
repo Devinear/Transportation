@@ -70,6 +70,9 @@ class BookmarkDataSourceImpl : BookmarkDataSource {
             for(item: Bookmark in items!!) {
                 bookmarks[item.id] = item.data
             }
+
+            // key(id) 값으로 정렬
+            bookmarks.toSortedMap()
         }
         // job이 종료될때까지 join하게 되면 callback이 필요없다.
         job.join()
