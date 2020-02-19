@@ -2,13 +2,13 @@ package com.custom.transportation.repository
 
 interface BookmarkDataSource {
 
-    fun insert(bookmark : Any)
+    fun insert(data : BusInfoData) : Boolean
 
-    fun delete(bookmark : Any) : Boolean
+    fun insert(data : BusStopData) : Boolean
+
+    fun delete(bookmark : BookmarkData) : Boolean
 
     suspend fun move(fromIndex: Int, toIndex: Int)
-
-    fun isDuplicate(bookmark: Any) : Boolean
 
     fun getAll() : List<Any>
 
