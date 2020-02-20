@@ -1,10 +1,13 @@
 package com.custom.transportation.ui.contract
 
-import com.custom.transportation.repository.*
+import com.custom.transportation.repository.BookmarkDataSource
+import com.custom.transportation.repository.BookmarkDataSourceImpl
+import com.custom.transportation.repository.BusStopData
+import com.custom.transportation.repository.BusStopDataSourceImpl
 
 class BusStopPresenter(val view: BusStopContract.View) : BusStopContract.Presenter, BusStopContract.Callback {
 
-    private val busStop : BusStopDataSource = BusStopDataSourceImpl.getInstance()
+    private val busStop = BusStopDataSourceImpl.getInstance()
     private val bookmark : BookmarkDataSource = BookmarkDataSourceImpl.getInstance()
 
     override fun search(search: String) = busStop.search(search, this)

@@ -10,7 +10,7 @@ interface BookmarkDataSource {
 
     suspend fun move(fromIndex: Int, toIndex: Int)
 
-    fun getAll() : List<Any>
+    fun getAll() : List<BookmarkData>
 
     suspend fun reloadData()
 }

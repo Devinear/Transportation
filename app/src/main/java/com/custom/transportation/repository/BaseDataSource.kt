@@ -2,7 +2,7 @@ package com.custom.transportation.repository
 
 import com.custom.transportation.ui.base.BaseContract
 
-interface BusStopDataSource {
+interface BaseDataSource <T> {
     fun search(search: String, callback: BaseContract.RemoteCallback)
-    fun getAll() : List<BusStopData>
+    fun getAll() : List<T>
 }

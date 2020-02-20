@@ -1,11 +1,10 @@
 package com.custom.transportation.ui.contract
 
-import com.custom.transportation.repository.BookmarkDataSource
 import com.custom.transportation.repository.BookmarkDataSourceImpl
 
 class BookmarkPresenter(val view: BookmarkContract.View) : BookmarkContract.Presenter {
 
-    private val bookmark: BookmarkDataSource = BookmarkDataSourceImpl.getInstance()
+    private val bookmark = BookmarkDataSourceImpl.getInstance()
 
     override fun getData(): List<Any> = bookmark.getAll()
 

@@ -11,7 +11,7 @@ import retrofit2.Response
 data class BusStopData
     (val arsId: String,  val stId: String, val stNm: String, val tmX: Float, val tmY: Float)
 
-class BusStopDataSourceImpl : BusStopDataSource, Callback<ServiceResult> {
+class BusStopDataSourceImpl : BaseDataSource<BusStopData>, Callback<ServiceResult> {
 
     private var callback : BaseContract.RemoteCallback? = null
     private val stopList : ArrayList<BusStopData> = ArrayList()
@@ -68,8 +68,8 @@ class BusStopDataSourceImpl : BusStopDataSource, Callback<ServiceResult> {
     }
 
     companion object {
-        private var INSTANCE : BusStopDataSource? = null
-        fun getInstance() : BusStopDataSource =
+        private var INSTANCE : BaseDataSource<BusStopData>? = null
+        fun getInstance() : BaseDataSource<BusStopData> =
             INSTANCE ?: BusStopDataSourceImpl().also { INSTANCE = it }
     }
 }

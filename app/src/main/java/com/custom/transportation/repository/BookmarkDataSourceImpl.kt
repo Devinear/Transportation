@@ -6,6 +6,8 @@ import com.custom.transportation.common.ConvertUtil
 import com.custom.transportation.repository.local.Bookmark
 import com.custom.transportation.repository.local.BookmarkDB
 import com.custom.transportation.repository.local.BookmarkDao
+import com.custom.transportation.repository.mapper.BusInfoMapperImpl
+import com.custom.transportation.repository.mapper.BusStopMapperImpl
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
@@ -24,11 +26,11 @@ class BookmarkDataSourceImpl : BookmarkDataSource {
     // BookmarkData를 기반으로 해당 DB에 매칭되는 ID값을 보관한다.
     private val bookmarks = mutableMapOf<Int, BookmarkData>()
 
-    override fun insert(data: BusInfoData): Boolean = insert(fromBusInfoData(data))
+    override fun insert(data: BusInfoData): Boolean = insertDatabase(BusInfoMapperImpl.toBookmark(data))
 
-    override fun insert(data: BusStopData): Boolean = insert(fromBusStopData(data))
+    override fun insert(data: BusStopData): Boolean = insertDatabase(BusStopMapperImpl.toBookmark(data))
 
-    private fun insert(bookmark: BookmarkData): Boolean{
+    private fun insertDatabase(bookmark: BookmarkData): Boolean{
         if(bookmarks.containsValue(bookmark)) return false
 
         bookmark.key = bookmarks.keys.last() + 1
@@ -53,7 +55,6 @@ class BookmarkDataSourceImpl : BookmarkDataSource {
         Log.d("DB", "move:${fromIndex}>${toIndex}")
 
         val job = CoroutineScope(Dispatchers.IO).launch {
-
             val list = loadDatabaseDao()?.getBetweenIndex(min(fromIndex, toIndex), max(fromIndex, toIndex))
             list ?: return@launch
         }
@@ -84,14 +85,6 @@ class BookmarkDataSourceImpl : BookmarkDataSource {
         CommonData.appContext ?: return null
         return BookmarkDB.getInstance(CommonData.appContext!!).bookmarkDao()
     }
-
-    private fun fromBusInfoData(data: BusInfoData) : BookmarkData
-            = BookmarkData(key = -1, isBusInfo = true, name = data.name,
-        firValue = ConvertUtil.toBusType(data.thisType), secValue = ConvertUtil.toRouteType(data.routeType))
-
-    private fun fromBusStopData(data: BusStopData) : BookmarkData
-            = BookmarkData(key = -1, isBusInfo = false, name = data.stNm,
-        firValue = data.stId, secValue = data.arsId)
 
     companion object {
         private var INSTANCE : BookmarkDataSource? = null
