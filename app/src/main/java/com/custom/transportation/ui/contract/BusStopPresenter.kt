@@ -7,8 +7,8 @@ import com.custom.transportation.repository.BusStopDataSourceImpl
 
 class BusStopPresenter(val view: BusStopContract.View) : BusStopContract.Presenter, BusStopContract.Callback {
 
-    private val busStop = BusStopDataSourceImpl.getInstance()
-    private val bookmark : BookmarkDataSource = BookmarkDataSourceImpl.getInstance()
+    private val busStop = BusStopDataSourceImpl.INSTANCE
+    private val bookmark : BookmarkDataSource = BookmarkDataSourceImpl.INSTANCE
 
     override fun search(search: String) = busStop.search(search, this)
 

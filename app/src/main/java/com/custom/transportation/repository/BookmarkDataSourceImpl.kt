@@ -87,8 +87,8 @@ class BookmarkDataSourceImpl : BookmarkDataSource {
     }
 
     companion object {
-        private var INSTANCE : BookmarkDataSource? = null
-        fun getInstance() : BookmarkDataSource =
-            INSTANCE ?: BookmarkDataSourceImpl().also { INSTANCE = it }
+        val INSTANCE by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
+            BookmarkDataSourceImpl()
+        }
     }
 }

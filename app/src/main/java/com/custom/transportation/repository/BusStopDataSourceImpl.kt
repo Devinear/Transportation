@@ -68,8 +68,8 @@ class BusStopDataSourceImpl : BaseDataSource<BusStopData>, Callback<ServiceResul
     }
 
     companion object {
-        private var INSTANCE : BaseDataSource<BusStopData>? = null
-        fun getInstance() : BaseDataSource<BusStopData> =
-            INSTANCE ?: BusStopDataSourceImpl().also { INSTANCE = it }
+        val INSTANCE by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
+            BusStopDataSourceImpl()
+        }
     }
 }

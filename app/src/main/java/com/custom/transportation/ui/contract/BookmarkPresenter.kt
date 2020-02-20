@@ -4,7 +4,7 @@ import com.custom.transportation.repository.BookmarkDataSourceImpl
 
 class BookmarkPresenter(val view: BookmarkContract.View) : BookmarkContract.Presenter {
 
-    private val bookmark = BookmarkDataSourceImpl.getInstance()
+    private val bookmark = BookmarkDataSourceImpl.INSTANCE
 
     override fun getData(): List<Any> = bookmark.getAll()
 
