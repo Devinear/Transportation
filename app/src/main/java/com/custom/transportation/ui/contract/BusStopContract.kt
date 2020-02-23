@@ -7,9 +7,7 @@ interface BusStopContract {
 
     interface View : BaseContract.View
 
-    interface Presenter : BaseContract.Presenter {
-        fun getData() : List<BusStopData>
-    }
+    interface Presenter : BaseContract.Presenter<BusStopData>
 
     interface Callback : BaseContract.RemoteCallback
 }

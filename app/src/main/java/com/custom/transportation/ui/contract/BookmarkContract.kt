@@ -1,5 +1,6 @@
 package com.custom.transportation.ui.contract
 
+import com.custom.transportation.repository.BookmarkData
 import com.custom.transportation.ui.base.BaseContract
 
 interface BookmarkContract {
@@ -8,10 +9,9 @@ interface BookmarkContract {
         fun updateData()
     }
 
-    interface Presenter : BaseContract.Presenter {
+    interface Presenter : BaseContract.Presenter<BookmarkData> {
         suspend fun requestData()
-        fun deleteBookmark(bookmark: Any): Boolean
         suspend fun moveBookmark(fromIndex: Int, toIndex: Int)
-        fun getData(): List<Any>
+        fun deleteBookmark(bookmark: BookmarkData): Boolean
     }
 }

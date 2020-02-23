@@ -11,6 +11,9 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.custom.transportation.R
+import com.custom.transportation.common.ConvertUtil
+import com.custom.transportation.common.RouteType
+import com.custom.transportation.repository.BookmarkData
 import com.custom.transportation.repository.BusInfoData
 import com.custom.transportation.repository.BusStopData
 import com.custom.transportation.ui.contract.BookmarkPresenter
@@ -20,9 +23,9 @@ import kotlinx.coroutines.launch
 import java.util.*
 
 class BookmarkAdapter(val presenter: BookmarkPresenter, private val dragListener: OnDragListener) : RecyclerView.Adapter<BookmarkAdapter.ViewHolder>(), OnItemMoveListener{
-    private val items = mutableListOf<Any>()
+    private val items = mutableListOf<BookmarkData>()
 
-    fun addItems(items : List<Any>) {
+    fun addItems(items : List<BookmarkData>) {
         with(this.items) {
             clear()
             addAll(items)
@@ -76,24 +79,25 @@ class BookmarkAdapter(val presenter: BookmarkPresenter, private val dragListener
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         items[position].let {
             with(holder) {
-                when(it) {
-                    is BusStopData -> {
+                when(it.isBusInfo) {
+                    false -> {
                         vFront.setBackgroundColor(context.getColor(R.color.stop_common))
                         vBack.setBackgroundColor(context.getColor(R.color.stop_common))
                         ivIcon.setImageResource(R.drawable.ic_bus_stop)
                         laStop.visibility = View.VISIBLE
                         laInfo.visibility = View.GONE
-                        tvStopTitle.text  = it.stNm
-                        tvStopSub.text    = "${it.arsId.substring(0,2)}-${it.arsId.substring(2)}"
+                        tvStopTitle.text  = it.name
+                        tvStopSub.text    = "${it.secValue.substring(0,2)}-${it.secValue.substring(2)}"
                     }
-                    is BusInfoData -> {
-                        vFront.setBackgroundColor(context.getColor(it.routeType.colorId))
-                        vBack.setBackgroundColor(context.getColor(it.routeType.colorId))
+                    true -> {
+                        val route: RouteType = ConvertUtil.fromRouteType(it.secValue)
+                        vFront.setBackgroundColor(context.getColor(route.colorId))
+                        vBack.setBackgroundColor(context.getColor(route.colorId))
                         ivIcon.setImageResource(R.drawable.ic_directions_bus_2x)
                         laStop.visibility = View.GONE
                         laInfo.visibility = View.VISIBLE
                         tvInfoTitle.text  = it.name
-                        tvInfoSub.text    = "[${context.getText(it.routeType.nameId)}]"
+                        tvInfoSub.text    = "[${context.getText(route.nameId)}]"
                     }
                 }
             }

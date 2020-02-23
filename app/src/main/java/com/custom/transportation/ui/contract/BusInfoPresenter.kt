@@ -14,7 +14,7 @@ class BusInfoPresenter(val view: BusInfoContract.View) : BusInfoContract.Present
 
     override fun getData(): List<BusInfoData> = busInfo.getAll()
 
-    override fun addBookmark(bookmark: Any) = this.bookmark.insert(bookmark)
+    override fun addBookmark(bookmark: BusInfoData) : Boolean = this.bookmark.insert(bookmark)
 
     override fun onSuccess() = view.searchSuccess()
 

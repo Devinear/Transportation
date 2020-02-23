@@ -6,9 +6,10 @@ interface BaseContract {
         fun searchFailure(msg : String)
     }
 
-    interface Presenter {
+    interface Presenter<T> {
         fun search(search : String)
-        fun addBookmark(bookmark: Any)
+        fun addBookmark(bookmark: T) : Boolean
+        fun getData() : List<T>
     }
 
     interface RemoteCallback {
