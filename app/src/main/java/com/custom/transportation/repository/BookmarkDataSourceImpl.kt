@@ -33,7 +33,7 @@ class BookmarkDataSourceImpl : BookmarkDataSource {
     private fun insertDatabase(bookmark: BookmarkData): Boolean{
         if(bookmarks.containsValue(bookmark)) return false
 
-        bookmark.key = bookmarks.keys.last() + 1
+        bookmark.key = if(bookmarks.isEmpty()) 0 else bookmarks.keys.last() + 1
         CoroutineScope(Dispatchers.IO).launch {
             loadDatabaseDao()?.insertBookmark(Bookmark(bookmark.key,bookmark))
         }
