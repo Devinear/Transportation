@@ -1,6 +1,8 @@
 package com.custom.transportation.repository
 
-interface BookmarkDataSource {
+interface BookmarkDataSource : BaseDataSource<BookmarkData> {
+
+    override fun getAll() : List<BookmarkData>
 
     fun insert(data : BusInfoData) : Boolean
 
@@ -9,8 +11,6 @@ interface BookmarkDataSource {
     fun delete(bookmark : BookmarkData) : Boolean
 
     suspend fun move(fromIndex: Int, toIndex: Int)
-
-    fun getAll() : List<BookmarkData>
 
     suspend fun reloadData()
 }
