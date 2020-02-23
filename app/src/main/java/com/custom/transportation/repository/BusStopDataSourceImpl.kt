@@ -20,7 +20,7 @@ class BusStopDataSourceImpl : BaseDataSource<BusStopData>, Callback<ServiceResul
         this.callback = callback
 
         for(ch: Char in search.toCharArray()) {
-            if((ch in '0'..'9') && ch != '-') {
+            if((ch !in '0'..'9') && ch != '-') {
                 searchName(search)
                 return
             }
