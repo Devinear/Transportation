@@ -10,10 +10,10 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.custom.transportation.R
-import com.custom.transportation.ui.base.BaseFragment
 import com.custom.transportation.ui.adapter.recycler.BookmarkAdapter
 import com.custom.transportation.ui.adapter.recycler.BookmarkTouchHelper
 import com.custom.transportation.ui.adapter.recycler.OnDragListener
+import com.custom.transportation.ui.base.BaseFragment
 import com.custom.transportation.ui.contract.BookmarkContract
 import com.custom.transportation.ui.contract.BookmarkPresenter
 import kotlinx.coroutines.CoroutineScope

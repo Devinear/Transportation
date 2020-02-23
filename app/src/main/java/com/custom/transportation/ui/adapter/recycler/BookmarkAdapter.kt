@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -113,6 +114,11 @@ class BookmarkAdapter(val presenter: BookmarkPresenter, private val dragListener
     override fun onItemMove(fromPosition: Int, toPosition: Int) {
         Collections.swap(items, fromPosition, toPosition)
         notifyItemMoved(fromPosition, toPosition)
+    }
+
+    override fun onItemIdle(fromPosition: Int, toPosition: Int) {
+        Log.d("BookmarkAdapter", "onItemIdle from:${fromPosition} to:${toPosition}")
+        if(fromPosition == toPosition)  return
         CoroutineScope(Dispatchers.IO).launch {
             presenter.moveBookmark(fromPosition, toPosition)
         }

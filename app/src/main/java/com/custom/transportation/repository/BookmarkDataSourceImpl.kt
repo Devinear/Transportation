@@ -57,20 +57,26 @@ class BookmarkDataSourceImpl : BookmarkDataSource {
         val job = CoroutineScope(Dispatchers.IO).launch {
             val dao: BookmarkDao? = loadDatabaseDao()
             dao ?: return@launch
-            val list = dao.getBetweenIndex(min(fromIndex, toIndex), max(fromIndex, toIndex))
 
+            val fromKey: Int = bookmarks.keys.elementAt(fromIndex)
+            val toKey: Int = bookmarks.keys.elementAt(toIndex)
+
+            val list = dao.getBetweenIndex(min(fromKey, toKey), max(fromKey, toKey))
+            if(list.size < 2) return@launch
+
+            val isBigFrom: Boolean = fromKey > toKey
             for(item : Bookmark in list) {
                 when (item.id) {
-                    fromIndex -> {
-                        dao.update(item.copy(id = toIndex, data = item.data))
+                    fromKey -> {
+                        dao.update(item.copy(id = toKey, data = item.data.also { it.key = toKey }))
                     }
-                    toIndex -> {
-                        dao.update(item.copy(id = fromIndex, data = item.data))
+                    toKey -> {
+                        dao.update(item.copy(id = fromKey, data = item.data.also { it.key = fromKey }))
                     }
                     else -> {
-                        var index: Int = item.id
-                        if(fromIndex > toIndex) index -= 1 else index += 1
-                        dao.update(item.copy(id = index, data = item.data))
+                        var key: Int = item.id
+                        if(isBigFrom) key -= 1 else key += 1
+                        dao.update(item.copy(id = key, data = item.data.also { it.key = key }))
                     }
                 }
             }
