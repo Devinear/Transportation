@@ -14,7 +14,7 @@ class Converts {
     }
 
     @TypeConverter
-    fun BookmarkDataToData(data: BookmarkData?) : String? {
+    fun bookmarkDataToData(data: BookmarkData?) : String? {
         data ?: return null
         return "${data.key}/${data.isBusInfo}/${data.name}/${data.firValue}/${data.secValue}"
     }
