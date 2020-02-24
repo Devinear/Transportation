@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/item_margin">
+
+    <TextView
+        android:id="@+id/tv_tag"
+        android:layout_width="match_parent"
+        app:layout_constraintHorizontal_weight="1"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/item_main_text_size"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="#출근용"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
