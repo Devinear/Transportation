@@ -18,7 +18,7 @@ import kotlin.math.min
 
 data class BookmarkData
     (var key: Int, val isBusInfo: Boolean,
-    val name: String, val firValue: String, val secValue: String)
+    val name: String, val firValue: String, val secValue: String, var tag: String)
 //     val busNm: String?, val busType: String?, val routeType: String?,
 //     val stNm: String?, val stId: String?, val arsId: String?)
 

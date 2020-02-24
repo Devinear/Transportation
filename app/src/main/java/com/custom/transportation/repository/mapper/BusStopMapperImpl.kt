@@ -8,6 +8,6 @@ object BusStopMapperImpl : Mapper<BusStopData, BookmarkData> {
     override fun toBookmark(data: BusStopData): BookmarkData =
         BookmarkData(
             key = -1, isBusInfo = false, name = data.stNm,
-            firValue = data.stId, secValue = data.arsId
+            firValue = data.stId, secValue = data.arsId, tag = ""
         )
 }

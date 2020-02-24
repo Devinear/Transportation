@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
-@Database(entities = [(Bookmark::class)], version = 2)
+@Database(entities = [(Bookmark::class)], version = 3)
 @TypeConverters(Converts::class)
 abstract class BookmarkDB : RoomDatabase() {
 

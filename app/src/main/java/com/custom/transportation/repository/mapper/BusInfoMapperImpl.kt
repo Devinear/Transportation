@@ -9,6 +9,6 @@ object BusInfoMapperImpl : Mapper<BusInfoData, BookmarkData> {
     override fun toBookmark(data: BusInfoData): BookmarkData =
         BookmarkData(
             key = -1, isBusInfo = true, name = data.name,
-            firValue = ConvertUtil.toBusType(data.thisType), secValue = ConvertUtil.toRouteType(data.routeType)
+            firValue = ConvertUtil.toBusType(data.thisType), secValue = ConvertUtil.toRouteType(data.routeType), tag = ""
     )
 }
