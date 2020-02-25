@@ -10,6 +10,8 @@ interface BookmarkDataSource : BaseDataSource<BookmarkData> {
 
     fun delete(bookmark : BookmarkData) : Boolean
 
+    fun update(bookmark: BookmarkData) : Boolean
+
     suspend fun move(fromIndex: Int, toIndex: Int)
 
     suspend fun reloadData()

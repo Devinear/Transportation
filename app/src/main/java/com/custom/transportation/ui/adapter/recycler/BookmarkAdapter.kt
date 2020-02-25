@@ -136,5 +136,6 @@ class BookmarkAdapter(val presenter: BookmarkPresenter, private val dragListener
     override fun addTags(position: Int, tags: String) {
         items[position].tag = tags.replace("[", "").replace("]", "")
         notifyItemChanged(position)
+        presenter.updateTag(items[position])
     }
 }

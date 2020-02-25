@@ -52,6 +52,15 @@ class BookmarkDataSourceImpl : BookmarkDataSource {
         return true
     }
 
+    override fun update(bookmark: BookmarkData) : Boolean {
+        if(!bookmarks.containsValue(bookmark)) return false
+
+        CoroutineScope(Dispatchers.IO).launch {
+            loadDatabaseDao()?.update(Bookmark(bookmark.key, bookmark))
+        }
+        return true
+    }
+
     override suspend fun move(fromIndex: Int, toIndex: Int) {
         Log.d("DB", "move:${fromIndex}>${toIndex}")
         val job = CoroutineScope(Dispatchers.IO).launch {
