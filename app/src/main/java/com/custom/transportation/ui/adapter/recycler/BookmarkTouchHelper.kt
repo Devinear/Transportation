@@ -56,4 +56,6 @@ class BookmarkTouchHelper(private val moveListener: OnItemMoveListener) : ItemTo
         fromPosition = -1
         toPosition = -1
     }
+
+    override fun isItemViewSwipeEnabled(): Boolean = false
 }
