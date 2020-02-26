@@ -2,12 +2,13 @@ package com.custom.transportation.ui.adapter.recycler
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.DialogInterface
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.custom.transportation.R
@@ -48,38 +49,36 @@ class BookmarkAdapter(val presenter: BookmarkPresenter, private val dragListener
         val tvSub  : TextView  = view.findViewById(R.id.tv_sub)
         val tvTags : TextView  = view.findViewById(R.id.tv_tags)
         private val ibDelete   : ImageButton = view.findViewById(R.id.ib_delete)
+        private val ibAddTag   : ImageButton = view.findViewById(R.id.ib_add_tag)
 
         init {
             ibDelete.setOnClickListener{
-
-                if(context is AppCompatActivity) {
-                    TagDialogFragment(tvTags.text.toString(), adapterPosition, this@BookmarkAdapter).show(context.supportFragmentManager, TAG)
-                }
-
-//                AlertDialog.Builder(context).apply {
-//                    setMessage(context.getText(R.string.del_bookmark))
-//                    setPositiveButton(context.getString(android.R.string.ok)) { dialog: DialogInterface?, _:Int ->
-//                        if(items.size <= adapterPosition) {
-//                            dialog?.dismiss()
-//                            return@setPositiveButton
-//                        }
-//                        if(presenter.deleteBookmark(items[adapterPosition])) {
-//                            Toast.makeText(context, context.getText(R.string.del_bookmark_success), Toast.LENGTH_SHORT).show()
-//                            addItems(presenter.getData())
-//                        }
-//                        else {
-//                            Toast.makeText(context, context.getText(R.string.del_bookmark_fail), Toast.LENGTH_SHORT).show()
-//                        }
-//                    }
-//                    setNegativeButton(context.getString(android.R.string.cancel)) { dialog: DialogInterface?, _:Int ->
-//                        dialog?.dismiss()
-//                    }
-//                }.create().run { show() }
+                AlertDialog.Builder(context).apply {
+                    setMessage(context.getText(R.string.del_bookmark))
+                    setPositiveButton(context.getString(android.R.string.ok)) { dialog: DialogInterface?, _:Int ->
+                        if(items.size <= adapterPosition) {
+                            dialog?.dismiss()
+                            return@setPositiveButton
+                        }
+                        if(presenter.deleteBookmark(items[adapterPosition])) {
+                            Toast.makeText(context, context.getText(R.string.del_bookmark_success), Toast.LENGTH_SHORT).show()
+                            addItems(presenter.getData())
+                        }
+                        else {
+                            Toast.makeText(context, context.getText(R.string.del_bookmark_fail), Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                    setNegativeButton(context.getString(android.R.string.cancel)) { dialog: DialogInterface?, _:Int ->
+                        dialog?.dismiss()
+                    }
+                }.create().run { show() }
             }
-//            itemView.setOnLongClickListener {
-//                TagDialogFragment(tags = tvTag.text.toString()).showsDialog
-//                false
-//            }
+            ibAddTag.setOnClickListener{
+                if(context is AppCompatActivity) {
+                    TagDialogFragment(tvTags.text.toString(), adapterPosition, this@BookmarkAdapter)
+                        .show(context.supportFragmentManager, TAG)
+                }
+            }
         }
     }
 

@@ -74,14 +74,25 @@
 
     <ImageButton
         android:id="@+id/ib_delete"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_margin="10dp"
-        android:background="@drawable/ic_delete"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:background="@drawable/baseline_delete_black_48dp"
         android:scaleType="fitCenter"
+        android:layout_marginEnd="20dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/ib_add_tag"
         app:layout_constraintStart_toEndOf="@id/tv_title"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageButton
+        android:id="@+id/ib_add_tag"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:background="@drawable/baseline_add_comment_black_48dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintTop_toBottomOf="@id/ib_delete"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/ib_delete"
+        app:layout_constraintEnd_toEndOf="@id/ib_delete" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
