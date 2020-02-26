@@ -1,5 +1,6 @@
 package com.custom.transportation.ui.adapter.recycler
 
+import android.graphics.Color
 import android.util.Log
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -15,7 +16,6 @@ interface OnItemMoveListener {
 
 class BookmarkTouchHelper(private val moveListener: OnItemMoveListener) : ItemTouchHelper.Callback() {
 
-    private var isActionStateDrag : Boolean = false
     private var fromPosition: Int = -1
     private var toPosition: Int = -1
 
@@ -38,16 +38,22 @@ class BookmarkTouchHelper(private val moveListener: OnItemMoveListener) : ItemTo
 
     override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
         Log.d("BookmarkTouchHelper", "onSelectedChanged actionState:${actionState} from:${fromPosition} to:${toPosition}")
-        if(actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
-            isActionStateDrag = true
-        }
-        else if(isActionStateDrag && actionState == ItemTouchHelper.ACTION_STATE_IDLE) {
-            isActionStateDrag = false
-            moveListener.onItemIdle(fromPosition, toPosition)
 
-            fromPosition = -1
-            toPosition = -1
-        }
+        if(actionState == ItemTouchHelper.ACTION_STATE_DRAG)
+            viewHolder?.itemView?.setBackgroundColor(Color.parseColor("#F0F8FF")) // AliceBlue
+
+        // actionState == DRAG 아니면 onSelectedChanged() 에서 viewHolder 값이 NULL 전달됨
+        // 따라서 하이라이트 효과의 해제는 clearView() 에서 해주어야 한다.
         super.onSelectedChanged(viewHolder, actionState)
+    }
+
+    override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
+        Log.d("BookmarkTouchHelper", "clearView")
+        super.clearView(recyclerView, viewHolder)
+        viewHolder.itemView.setBackgroundColor(Color.TRANSPARENT)
+
+        moveListener.onItemIdle(fromPosition, toPosition)
+        fromPosition = -1
+        toPosition = -1
     }
 }

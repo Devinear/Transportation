@@ -113,10 +113,9 @@ class BookmarkAdapter(val presenter: BookmarkPresenter, private val dragListener
             }
         }
 
-        holder.itemView.setOnTouchListener { _, event ->
-            if(event.action == MotionEvent.ACTION_DOWN)
-                dragListener.onStartDrag(holder)
-            return@setOnTouchListener false
+        holder.itemView.setOnLongClickListener {
+            dragListener.onStartDrag(holder)
+            false
         }
     }
 
