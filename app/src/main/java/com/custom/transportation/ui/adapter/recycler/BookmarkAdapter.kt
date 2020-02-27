@@ -71,7 +71,7 @@ class BookmarkAdapter(val presenter: BookmarkPresenter, private val dragListener
                     setNegativeButton(context.getString(android.R.string.cancel)) { dialog: DialogInterface?, _:Int ->
                         dialog?.dismiss()
                     }
-                }.create()
+                }.create().show()
             }
             ibAddTag.setOnClickListener{
                 if(context is AppCompatActivity) {
