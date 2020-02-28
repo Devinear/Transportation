@@ -1,21 +1,23 @@
 package com.custom.transportation.ui.contract
 
-import com.custom.transportation.repository.BookmarkDataSource
+import com.custom.transportation.repository.BookmarkData
 import com.custom.transportation.repository.BookmarkDataSourceImpl
 
-class BookmarkPresenter(val view: BookmarkContract.View) : BookmarkContract.Presenter, BookmarkContract.Callback {
+class BookmarkPresenter(val view: BookmarkContract.View) : BookmarkContract.Presenter {
 
-    private val bookmark: BookmarkDataSource = BookmarkDataSourceImpl.getInstance()
+    private val bookmark = BookmarkDataSourceImpl.INSTANCE
 
-    override fun getData(): List<Any> = bookmark.getAll()
+    override fun getData(): List<BookmarkData> = bookmark.getAll()
 
     override fun search(search: String) = Unit
 
-    override fun addBookmark(bookmark: Any) = Unit
+    override fun addBookmark(bookmark: BookmarkData) : Boolean = false
 
-    override fun deleteBookmark(bookmark: Any) : Boolean = this.bookmark.delete(bookmark)
+    override fun deleteBookmark(bookmark: BookmarkData) : Boolean = this.bookmark.delete(bookmark)
 
-    override fun requestData() = bookmark.reloadData(this)
+    override fun updateTag(bookmark: BookmarkData) : Boolean = this.bookmark.update(bookmark)
 
-    override fun onComplete() = view.updateData()
+    override suspend fun moveBookmark(fromIndex: Int, toIndex: Int) = bookmark.move(fromIndex, toIndex)
+
+    override suspend fun requestData() = bookmark.reloadData()
 }

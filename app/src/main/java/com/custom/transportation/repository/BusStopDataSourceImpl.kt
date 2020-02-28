@@ -1,6 +1,6 @@
 package com.custom.transportation.repository
 
-import com.custom.transportation.base.BaseContract
+import com.custom.transportation.ui.base.BaseContract
 import com.custom.transportation.common.CommonData
 import com.custom.transportation.repository.remote.RetrofitHelper
 import com.custom.transportation.repository.remote.ServiceResult
@@ -11,7 +11,7 @@ import retrofit2.Response
 data class BusStopData
     (val arsId: String,  val stId: String, val stNm: String, val tmX: Float, val tmY: Float)
 
-class BusStopDataSourceImpl : BusStopDataSource, Callback<ServiceResult> {
+class BusStopDataSourceImpl : BaseDataSource<BusStopData>, Callback<ServiceResult> {
 
     private var callback : BaseContract.RemoteCallback? = null
     private val stopList : ArrayList<BusStopData> = ArrayList()
@@ -20,7 +20,7 @@ class BusStopDataSourceImpl : BusStopDataSource, Callback<ServiceResult> {
         this.callback = callback
 
         for(ch: Char in search.toCharArray()) {
-            if((ch < '0' || ch > '9') && ch != '-') {
+            if((ch !in '0'..'9') && ch != '-') {
                 searchName(search)
                 return
             }
@@ -68,8 +68,8 @@ class BusStopDataSourceImpl : BusStopDataSource, Callback<ServiceResult> {
     }
 
     companion object {
-        private var INSTANCE : BusStopDataSource? = null
-        fun getInstance() : BusStopDataSource =
-            INSTANCE ?: BusStopDataSourceImpl().also { INSTANCE = it }
+        val INSTANCE by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
+            BusStopDataSourceImpl()
+        }
     }
 }

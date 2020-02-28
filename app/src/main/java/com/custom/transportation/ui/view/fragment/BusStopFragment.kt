@@ -13,7 +13,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.custom.transportation.R
-import com.custom.transportation.base.BaseFragment
+import com.custom.transportation.ui.base.BaseFragment
 import com.custom.transportation.ui.adapter.recycler.BusStopAdapter
 import com.custom.transportation.ui.contract.BusStopContract
 import com.custom.transportation.ui.contract.BusStopPresenter

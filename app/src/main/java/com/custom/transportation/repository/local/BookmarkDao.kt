@@ -10,9 +10,15 @@ interface BookmarkDao {
     @Delete
     fun deleteBookmark(vararg bookmark: Bookmark)
 
+    @Query("SELECT * FROM bookmarks WHERE id BETWEEN :minIndex AND :maxIndex")
+    fun getBetweenIndex(minIndex: Int, maxIndex: Int) : List<Bookmark>
+
     @Query("SELECT * FROM bookmarks")
     fun getAll(): List<Bookmark>
 
     @Query("DELETE FROM bookmarks")
     fun deleteAll()
+
+    @Update
+    fun update(vararg bookmark: Bookmark)
 }

@@ -10,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import com.custom.transportation.R
-import com.custom.transportation.base.BaseFragment
+import com.custom.transportation.ui.base.BaseFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class BusNumberFragment : BaseFragment() {

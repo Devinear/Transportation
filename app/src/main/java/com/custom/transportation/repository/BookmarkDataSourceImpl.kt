@@ -1,63 +1,122 @@
 package com.custom.transportation.repository
 
-import com.custom.transportation.base.BaseContract
+import android.util.Log
 import com.custom.transportation.common.CommonData
+import com.custom.transportation.common.ConvertUtil
 import com.custom.transportation.repository.local.Bookmark
 import com.custom.transportation.repository.local.BookmarkDB
 import com.custom.transportation.repository.local.BookmarkDao
+import com.custom.transportation.repository.mapper.BusInfoMapperImpl
+import com.custom.transportation.repository.mapper.BusStopMapperImpl
+import com.custom.transportation.ui.base.BaseContract
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
+import kotlin.math.max
+import kotlin.math.min
+
+data class BookmarkData
+    (var key: Int, val isBusInfo: Boolean,
+    val name: String, val firValue: String, val secValue: String, var tag: String)
+//     val busNm: String?, val busType: String?, val routeType: String?,
+//     val stNm: String?, val stId: String?, val arsId: String?)
 
 class BookmarkDataSourceImpl : BookmarkDataSource {
 
-    private val bookmarks : ArrayList<Any> = ArrayList()
+    // BookmarkData를 기반으로 해당 DB에 매칭되는 ID값을 보관한다.
+    private val bookmarks = mutableMapOf<Int, BookmarkData>()
 
-    override fun insert(bookmark: Any) {
-        if(isDuplicate(bookmark)) return
+    override fun insert(data: BusInfoData): Boolean = insertDatabase(BusInfoMapperImpl.toBookmark(data))
 
-        bookmarks.add(bookmark)
-        synchronized(this) {
-            Thread(Runnable {
-                when (bookmark) {
-                    is BusStopData -> loadDatabaseDao()?.insertBookmark(Bookmark(true, bookmark, null))
-                    is BusInfoData -> loadDatabaseDao()?.insertBookmark(Bookmark(false, null, bookmark))
+    override fun insert(data: BusStopData): Boolean = insertDatabase(BusStopMapperImpl.toBookmark(data))
+
+    private fun insertDatabase(bookmark: BookmarkData): Boolean{
+        if(bookmarks.containsValue(bookmark)) return false
+
+        bookmark.key = if(bookmarks.isEmpty()) 0 else bookmarks.keys.last() + 1
+        CoroutineScope(Dispatchers.IO).launch {
+            loadDatabaseDao()?.insertBookmark(Bookmark(bookmark.key,bookmark))
+        }
+        bookmarks[bookmark.key] = bookmark
+        return true
+    }
+
+    override fun delete(bookmark: BookmarkData) : Boolean {
+        val data = bookmarks.remove(bookmark.key)
+        data ?: return false
+
+        CoroutineScope(Dispatchers.IO).launch {
+            loadDatabaseDao()?.deleteBookmark(Bookmark(bookmark.key, bookmark))
+        }
+        return true
+    }
+
+    override fun update(bookmark: BookmarkData) : Boolean {
+        if(!bookmarks.containsValue(bookmark)) return false
+
+        CoroutineScope(Dispatchers.IO).launch {
+            loadDatabaseDao()?.update(Bookmark(bookmark.key, bookmark))
+        }
+        return true
+    }
+
+    override suspend fun move(fromIndex: Int, toIndex: Int) {
+        Log.d("DB", "move:${fromIndex}>${toIndex}")
+        val job = CoroutineScope(Dispatchers.IO).launch {
+            val dao: BookmarkDao? = loadDatabaseDao()
+            dao ?: return@launch
+
+            val fromKey: Int = bookmarks.keys.elementAt(fromIndex)
+            val toKey: Int = bookmarks.keys.elementAt(toIndex)
+
+            val list = dao.getBetweenIndex(min(fromKey, toKey), max(fromKey, toKey))
+            if(list.size < 2) return@launch
+
+            val isBigFrom: Boolean = fromKey > toKey
+            for(item : Bookmark in list) {
+                when (item.id) {
+                    fromKey -> {
+                        dao.update(item.copy(id = toKey, data = item.data.also { it.key = toKey }))
+                    }
+                    toKey -> {
+                        dao.update(item.copy(id = fromKey, data = item.data.also { it.key = fromKey }))
+                    }
+                    else -> {
+                        var key: Int = item.id
+                        if(isBigFrom) key -= 1 else key += 1
+                        dao.update(item.copy(id = key, data = item.data.also { it.key = key }))
+                    }
                 }
-            }).start()
-        }
-    }
-
-    override fun delete(bookmark: Any) : Boolean {
-        synchronized(this) {
-            Thread(Runnable {
-                when (bookmark) {
-                    is BusStopData -> loadDatabaseDao()?.deleteBookmark(Bookmark(true,bookmark,null))
-                    is BusInfoData -> loadDatabaseDao()?.deleteBookmark(Bookmark(false,null,bookmark))
-                }
-            }).start()
-        }
-        return bookmarks.remove(bookmark)
-    }
-
-    override fun isDuplicate(bookmark: Any) : Boolean {
-        if(bookmarks.size == 0) return false
-        for(item in bookmarks) {
-            if(item == bookmark) return true
-        }
-        return false
-    }
-
-    override fun reloadData(callback: BaseContract.LocalCallback) {
-        Thread(Runnable {
-            val items: List<Bookmark> = loadDatabaseDao()?.getAll() ?: return@Runnable
-            for(item: Bookmark in items) {
-                @Suppress("IMPLICIT_CAST_TO_ANY")
-                val data: Any? = if(item.isBusStop) item.station else item.busInfo
-                data ?: return@Runnable
-                bookmarks.add(data)
             }
-            callback.onComplete()
-        }).start()
+            Log.d("DB", "move: Complete")
+        }
+        job.join()
+        Log.d("DB", "move: Complete > Join")
     }
 
-    override fun getAll(): List<Any> = bookmarks
+    override suspend fun reloadData() {
+        val job = CoroutineScope(Dispatchers.IO).launch {
+
+            val items: List<Bookmark>? = loadDatabaseDao()?.getAll()
+            // items가 Null인 경우 Coroutine 종료
+            items ?: cancel()
+
+            bookmarks.clear()
+            for(item: Bookmark in items!!) {
+                bookmarks[item.id] = item.data
+            }
+
+            // key(id) 값으로 정렬
+            bookmarks.toSortedMap()
+        }
+        // job이 종료될때까지 join하게 되면 callback이 필요없다.
+        job.join()
+    }
+
+    override fun search(search: String, callback: BaseContract.RemoteCallback) = Unit
+
+    override fun getAll(): List<BookmarkData> = bookmarks.values.toMutableList()
 
     private fun loadDatabaseDao() : BookmarkDao? {
         CommonData.appContext ?: return null
@@ -65,8 +124,8 @@ class BookmarkDataSourceImpl : BookmarkDataSource {
     }
 
     companion object {
-        private var INSTANCE : BookmarkDataSource? = null
-        fun getInstance() : BookmarkDataSource =
-            INSTANCE ?: BookmarkDataSourceImpl().also { INSTANCE = it }
+        val INSTANCE by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
+            BookmarkDataSourceImpl()
+        }
     }
 }

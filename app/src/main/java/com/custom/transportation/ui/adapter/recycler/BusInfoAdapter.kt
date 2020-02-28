@@ -12,6 +12,7 @@ import com.custom.transportation.ui.contract.BusInfoContract
 import com.google.android.material.snackbar.Snackbar
 
 class BusInfoAdapter(val presenter: BusInfoContract.Presenter) : RecyclerView.Adapter<BusInfoAdapter.ViewHolder>() {
+
     private val items = mutableListOf<BusInfoData>()
 
     fun addItems(items : List<BusInfoData>) {

@@ -1,4 +1,4 @@
-package com.custom.transportation.base
+package com.custom.transportation.ui.base
 
 interface BaseContract {
     interface View {
@@ -6,17 +6,14 @@ interface BaseContract {
         fun searchFailure(msg : String)
     }
 
-    interface Presenter {
+    interface Presenter<T> {
         fun search(search : String)
-        fun addBookmark(bookmark: Any)
+        fun addBookmark(bookmark: T) : Boolean
+        fun getData() : List<T>
     }
 
     interface RemoteCallback {
         fun onSuccess()
         fun onFailure(msg: String)
-    }
-
-    interface LocalCallback {
-        fun onComplete()
     }
 }

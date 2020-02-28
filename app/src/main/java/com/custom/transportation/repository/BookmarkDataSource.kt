@@ -1,16 +1,18 @@
 package com.custom.transportation.repository
 
-import com.custom.transportation.base.BaseContract
+interface BookmarkDataSource : BaseDataSource<BookmarkData> {
 
-interface BookmarkDataSource {
+    override fun getAll() : List<BookmarkData>
 
-    fun insert(bookmark : Any)
+    fun insert(data : BusInfoData) : Boolean
 
-    fun delete(bookmark : Any) : Boolean
+    fun insert(data : BusStopData) : Boolean
 
-    fun isDuplicate(bookmark: Any) : Boolean
+    fun delete(bookmark : BookmarkData) : Boolean
 
-    fun getAll() : List<Any>
+    fun update(bookmark: BookmarkData) : Boolean
 
-    fun reloadData(callback: BaseContract.LocalCallback)
+    suspend fun move(fromIndex: Int, toIndex: Int)
+
+    suspend fun reloadData()
 }

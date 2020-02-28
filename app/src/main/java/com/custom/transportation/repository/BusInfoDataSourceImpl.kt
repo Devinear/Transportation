@@ -1,6 +1,6 @@
 package com.custom.transportation.repository
 
-import com.custom.transportation.base.BaseContract
+import com.custom.transportation.ui.base.BaseContract
 import com.custom.transportation.common.BusType
 import com.custom.transportation.common.CommonData
 import com.custom.transportation.common.ConvertUtil
@@ -15,15 +15,15 @@ data class BusInfoData
     (val name: String, val time: String, val direction: String,
      val thisType: BusType, val thisCount: String, val after: String, val routeType: RouteType)
 
-class BusInfoDataSourceImpl : BusInfoDataSource, Callback<ServiceResult> {
+class BusInfoDataSourceImpl : BaseDataSource<BusInfoData>, Callback<ServiceResult> {
     private var callback: BaseContract.RemoteCallback? = null
     private val items : ArrayList<BusInfoData> = ArrayList()
 
-    override fun search(arsId: String, callback: BaseContract.RemoteCallback) {
+    override fun search(search: String, callback: BaseContract.RemoteCallback) {
         this.callback = callback
 
         RetrofitHelper.getRetrofit(CommonData.baseUrl)
-            .getStationByUid(CommonData.ServiceKey, arsId)
+            .getStationByUid(CommonData.ServiceKey, search)
             .enqueue(this)
     }
 
@@ -55,8 +55,8 @@ class BusInfoDataSourceImpl : BusInfoDataSource, Callback<ServiceResult> {
     }
 
     companion object {
-        private var INSTANCE : BusInfoDataSource? = null
-        fun getInstance() : BusInfoDataSource =
-            INSTANCE ?: BusInfoDataSourceImpl().also { INSTANCE = it }
+        val INSTANCE by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
+            BusInfoDataSourceImpl()
+        }
     }
 }
