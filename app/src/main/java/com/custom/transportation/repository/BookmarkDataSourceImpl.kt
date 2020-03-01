@@ -8,11 +8,13 @@ import com.custom.transportation.repository.local.BookmarkDB
 import com.custom.transportation.repository.local.BookmarkDao
 import com.custom.transportation.repository.mapper.BusInfoMapperImpl
 import com.custom.transportation.repository.mapper.BusStopMapperImpl
+import com.custom.transportation.repository.remote.ServiceResult
 import com.custom.transportation.ui.base.BaseContract
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import retrofit2.Response
 import kotlin.math.max
 import kotlin.math.min
 
@@ -113,8 +115,6 @@ class BookmarkDataSourceImpl : BookmarkDataSource {
         // job이 종료될때까지 join하게 되면 callback이 필요없다.
         job.join()
     }
-
-    override fun search(search: String, callback: BaseContract.RemoteCallback) = Unit
 
     override fun getAll(): List<BookmarkData> = bookmarks.values.toMutableList()
 

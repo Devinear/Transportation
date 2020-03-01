@@ -1,8 +1,8 @@
 package com.custom.transportation.repository
 
-interface BookmarkDataSource : BaseDataSource<BookmarkData> {
+interface BookmarkDataSource {
 
-    override fun getAll() : List<BookmarkData>
+    fun getAll() : List<BookmarkData>
 
     fun insert(data : BusInfoData) : Boolean
 

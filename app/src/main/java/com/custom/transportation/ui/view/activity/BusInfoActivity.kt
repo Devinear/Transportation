@@ -11,6 +11,9 @@ import com.custom.transportation.ui.adapter.recycler.BusInfoAdapter
 import com.custom.transportation.ui.contract.BusInfoContract
 import com.custom.transportation.ui.contract.BusInfoPresenter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class BusInfoActivity : AppCompatActivity(), BusInfoContract.View {
 
@@ -27,16 +30,17 @@ class BusInfoActivity : AppCompatActivity(), BusInfoContract.View {
         }
 
         val arsId : String? = intent.getStringExtra(IntentType.ArsID.type)
-        if(arsId != null) {
-            presenter.search(arsId)
-        }
 
         findViewById<FloatingActionButton>(R.id.fab).apply {
             isEnabled = arsId != null
         }.setOnClickListener {
-            if(arsId != null)
-            presenter.search(arsId)
+            arsId ?: return@setOnClickListener
+            presenter.run { search(search = arsId) }
         }
+
+        // 최초 1회 검색 필요
+        arsId ?: return
+        presenter.run { search(search = arsId) }
     }
 
     override fun searchSuccess() = busInfoAdapter.addItems(presenter.getData())

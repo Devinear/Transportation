@@ -18,6 +18,9 @@ import com.custom.transportation.ui.adapter.recycler.BusStopAdapter
 import com.custom.transportation.ui.contract.BusStopContract
 import com.custom.transportation.ui.contract.BusStopPresenter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class BusStopFragment : BaseFragment(), BusStopContract.View {
 
@@ -38,7 +41,7 @@ class BusStopFragment : BaseFragment(), BusStopContract.View {
                 val edit = EditText(context)
                 setView(edit)
                 setPositiveButton(context.getString(android.R.string.ok)) { _: DialogInterface?, _: Int ->
-                    presenter.search(edit.text.toString())
+                    presenter.run { search(search = edit.text.toString()) }
                 }
             }.create().run { show() }
         }
