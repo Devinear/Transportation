@@ -13,7 +13,7 @@ interface BusService {
     @GET("getStationByName")
     fun getStationByName(
         @Query("serviceKey", encoded = true) serviceKey: String,
-        @Query("stSrch", encoded = false) stCrch: String
+        @Query("stSrch", encoded = false) stSrch: String
     ) : Call<ServiceResult>
 
     /* 노선 고유번호에 해당하는 정류소 정보를 조회한다. */
