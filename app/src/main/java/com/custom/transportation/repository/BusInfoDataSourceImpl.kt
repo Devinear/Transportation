@@ -11,6 +11,7 @@ import com.custom.transportation.repository.remote.ServiceResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -38,10 +39,14 @@ class BusInfoDataSourceImpl : BaseDataSource<BusInfoData>() {
                             )
                         )
                     }
-                    callback.onSuccess()
+                    withContext(Dispatchers.Main) {
+                        callback.onSuccess()
+                    }
                 }
                 is ResponseResult.Failure -> {
-                    callback.run { onFailure(msg = response.msg) }
+                    withContext(Dispatchers.Main) {
+                        callback.run { onFailure(msg = response.msg) }
+                    }
                 }
             }
         }
