@@ -31,10 +31,5 @@ class MainActivity : AppCompatActivity() {
             })
             setupWithViewPager(viewPager)
         }
-
-//        // Database 생성을 위한 context 전달
-//        // 생성된 후에는 context가 필요하지 않다.
-//        BookmarkDatabase.getInstance(applicationContext)
-        CommonData.appContext = applicationContext
     }
 }
