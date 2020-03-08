@@ -6,13 +6,13 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.custom.transportation.ui.base.BaseFragment
 import com.custom.transportation.common.MainTab
 import com.custom.transportation.ui.view.fragment.BookmarkFragment
-import com.custom.transportation.ui.view.fragment.BusFragment
+import com.custom.transportation.ui.view.fragment.BusStopFragment
 
 class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
     override fun getItem(position: Int): BaseFragment {
         return when(position) {
-            MainTab.BUS.pos -> BusFragment.getInstance()
+            MainTab.BUS.pos -> BusStopFragment.getInstance()
             else -> BookmarkFragment.getInstance()
         }
     }
