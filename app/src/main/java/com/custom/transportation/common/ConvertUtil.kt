@@ -12,7 +12,7 @@ object ConvertUtil {
             "5" -> RouteType.YELLOW
             "6" -> RouteType.RED
             "7" -> RouteType.INCHEON
-            "8" -> RouteType.GTEONGGI
+            "8" -> RouteType.GYUNGGI
             "9" -> RouteType.REMOVE
             else // if(route.compareTo("0", false) == 0) {
             -> RouteType.COMMON
@@ -28,7 +28,7 @@ object ConvertUtil {
             RouteType.YELLOW  -> "5"
             RouteType.RED     -> "6"
             RouteType.INCHEON -> "7"
-            RouteType.GTEONGGI-> "8"
+            RouteType.GYUNGGI-> "8"
             RouteType.REMOVE  -> "9"
         }
     }

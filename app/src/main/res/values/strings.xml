@@ -38,7 +38,7 @@
     <string name="route_yellow">순환버스</string>
     <string name="route_red">광역버스</string>
     <string name="route_incheon">인천버스</string>
-    <string name="route_gteonggi">경기버스</string>
+    <string name="route_gyunggi">경기버스</string>
     <string name="route_remove">폐지</string>
     <string name="route_common">공용</string>
     <string name="bookmark_tag_hint">추가하고 싶은 태그가 있나요?</string>
