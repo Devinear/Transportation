@@ -40,20 +40,12 @@ class BusInfoActivity : AppCompatActivity(), BusInfoContract.View {
             presenter.run { search(search = arsId) }
         }
 
-//        findViewById<FloatingActionButton>(R.id.fab).apply {
-//            isEnabled = arsId != null
-//        }.setOnClickListener {
-//            arsId ?: return@setOnClickListener
-//            presenter.run { search(search = arsId) }
-//        }
-
         // 최초 1회 검색 필요
         arsId ?: return
         presenter.run { search(search = arsId) }
     }
 
     override fun searchSuccess() {
-        Toast.makeText(this, "Refreshing", Toast.LENGTH_SHORT).show()
         busInfoAdapter.addItems(presenter.getData())
         swipeLayout.isRefreshing = false
     }
