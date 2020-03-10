@@ -40,6 +40,10 @@ class BookmarkDataSourceImpl : BookmarkDataSource {
         return true
     }
 
+    override fun isExist(data: BusInfoData): Boolean = bookmarks.containsValue(BusInfoMapperImpl.toBookmark(data))
+
+    override fun isExist(data: BusStopData): Boolean = bookmarks.containsValue(BusStopMapperImpl.toBookmark(data))
+
     override fun delete(bookmark: BookmarkData) : Boolean {
         val data = bookmarks.remove(bookmark.key)
         data ?: return false

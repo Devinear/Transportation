@@ -15,6 +15,7 @@
 
     <string name="empty_bookmark">저장된 즐겨찾기가 없습니다.</string>
     <string name="add_bookmark">즐겨찾기가 추가되었습니다.</string>
+    <string name="exist_bookmark">이미 추가되어 있습니다.</string>
     <string name="del_bookmark">즐겨찾기를 삭제하시겠습니까?</string>
     <string name="del_bookmark_success">즐겨찾기가 삭제되었습니다.</string>
     <string name="del_bookmark_fail">즐겨찾기 삭제가 실패하였습니다.</string>

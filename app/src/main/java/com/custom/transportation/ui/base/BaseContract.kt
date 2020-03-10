@@ -9,6 +9,7 @@ interface BaseContract {
     interface Presenter<T> {
         fun search(search : String)
         fun addBookmark(bookmark: T) : Boolean
+        fun existBookmark(bookmark: T) : Boolean
         fun getData() : List<T>
     }
 

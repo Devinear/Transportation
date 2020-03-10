@@ -8,6 +8,10 @@ interface BookmarkDataSource {
 
     fun insert(data : BusStopData) : Boolean
 
+    fun isExist(data : BusInfoData) : Boolean
+
+    fun isExist(data : BusStopData) : Boolean
+
     fun delete(bookmark : BookmarkData) : Boolean
 
     fun update(bookmark: BookmarkData) : Boolean

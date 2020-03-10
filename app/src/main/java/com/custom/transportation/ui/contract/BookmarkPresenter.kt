@@ -13,6 +13,8 @@ class BookmarkPresenter(val view: BookmarkContract.View) : BookmarkContract.Pres
 
     override fun addBookmark(bookmark: BookmarkData) : Boolean = false
 
+    override fun existBookmark(bookmark: BookmarkData): Boolean = false
+
     override fun deleteBookmark(bookmark: BookmarkData) : Boolean = this.bookmark.delete(bookmark)
 
     override fun updateTag(bookmark: BookmarkData) : Boolean = this.bookmark.update(bookmark)

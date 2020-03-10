@@ -16,6 +16,8 @@ class BusStopPresenter(val view: BusStopContract.View) : BusStopContract.Present
 
     override fun addBookmark(bookmark: BusStopData) : Boolean = this.bookmark.insert(bookmark)
 
+    override fun existBookmark(bookmark: BusStopData): Boolean = this.bookmark.isExist(bookmark)
+
     override fun onSuccess() = view.searchSuccess()
 
     override fun onFailure(msg: String) = view.searchFailure(msg)

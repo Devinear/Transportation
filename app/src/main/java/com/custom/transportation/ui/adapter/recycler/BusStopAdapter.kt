@@ -33,16 +33,19 @@ class BusStopAdapter(val presenter: BusStopContract.Presenter) : RecyclerView.Ad
                     .apply { putExtra(IntentType.ArsID.type, items[adapterPosition].arsId) })
             }
             view.setOnLongClickListener {
-//                presenter.addBookmark(items[adapterPosition])
-                Snackbar.make(it, it.context.getText(R.string.add_bookmark), Snackbar.LENGTH_SHORT)
-                    .setAction(R.string.cancel) { }
-                    .addCallback(object: BaseTransientBottomBar.BaseCallback<Snackbar>() {
-                        override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
-                            if(event != DISMISS_EVENT_ACTION)
-                                presenter.addBookmark(items[adapterPosition])
-                        }
-                    })
-                    .show()
+                if(presenter.existBookmark(items[adapterPosition])) {
+                    Snackbar.make(it, it.context.getText(R.string.exist_bookmark), Snackbar.LENGTH_SHORT).show()
+                }
+                else {
+                    Snackbar.make(it,it.context.getText(R.string.add_bookmark),Snackbar.LENGTH_SHORT)
+                        .setAction(R.string.cancel) { }
+                        .addCallback(object : BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                            override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+                                if (event != DISMISS_EVENT_ACTION)
+                                    presenter.addBookmark(items[adapterPosition])
+                            }
+                        }).show()
+                }
                 return@setOnLongClickListener true
             }
         }
