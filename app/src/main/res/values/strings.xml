@@ -5,6 +5,7 @@
     <string name="title_bus">버스</string>
 
     <string name="search">검색</string>
+    <string name="cancel">취소</string>
 
     <string name="bus_stop">버스 정류장</string>
     <string name="bus_number">버스 번호</string>

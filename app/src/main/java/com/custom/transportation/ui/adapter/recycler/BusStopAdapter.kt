@@ -11,6 +11,7 @@ import com.custom.transportation.common.IntentType
 import com.custom.transportation.repository.BusStopData
 import com.custom.transportation.ui.contract.BusStopContract
 import com.custom.transportation.ui.view.activity.BusInfoActivity
+import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 
 class BusStopAdapter(val presenter: BusStopContract.Presenter) : RecyclerView.Adapter<BusStopAdapter.ViewHolder>() {
@@ -32,8 +33,16 @@ class BusStopAdapter(val presenter: BusStopContract.Presenter) : RecyclerView.Ad
                     .apply { putExtra(IntentType.ArsID.type, items[adapterPosition].arsId) })
             }
             view.setOnLongClickListener {
-                presenter.addBookmark(items[adapterPosition])
-                Snackbar.make(it, it.context.getText(R.string.add_bookmark), Snackbar.LENGTH_SHORT).show()
+//                presenter.addBookmark(items[adapterPosition])
+                Snackbar.make(it, it.context.getText(R.string.add_bookmark), Snackbar.LENGTH_SHORT)
+                    .setAction(R.string.cancel) { }
+                    .addCallback(object: BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                        override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+                            if(event != DISMISS_EVENT_ACTION)
+                                presenter.addBookmark(items[adapterPosition])
+                        }
+                    })
+                    .show()
                 return@setOnLongClickListener true
             }
         }

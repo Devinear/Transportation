@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.custom.transportation.R
 import com.custom.transportation.repository.BusInfoData
 import com.custom.transportation.ui.contract.BusInfoContract
+import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 
 class BusInfoAdapter(val presenter: BusInfoContract.Presenter) : RecyclerView.Adapter<BusInfoAdapter.ViewHolder>() {
@@ -26,8 +27,16 @@ class BusInfoAdapter(val presenter: BusInfoContract.Presenter) : RecyclerView.Ad
     inner class ViewHolder(val context: Context, view: View) : RecyclerView.ViewHolder(view) {
         init {
             view.setOnLongClickListener {
-                presenter.addBookmark(items[adapterPosition])
-                Snackbar.make(it, it.context.getText(R.string.add_bookmark), Snackbar.LENGTH_SHORT).show()
+//                presenter.addBookmark(items[adapterPosition])
+                Snackbar.make(it, it.context.getText(R.string.add_bookmark), Snackbar.LENGTH_SHORT)
+                    .setAction(R.string.cancel) { }
+                    .addCallback(object: BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                        override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+                            if(event != DISMISS_EVENT_ACTION)
+                                presenter.addBookmark(items[adapterPosition])
+                        }
+                    })
+                    .show()
                 true
             }
         }
