@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/item_empty_text"
         android:textStyle="bold"
-        android:text="@string/empty_bookmark"
+        android:text="@string/msg_bookmark_empty"
         android:visibility="gone"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

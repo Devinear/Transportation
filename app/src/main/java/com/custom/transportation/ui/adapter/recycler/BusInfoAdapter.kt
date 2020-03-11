@@ -28,10 +28,10 @@ class BusInfoAdapter(val presenter: BusInfoContract.Presenter) : RecyclerView.Ad
         init {
             view.setOnLongClickListener {
                 if(presenter.existBookmark(items[adapterPosition])) {
-                    Snackbar.make(it, it.context.getText(R.string.exist_bookmark), Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(it, it.context.getText(R.string.msg_bookmark_exist), Snackbar.LENGTH_SHORT).show()
                 }
                 else {
-                    Snackbar.make(it, it.context.getText(R.string.add_bookmark), Snackbar.LENGTH_SHORT)
+                    Snackbar.make(it, it.context.getText(R.string.msg_bookmark_add), Snackbar.LENGTH_SHORT)
                         .setAction(R.string.cancel) { }
                         .addCallback(object : BaseTransientBottomBar.BaseCallback<Snackbar>() {
                             override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {

@@ -54,18 +54,18 @@ class BookmarkAdapter(val presenter: BookmarkPresenter, private val dragListener
         init {
             ibDelete.setOnClickListener{
                 AlertDialog.Builder(context).apply {
-                    setMessage(context.getText(R.string.del_bookmark))
+                    setMessage(context.getText(R.string.msg_bookmark_del))
                     setPositiveButton(context.getString(android.R.string.ok)) { dialog: DialogInterface?, _:Int ->
                         if(items.size <= adapterPosition) {
                             dialog?.dismiss()
                             return@setPositiveButton
                         }
                         if(presenter.deleteBookmark(items[adapterPosition])) {
-                            Toast.makeText(context, context.getText(R.string.del_bookmark_success), Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, context.getText(R.string.msg_bookmark_del_success), Toast.LENGTH_SHORT).show()
                             addItems(presenter.getData())
                         }
                         else {
-                            Toast.makeText(context, context.getText(R.string.del_bookmark_fail), Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, context.getText(R.string.msg_bookmark_del_fail), Toast.LENGTH_SHORT).show()
                         }
                     }
                     setNegativeButton(context.getString(android.R.string.cancel)) { dialog: DialogInterface?, _:Int ->
