@@ -14,6 +14,7 @@
     <string name="msg_not_result">검색된 결과가 없습니다.</string>
     <string name="msg_bookmark_empty">저장된 즐겨찾기가 없습니다.</string>
     <string name="msg_bookmark_add">즐겨찾기가 추가되었습니다.</string>
+    <string name="msg_bookmark_add_fail">즐겨찾기 추가에 실패하였습니다.</string>
     <string name="msg_bookmark_exist">이미 추가되어 있습니다.</string>
     <string name="msg_bookmark_del">즐겨찾기를 삭제하시겠습니까?</string>
     <string name="msg_bookmark_del_success">즐겨찾기가 삭제되었습니다.</string>

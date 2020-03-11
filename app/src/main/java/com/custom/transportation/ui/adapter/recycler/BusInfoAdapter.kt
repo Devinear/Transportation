@@ -27,18 +27,22 @@ class BusInfoAdapter(val presenter: BusInfoContract.Presenter) : RecyclerView.Ad
     inner class ViewHolder(val context: Context, view: View) : RecyclerView.ViewHolder(view) {
         init {
             view.setOnLongClickListener {
-                if(presenter.existBookmark(items[adapterPosition])) {
+                if(presenter.existBookmark(items[adapterPosition]) > -1) {
                     Snackbar.make(it, it.context.getText(R.string.msg_bookmark_exist), Snackbar.LENGTH_SHORT).show()
                 }
                 else {
-                    Snackbar.make(it, it.context.getText(R.string.msg_bookmark_add), Snackbar.LENGTH_SHORT)
-                        .setAction(R.string.cancel) { }
-                        .addCallback(object : BaseTransientBottomBar.BaseCallback<Snackbar>() {
-                            override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
-                                if (event != DISMISS_EVENT_ACTION)
-                                    presenter.addBookmark(items[adapterPosition])
-                            }
-                        }).show()
+                    if(presenter.addBookmark(items[adapterPosition])) {
+                        Snackbar.make(it, it.context.getText(R.string.msg_bookmark_add), Snackbar.LENGTH_SHORT)
+                            .setAction(R.string.cancel) { }
+                            .addCallback(object : BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                                override fun onDismissed(transientBottomBar: Snackbar?, event: Int ) {
+                                    if (event == DISMISS_EVENT_ACTION)
+                                        presenter.deleteBookmark(items[adapterPosition])
+                                }
+                            }).show()
+                    } else {
+                        Snackbar.make(it, it.context.getText(R.string.msg_bookmark_add_fail), Snackbar.LENGTH_SHORT).show()
+                    }
                 }
                 true
             }

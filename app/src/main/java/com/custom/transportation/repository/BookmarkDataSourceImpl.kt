@@ -25,11 +25,7 @@ class BookmarkDataSourceImpl : BookmarkDataSource {
     private val bookmarks = mutableMapOf<Int, BookmarkData>()
     private val bookmarkDao: BookmarkDao = App.DATABASE.bookmarkDao()
 
-    override fun insert(data: BusInfoData): Boolean = insertDatabase(BusInfoMapperImpl.toBookmark(data))
-
-    override fun insert(data: BusStopData): Boolean = insertDatabase(BusStopMapperImpl.toBookmark(data))
-
-    private fun insertDatabase(bookmark: BookmarkData): Boolean{
+    override fun insert(bookmark: BookmarkData): Boolean{
         if(bookmarks.containsValue(bookmark)) return false
 
         bookmark.key = if(bookmarks.isEmpty()) 0 else bookmarks.keys.last() + 1
@@ -40,11 +36,22 @@ class BookmarkDataSourceImpl : BookmarkDataSource {
         return true
     }
 
-    override fun isExist(data: BusInfoData): Boolean = bookmarks.containsValue(BusInfoMapperImpl.toBookmark(data))
-
-    override fun isExist(data: BusStopData): Boolean = bookmarks.containsValue(BusStopMapperImpl.toBookmark(data))
+    override fun isExist(bookmark: BookmarkData): Int {
+        for(data : BookmarkData in bookmarks.values) {
+            if(data.copy(key = -1) == bookmark)
+                return data.key
+        }
+        return -1
+    }
 
     override fun delete(bookmark: BookmarkData) : Boolean {
+        // 즐겨찾기 추가 후 취소 동작으로 인한 삭제 과정
+        if(bookmark.key == -1) {
+            val key: Int = isExist(bookmark)
+            if(key == -1) return false
+            bookmark.key = key
+        }
+
         val data = bookmarks.remove(bookmark.key)
         data ?: return false
 
