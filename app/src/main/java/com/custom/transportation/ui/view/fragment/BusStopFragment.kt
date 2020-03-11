@@ -63,9 +63,5 @@ class BusStopFragment : BaseFragment(), BusStopContract.View {
         val INSTANCE : BusStopFragment by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
             BusStopFragment()
         }
-//        private var instance : BusStopFragment? = null
-//        fun getInstance() : BusStopFragment = instance ?: synchronized(this) {
-//            instance ?: BusStopFragment().also { instance = it }
-//        }
     }
 }

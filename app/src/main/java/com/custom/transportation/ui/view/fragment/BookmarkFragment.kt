@@ -61,9 +61,5 @@ class BookmarkFragment : BaseFragment(), BookmarkContract.View, OnDragListener {
         val INSTANCE : BookmarkFragment by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
             BookmarkFragment()
         }
-//        private var instance : BookmarkFragment? = null
-//        fun getInstance() : BookmarkFragment = instance ?: synchronized(this) {
-//            instance ?: BookmarkFragment().also { instance = it }
-//        }
     }
 }
