@@ -12,8 +12,8 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) : 
 
     override fun getItem(position: Int): BaseFragment {
         return when(position) {
-            MainTab.BUS.pos -> BusStopFragment.getInstance()
-            else -> BookmarkFragment.getInstance()
+            MainTab.BUS.pos -> BusStopFragment.INSTANCE
+            else -> BookmarkFragment.INSTANCE
         }
     }
 

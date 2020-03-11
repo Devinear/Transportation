@@ -60,9 +60,12 @@ class BusStopFragment : BaseFragment(), BusStopContract.View {
             = Toast.makeText(context, "Failure:${msg}", Toast.LENGTH_SHORT).show()
 
     companion object {
-        private var instance : BusStopFragment? = null
-        fun getInstance() : BusStopFragment = instance ?: synchronized(this) {
-            instance ?: BusStopFragment().also { instance = it }
+        val INSTANCE : BusStopFragment by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
+            BusStopFragment()
         }
+//        private var instance : BusStopFragment? = null
+//        fun getInstance() : BusStopFragment = instance ?: synchronized(this) {
+//            instance ?: BusStopFragment().also { instance = it }
+//        }
     }
 }
