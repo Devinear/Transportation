@@ -4,6 +4,7 @@ import com.custom.transportation.repository.BookmarkDataSource
 import com.custom.transportation.repository.BookmarkDataSourceImpl
 import com.custom.transportation.repository.BusStopData
 import com.custom.transportation.repository.BusStopDataSourceImpl
+import com.custom.transportation.repository.mapper.BusStopMapperImpl
 
 class BusStopPresenter(val view: BusStopContract.View) : BusStopContract.Presenter, BusStopContract.Callback {
 
@@ -14,9 +15,11 @@ class BusStopPresenter(val view: BusStopContract.View) : BusStopContract.Present
 
     override fun getData(): List<BusStopData> = busStop.getAll()
 
-    override fun addBookmark(bookmark: BusStopData) : Boolean = this.bookmark.insert(bookmark)
+    override fun addBookmark(bookmark: BusStopData) : Boolean = this.bookmark.insert(BusStopMapperImpl.toBookmark(data = bookmark))
 
-    override fun existBookmark(bookmark: BusStopData): Boolean = this.bookmark.isExist(bookmark)
+    override fun deleteBookmark(bookmark: BusStopData): Boolean = this.bookmark.delete(BusStopMapperImpl.toBookmark(data = bookmark))
+
+    override fun existBookmark(bookmark: BusStopData): Int = this.bookmark.isExist(BusStopMapperImpl.toBookmark(data = bookmark))
 
     override fun onSuccess() = view.searchSuccess()
 

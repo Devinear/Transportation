@@ -13,6 +13,5 @@ interface BookmarkContract {
         suspend fun requestData()
         suspend fun moveBookmark(fromIndex: Int, toIndex: Int)
         fun updateTag(bookmark: BookmarkData) : Boolean
-        fun deleteBookmark(bookmark: BookmarkData): Boolean
     }
 }
