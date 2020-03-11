@@ -18,9 +18,6 @@ import com.custom.transportation.ui.adapter.recycler.BusStopAdapter
 import com.custom.transportation.ui.contract.BusStopContract
 import com.custom.transportation.ui.contract.BusStopPresenter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class BusStopFragment : BaseFragment(), BusStopContract.View {
 
@@ -37,7 +34,7 @@ class BusStopFragment : BaseFragment(), BusStopContract.View {
 
         view.findViewById<FloatingActionButton>(R.id.fab).setOnClickListener {
             AlertDialog.Builder(context).apply {
-                setTitle(context.getString(R.string.search_bus_stop))
+                setTitle(context.getString(R.string.msg_search_bus_stop))
                 val edit = EditText(context)
                 setView(edit)
                 setPositiveButton(context.getString(android.R.string.ok)) { _: DialogInterface?, _: Int ->

@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/item_empty_text"
         android:textStyle="bold"
-        android:text="@string/not_result"
+        android:text="@string/msg_not_result"
         android:visibility="gone"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

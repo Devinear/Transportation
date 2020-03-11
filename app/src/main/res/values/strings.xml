@@ -6,13 +6,12 @@
 
     <string name="search">검색</string>
     <string name="cancel">취소</string>
+    <string name="seperator">/</string>
 
     <string name="bus_stop">버스 정류장</string>
     <string name="bus_number">버스 번호</string>
-    <string name="search_bus_stop">정류장 명칭 또는 번호를 입력하세요.</string>
-    <string name="search_bus_number">버스 노선 번호를 입력하세요.</string>
-    <string name="not_result">검색된 결과가 없습니다.</string>
-
+    <string name="msg_search_bus_stop">정류장 명칭 또는 번호를 입력하세요.</string>
+    <string name="msg_not_result">검색된 결과가 없습니다.</string>
     <string name="msg_bookmark_empty">저장된 즐겨찾기가 없습니다.</string>
     <string name="msg_bookmark_add">즐겨찾기가 추가되었습니다.</string>
     <string name="msg_bookmark_exist">이미 추가되어 있습니다.</string>
@@ -21,7 +20,6 @@
     <string name="msg_bookmark_del_fail">즐겨찾기 삭제가 실패하였습니다.</string>
     <string name="bus_info_after_title">다음 버스:</string>
     <string name="bus_info_this_title">이번 버스:</string>
-    <string name="bus_seperator">/</string>
 
     <string name="bus_this_count_msg">명 탑승</string>
     <string name="map">MAP</string>

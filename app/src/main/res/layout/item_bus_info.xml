@@ -103,7 +103,7 @@
         android:layout_width="wrap_content"
         app:layout_constraintHorizontal_weight="1"
         android:layout_height="wrap_content"
-        android:text="@string/bus_seperator"
+        android:text="@string/seperator"
         android:textSize="@dimen/item_sub_text_size"
         app:layout_constraintTop_toTopOf="@id/tv_this_title"
         app:layout_constraintBottom_toBottomOf="@id/tv_this_title"
