@@ -18,6 +18,7 @@ import com.custom.transportation.repository.BookmarkData
 import com.custom.transportation.ui.contract.BookmarkPresenter
 import com.custom.transportation.ui.contract.TagContract
 import com.custom.transportation.ui.view.fragment.TagDialogFragment
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -26,7 +27,6 @@ import java.util.*
 class BookmarkAdapter(val presenter: BookmarkPresenter, private val dragListener: OnDragListener)
     : RecyclerView.Adapter<BookmarkAdapter.ViewHolder>(), OnItemMoveListener, TagContract.View
 {
-
     companion object {
         private const val TAG = "BookmarkAdapter"
     }
@@ -39,6 +39,14 @@ class BookmarkAdapter(val presenter: BookmarkPresenter, private val dragListener
             addAll(items)
         }
         notifyDataSetChanged()
+    }
+
+    fun addItem(item : BookmarkData) : Boolean {
+        if(items.indexOf(item) == -1) {
+            items.add(item)
+            return true
+        }
+        return false
     }
 
     inner class ViewHolder(val context: Context, view: View) : RecyclerView.ViewHolder(view) {
