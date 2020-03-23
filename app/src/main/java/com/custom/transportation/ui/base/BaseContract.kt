@@ -1,5 +1,7 @@
 package com.custom.transportation.ui.base
 
+import androidx.lifecycle.LiveData
+
 interface BaseContract {
     interface View {
         fun searchSuccess()

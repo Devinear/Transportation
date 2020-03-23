@@ -1,5 +1,6 @@
 package com.custom.transportation.ui.contract
 
+import androidx.lifecycle.LiveData
 import com.custom.transportation.repository.BookmarkDataSource
 import com.custom.transportation.repository.BookmarkDataSourceImpl
 import com.custom.transportation.repository.BusInfoData
@@ -14,6 +15,8 @@ class BusInfoPresenter(val view: BusInfoContract.View) : BusInfoContract.Present
     override fun search(search: String) = busInfo.search(search, this)
 
     override fun getData(): List<BusInfoData> = busInfo.getAll()
+
+    override fun getLiveData(): List<LiveData<BusInfoData>> = busInfo.getLiveDataAll()
 
     override fun addBookmark(bookmark: BusInfoData) : Boolean = this.bookmark.insert(BusInfoMapperImpl.toBookmark(data = bookmark))
 

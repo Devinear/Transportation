@@ -29,11 +29,11 @@ class BusInfoActivity : AppCompatActivity(), BusInfoContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bus_info)
 
-        model = ViewModelProviders.of(this)[BusInfoViewModel::class.java]
-        val observer = Observer<BusInfoData> {
-
-        }
-        model.busInfo.observe(this, observer)
+//        model = ViewModelProviders.of(this)[BusInfoViewModel::class.java]
+//        val observer = Observer<BusInfoData> {
+//
+//        }
+//        model.busInfo.observe(this, observer)
 
         findViewById<RecyclerView>(R.id.recycler).run {
             layoutManager = LinearLayoutManager(context)
@@ -54,7 +54,15 @@ class BusInfoActivity : AppCompatActivity(), BusInfoContract.View {
     }
 
     override fun searchSuccess() {
-        busInfoAdapter.addItems(presenter.getData())
+        val lives = presenter.getLiveData()
+        val observer = Observer<BusInfoData> {
+            busInfoAdapter.notifyDataSetChanged()
+        }
+        lives.forEach {
+            it.observe(this, observer)
+        }
+        busInfoAdapter.addLiveItems(lives)
+//        busInfoAdapter.addItems(presenter.getData())
         swipeLayout.isRefreshing = false
     }
 

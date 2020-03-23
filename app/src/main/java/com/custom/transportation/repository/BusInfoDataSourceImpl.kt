@@ -23,7 +23,7 @@ data class BusInfoData
      val thisType: BusType, val thisCount: String, val after: String, val routeType: RouteType)
 
 class BusInfoDataSourceImpl : BaseDataSource<BusInfoData>() {
-    private val liveItems = mutableListOf<LiveData<BusInfoData>>()
+    private val liveItems = mutableListOf<MutableLiveData<BusInfoData>>()
     private val items : ArrayList<BusInfoData> = ArrayList()
 
     override fun search(search: String, callback: BaseContract.RemoteCallback) {
@@ -33,19 +33,31 @@ class BusInfoDataSourceImpl : BaseDataSource<BusInfoData>() {
                 .getStationByUid(CommonData.ServiceKey, search) }
             when(response) {
                 is ResponseResult.Success -> {
-                    liveItems.clear()
-                    response.items.forEach { item ->
-                        val data = MutableLiveData<BusInfoData>().apply {
-                            value = BusInfoData(item.rtNm, item.arrmsg1, item.adirection,
-                                ConvertUtil.fromBusType(item.busType1), item.rerideNum1, item.arrmsg2, ConvertUtil.fromRouteType(item.routeType))
+                    if(liveItems.size != response.items.size) {
+                        liveItems.clear()
+                        response.items.forEach { item ->
+                            val info = BusInfoData(
+                                item.rtNm,item.arrmsg1,item.adirection,ConvertUtil.fromBusType(item.busType1),
+                                item.rerideNum1,item.arrmsg2,ConvertUtil.fromRouteType(item.routeType))
+
+                            val data = MutableLiveData<BusInfoData>()
+                            data.value = info
+                            liveItems.add(data)
                         }
-
-                        liveItems.add(data)
+                        withContext(Dispatchers.Main) {
+                            callback.onSuccess()
+                        }
                     }
-                    withContext(Dispatchers.Main) {
-                        callback.onSuccess()
+                    else {
+                        var index : Int = 0
+                        for (item in response.items) {
+                            val info = BusInfoData(
+                                item.rtNm,item.arrmsg1,item.adirection,ConvertUtil.fromBusType(item.busType1),
+                                item.rerideNum1,item.arrmsg2,ConvertUtil.fromRouteType(item.routeType))
+                            liveItems[index].value = info
+                            index += 1
+                        }
                     }
-
 //                    items.clear()
 //                    response.items.forEach { item ->
 //                        items.add(
@@ -70,6 +82,8 @@ class BusInfoDataSourceImpl : BaseDataSource<BusInfoData>() {
     }
 
     override fun getAll(): List<BusInfoData> = items
+
+    fun getLiveDataAll(): List<LiveData<BusInfoData>> = liveItems
 
     companion object {
         val INSTANCE by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {

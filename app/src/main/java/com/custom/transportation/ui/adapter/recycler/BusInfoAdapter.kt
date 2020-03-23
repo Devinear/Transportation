@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.custom.transportation.R
 import com.custom.transportation.repository.BusInfoData
@@ -14,10 +15,18 @@ import com.google.android.material.snackbar.Snackbar
 
 class BusInfoAdapter(val presenter: BusInfoContract.Presenter) : RecyclerView.Adapter<BusInfoAdapter.ViewHolder>() {
 
-    private val items = mutableListOf<BusInfoData>()
+//    private val items = mutableListOf<BusInfoData>()
+//    fun addItems(items : List<BusInfoData>) {
+//        with(this.items) {
+//            clear()
+//            addAll(items)
+//        }
+//        notifyDataSetChanged()
+//    }
 
-    fun addItems(items : List<BusInfoData>) {
-        with(this.items) {
+    private val lives = mutableListOf<LiveData<BusInfoData>>()
+    fun addLiveItems(items: List<LiveData<BusInfoData>>) {
+        with(this.lives) {
             clear()
             addAll(items)
         }
@@ -27,17 +36,18 @@ class BusInfoAdapter(val presenter: BusInfoContract.Presenter) : RecyclerView.Ad
     inner class ViewHolder(val context: Context, view: View) : RecyclerView.ViewHolder(view) {
         init {
             view.setOnLongClickListener {
-                if(presenter.existBookmark(items[adapterPosition]) > -1) {
+                val data : BusInfoData = lives[adapterPosition].value!!
+                if(presenter.existBookmark(data) > -1) {
                     Snackbar.make(it, it.context.getText(R.string.msg_bookmark_exist), Snackbar.LENGTH_SHORT).show()
                 }
                 else {
-                    if(presenter.addBookmark(items[adapterPosition])) {
+                    if(presenter.addBookmark(data)) {
                         Snackbar.make(it, it.context.getText(R.string.msg_bookmark_add), Snackbar.LENGTH_SHORT)
                             .setAction(R.string.cancel) { }
                             .addCallback(object : BaseTransientBottomBar.BaseCallback<Snackbar>() {
                                 override fun onDismissed(transientBottomBar: Snackbar?, event: Int ) {
                                     if (event == DISMISS_EVENT_ACTION)
-                                        presenter.deleteBookmark(items[adapterPosition])
+                                        presenter.deleteBookmark(data)
                                 }
                             }).show()
                     } else {
@@ -60,18 +70,19 @@ class BusInfoAdapter(val presenter: BusInfoContract.Presenter) : RecyclerView.Ad
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder
             = ViewHolder(parent.context, LayoutInflater.from(parent.context).inflate(R.layout.item_bus_info, parent,false))
 
-    override fun getItemCount(): Int  = items.size
+    override fun getItemCount(): Int  = lives.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
-            viewFront.setBackgroundColor(context.getColor(items[position].routeType.colorId))
-            viewBack.setBackgroundColor(context.getColor(items[position].routeType.colorId))
-            tvName.text      = items[position].name
-            tvTime.text      = items[position].time
-            tvDirection.text = items[position].direction
-            tvThisType.text  = context.getText(items[position].thisType.typeId)
-            tvAfter.text     = items[position].after
-            tvThisCount.text = items[position].thisCount
+            val data : BusInfoData = lives[position].value!!
+            viewFront.setBackgroundColor(context.getColor(data.routeType.colorId))
+            viewBack.setBackgroundColor(context.getColor(data.routeType.colorId))
+            tvName.text      = data.name
+            tvTime.text      = data.time
+            tvDirection.text = data.direction
+            tvThisType.text  = context.getText(data.thisType.typeId)
+            tvAfter.text     = data.after
+            tvThisCount.text = data.thisCount
         }
     }
 }
