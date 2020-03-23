@@ -33,29 +33,26 @@ class BusInfoDataSourceImpl : BaseDataSource<BusInfoData>() {
                 .getStationByUid(CommonData.ServiceKey, search) }
             when(response) {
                 is ResponseResult.Success -> {
-                    if(liveItems.size != response.items.size) {
-                        liveItems.clear()
-                        response.items.forEach { item ->
-                            val info = BusInfoData(
-                                item.rtNm,item.arrmsg1,item.adirection,ConvertUtil.fromBusType(item.busType1),
-                                item.rerideNum1,item.arrmsg2,ConvertUtil.fromRouteType(item.routeType))
-
-                            val data = MutableLiveData<BusInfoData>()
-                            data.value = info
-                            liveItems.add(data)
-                        }
-                        withContext(Dispatchers.Main) {
+                    withContext(Dispatchers.Main) {
+                        if (liveItems.size != response.items.size) {
+                            liveItems.clear()
+                            response.items.forEach { item ->
+                                val info = BusInfoData(item.rtNm,item.arrmsg1,item.adirection,ConvertUtil.fromBusType(item.busType1),
+                                    item.rerideNum1,item.arrmsg2,ConvertUtil.fromRouteType(item.routeType))
+                                val data = MutableLiveData<BusInfoData>()
+                                data.value = info
+                                liveItems.add(data)
+                            }
                             callback.onSuccess()
-                        }
-                    }
-                    else {
-                        var index : Int = 0
-                        for (item in response.items) {
-                            val info = BusInfoData(
-                                item.rtNm,item.arrmsg1,item.adirection,ConvertUtil.fromBusType(item.busType1),
-                                item.rerideNum1,item.arrmsg2,ConvertUtil.fromRouteType(item.routeType))
-                            liveItems[index].value = info
-                            index += 1
+
+                        } else {
+                            var index: Int = 0
+                            for (item in response.items) {
+                                val info = BusInfoData(item.rtNm,item.arrmsg1,item.adirection,ConvertUtil.fromBusType(item.busType1),
+                                    item.rerideNum1,item.arrmsg2,ConvertUtil.fromRouteType(item.routeType))
+                                liveItems[index].value = info
+                                index += 1
+                            }
                         }
                     }
 //                    items.clear()
